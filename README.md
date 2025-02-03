@@ -1,50 +1,87 @@
-# Welcome to your Expo app 👋
+# REACT Native tutorial
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+https://www.youtube.com/watch?v=sm5Y7Vtuihg
 
-## Get started
+https://docs.expo.dev/
 
-1. Install dependencies
+run `npx create-expo-app@latest`
 
-   ```bash
-   npm install
-   ```
+* go to -> ttps://docs.expo.dev/get-started/set-up-your-environment/
+* scan QR code and install the expo go app on android device
 
-2. Start the app
+### start developing
 
-   ```bash
-    npx expo start
-   ```
+https://docs.expo.dev/get-started/start-developing/
 
-In the output, you'll find options to open the app in a
+run `npx expo start`
+* open expo app and scan qr code, it will show our app
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+install vscode extension ES7+ React/Redux/React-Native
 
-## Get a fresh project
+### now edit file `app/(tabs)/index.tsx`
 
-When you're ready, run:
+* remove all contents 
+* type: rnfe
+* rename index.tsx -> index.jsx
+* copy images from https://github.com/gitdagray/react-native-course branch `lesson-2`
 
-```bash
-npm run reset-project
+
+full code now after 39minutes in youtube video
+index.jsx
+```
+import { View, Text, StyleSheet, ImageBackground } from 'react-native'
+import React from 'react'
+import icedCoffeeImg from "@/assets/images/iced-coffee.png"
+const app = () => {
+  return (
+    <View style={styles.container}>
+      <ImageBackground
+        source={icedCoffeeImg}
+        resizeMode='cover'
+        style={styles.image}
+      >
+      <Text style={styles.text}>Coffee shop</Text>
+      </ImageBackground>
+    </View>
+  )
+}
+
+export default app
+
+const styles = StyleSheet.create({
+  container: {
+    flex:1,
+    flexDirection: 'column',
+  },
+  image: {
+    width: '100%',
+    height: '100%',
+    flex: 1,
+    resizeMode: 'cover',
+    justifyContent: 'center',
+  },
+  text: {
+    color: 'white',
+    fontSize: 42,
+    fontWeight: 'bold',
+    textAlign:'center',
+    backgroundColor: 'rgba(0,0,0,0.5)',
+  }
+})
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+icon list: https://icons.expo.fyi/Index
 
-## Learn more
 
-To learn more about developing your project with Expo, look at the following resources:
+### small layout page
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+```
+import { Slot } from "expo-router";
 
-## Join the community
+export default function CoffeeLayout() {
+    return <Slot />
+}
+```
 
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+fonts: github.com/expo/google-fonts
