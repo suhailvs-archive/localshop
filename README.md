@@ -85,3 +85,9 @@ export default function CoffeeLayout() {
 ```
 
 fonts: github.com/expo/google-fonts
+
+### Authentication
+
+https://docs.expo.dev/router/reference/authentication/
+
+`npm i expo-secure-store`
