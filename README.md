@@ -91,3 +91,5 @@ fonts: github.com/expo/google-fonts
 https://docs.expo.dev/router/reference/authentication/
 
 `npm i expo-secure-store`
+
+login themes from https://github.com/lumamontes/expo-router-auth
