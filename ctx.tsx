@@ -1,7 +1,9 @@
 import { useContext, createContext, type PropsWithChildren } from 'react';
-import axios from 'axios';
+// import axios from 'axios';
 import { useStorageState } from './useStorageState';
 import { router } from "expo-router";
+
+import api from '@/constants/api'
 
 const AuthContext = createContext<{
   // signIn: () => void;
@@ -28,9 +30,9 @@ export function useSession() {
   return value;
 }
 
-const api = axios.create({
-  baseURL: 'http://192.168.85.167:8000', // Replace with your API URL
-});
+// const api = axios.create({
+//   baseURL: 'http://192.168.85.167:8000', // Replace with your API URL
+// });
 
 export function SessionProvider({ children }: PropsWithChildren) {
   const [[isLoading, session], setSession] = useStorageState('session');
