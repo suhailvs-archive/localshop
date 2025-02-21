@@ -1,26 +1,17 @@
 import { useEffect, useState } from 'react';
-import { View, Text, ScrollView, Image, TouchableOpacity, StyleSheet, Modal, Button } from "react-native";
+import { View, Text, ScrollView, Image, TouchableOpacity, StyleSheet, Linking} from "react-native";
 import { useLocalSearchParams } from 'expo-router';
 import SkeletonLoader from "@/components/SkeletonLoader";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import api from '@/constants/api'
 
+import api from '@/constants/api'
+import Markdown from 'react-native-markdown-display';
+import { MaterialIcons } from "@expo/vector-icons"; // Call icon
 
 const OfferingDetailPage = ( ) => {
-  const [data, setData] = useState([]);
+  const [offering, setOffering] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const { id, category } = useLocalSearchParams(); // Get passed data
-  const product = {
-    title: 'heading',
-    description: "This is a sample product description.",
-    price: "99.99",
-    image: "https://m.media-amazon.com/images/I/41jGfc2vThS._SX522_.jpg",
-    reviews: 120,
-  };
-
-  const [showZoom, setShowZoom] = useState(false);
-
 
   useEffect(() => {
     fetchData();
@@ -29,7 +20,7 @@ const OfferingDetailPage = ( ) => {
   const fetchData = async () => {
       try {
           const response = await api.get(`/api/v1/listings/${id}/`);
-          setData(response.data);
+          setOffering(response.data);
       } catch (error) {
           console.error('Error fetching data:', error);
       } finally {
@@ -37,6 +28,15 @@ const OfferingDetailPage = ( ) => {
       }
   };
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return new Intl.DateTimeFormat("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "2-digit",
+    }).format(date);
+  };
+  
   const handleAddToCart = () => {
     // Add to cart logic
     alert("Added to Cart!");
@@ -44,8 +44,12 @@ const OfferingDetailPage = ( ) => {
 
   const handleBuyNow = () => {
     // Navigate to payment screen
-    navigation.navigate("Checkout", { product });
+    // navigation.navigate("Checkout", { offering });
   };
+  const handleCallPress = () => {
+    Linking.openURL(`tel:${offering.user.phone}`);
+  };
+
 
   return (
     <ScrollView style={styles.container}>
@@ -57,22 +61,24 @@ const OfferingDetailPage = ( ) => {
         </View>
       ) : (
         <View>
+          {/* Product Title and Price */}
+          <Text style={styles.productTitle}>{offering.heading}</Text>
+          <Text style={styles.productPrice}>${offering.rate}</Text>
+          {/* Formatted Date */}
+          <Text style={styles.dateLabel}>Added on: {formatDate(offering.created_at)}</Text>
           {/* Product Image   */}
           <View style={styles.imageContainer}>
-            <Image source={{ uri: product.image }} style={styles.productImage} />
+            <Image source={{ uri: offering.img }} style={styles.productImage} />
           </View>
-          {/* Product Title and Price */}
-          <Text style={styles.productTitle}>{product.title}</Text>
-          <Text style={styles.productPrice}>${data.rate}</Text>
+          
+          {/* Product Description */}          
+          <Markdown>{offering.detail}</Markdown>
 
-          {/* Product Description */}
-          <Text style={styles.productDescription}>{product.description}</Text>
-
-          {/* Reviews */}
+          {/* Reviews 
           <View style={styles.reviewsContainer}>
             <Icon name="star" size={20} color="#FF9900" />
-            <Text style={styles.reviewsText}>{product.reviews} Reviews</Text>
-          </View>
+            <Text style={styles.reviewsText}>{}</Text>
+          </View>*/}
 
           {/* Add to Cart and Buy Now Buttons */}
           <View style={styles.buttonContainer}>
@@ -83,16 +89,18 @@ const OfferingDetailPage = ( ) => {
               <Text style={styles.buttonText}>Buy Now</Text>
             </TouchableOpacity>
           </View>
-          {/* Image Zoom Modal 
-          <Modal visible={showZoom} transparent={true} onRequestClose={() => setShowZoom(false)}>
-            <ZoomableImage
-              imageUrls={[{ url: product.image }]}
-              onCancel={() => setShowZoom(false)}
-              enableSwipeDown={true}
-              swipeDownThreshold={0.3}
-            />
-          </Modal>*/}
+
+          <View style={styles.phoneView}>
+            <Text style={styles.phoneLabel}>Contact Customer:</Text>
+            <TouchableOpacity onPress={handleCallPress}  style={styles.phoneContainer}>
+              <MaterialIcons name="phone" size={20} color="#fff" />
+              <Text style={styles.phoneText}>{offering.user.phone}</Text>
+            </TouchableOpacity>
           </View>
+            <Text></Text>
+            <Text></Text>
+            <Text></Text>
+        </View>
       )}
     </ScrollView>
   );
@@ -104,13 +112,44 @@ const styles = StyleSheet.create({
   productImage: { width: "100%", height: 300, borderRadius: 10 },
   productTitle: { fontSize: 24, fontWeight: "bold", color: "#232F3E", marginTop: 10 },
   productPrice: { fontSize: 20, color: "#FF9900", marginTop: 10 },
-  productDescription: { fontSize: 16, color: "#555", marginTop: 10, lineHeight: 24 },
+  dateLabel: {fontSize: 16,fontWeight: "bold",color: "#ccc",marginRight: 5,},
   reviewsContainer: { flexDirection: "row", alignItems: "center", marginTop: 15 },
   reviewsText: { fontSize: 16, color: "#555", marginLeft: 10 },
   buttonContainer: { marginTop: 20, flexDirection: "row", justifyContent: "space-between" },
   addToCartButton: { backgroundColor: "#232F3E", padding: 15, borderRadius: 8, width: "48%" },
   buyNowButton: { backgroundColor: "#FF9900", padding: 15, borderRadius: 8, width: "48%" },
   buttonText: { color: "#fff", fontSize: 16, textAlign: "center", fontWeight: "bold" },
+
+  phoneView: {
+    marginTop:10,
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#000", // Amazon Pay Black
+    padding: 10,
+    borderRadius: 8,
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 4,
+    elevation: 5, // For Android shadow
+    color: "#fff",
+  },
+  phoneLabel: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#fff",
+    marginRight: 10,
+  },
+  phoneContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  phoneText: {
+    fontSize: 16,
+    color: "#fff",
+    marginLeft: 5,
+    textDecorationLine: "underline",
+  },
 });
 
 export default OfferingDetailPage;
