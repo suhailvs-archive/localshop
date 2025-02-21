@@ -80,6 +80,25 @@ const OfferingDetailPage = ( ) => {
             <Text style={styles.reviewsText}>{}</Text>
           </View>*/}
 
+          {/* Advertiser Details */}
+          <View>
+            <Text style={styles.advertiserItem}>Advertiser Details:</Text>
+            
+            <Text style={styles.advertiserTitle}>{offering.user.first_name}</Text>
+            <Text style={[offering.user.amount > 0 ? styles.positive : styles.negative]}>
+              Balance: {offering.user.amount} Rs
+            </Text>
+            <Text style={styles.advertiserDate}>Last login: {formatDate(offering.user.last_login)}</Text>
+               
+
+            <View style={styles.phoneView}>
+              <Text style={styles.phoneLabel}>Contact Customer:</Text>
+              <TouchableOpacity onPress={handleCallPress}  style={styles.phoneContainer}>
+                <MaterialIcons name="phone" size={20} color="#fff" />
+                <Text style={styles.phoneText}>{offering.user.phone}</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
           {/* Add to Cart and Buy Now Buttons */}
           <View style={styles.buttonContainer}>
             <TouchableOpacity style={styles.addToCartButton} onPress={handleAddToCart}>
@@ -89,17 +108,11 @@ const OfferingDetailPage = ( ) => {
               <Text style={styles.buttonText}>Buy Now</Text>
             </TouchableOpacity>
           </View>
-
-          <View style={styles.phoneView}>
-            <Text style={styles.phoneLabel}>Contact Customer:</Text>
-            <TouchableOpacity onPress={handleCallPress}  style={styles.phoneContainer}>
-              <MaterialIcons name="phone" size={20} color="#fff" />
-              <Text style={styles.phoneText}>{offering.user.phone}</Text>
-            </TouchableOpacity>
-          </View>
-            <Text></Text>
-            <Text></Text>
-            <Text></Text>
+          
+          {/* These 3 text boxes are to add some margin Bottom */}
+          <Text></Text>
+          <Text></Text>
+          <Text></Text>
         </View>
       )}
     </ScrollView>
@@ -110,7 +123,7 @@ const styles = StyleSheet.create({
   container: { flex: 1, padding: 20, backgroundColor: "#fff" },
   imageContainer: { alignItems: "center", marginBottom: 20 },
   productImage: { width: "100%", height: 300, borderRadius: 10 },
-  productTitle: { fontSize: 24, fontWeight: "bold", color: "#232F3E", marginTop: 10 },
+  productTitle: { fontSize: 24, fontWeight: "bold", color: "#232F3E", marginTop: 10, borderBottomWidth: 1, borderBottomColor: "#ddd"},
   productPrice: { fontSize: 20, color: "#FF9900", marginTop: 10 },
   dateLabel: {fontSize: 16,fontWeight: "bold",color: "#ccc",marginRight: 5,},
   reviewsContainer: { flexDirection: "row", alignItems: "center", marginTop: 15 },
@@ -150,6 +163,13 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     textDecorationLine: "underline",
   },
+
+  advertiserItem: { fontSize: 20, borderBottomWidth: 1, borderBottomColor: "#ddd" },
+  advertiserTitle: { fontSize: 16, fontWeight: "500" },
+  
+  advertiserDate: { fontSize: 12, color: "gray", marginTop: 2 },
+  positive: { color: "green" },
+  negative: { color: "red" },
 });
 
 export default OfferingDetailPage;
