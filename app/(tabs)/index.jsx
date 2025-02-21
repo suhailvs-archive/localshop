@@ -36,7 +36,7 @@ export default function OfferingScreen() {
     };
     const renderItem = ({ item }) => (
         <TouchableOpacity style={styles.row} onPress={() => {
-            router.push({ pathname: 'screens/offering_details', params:{'id':item.id, 'category':item.category, 'heading':item.heading} })
+            router.push({ pathname: 'screens/offering_details', params:{'id':item.id, 'category':item.category} })
             }
         }>            
             <View style={styles.menuTextRow}>

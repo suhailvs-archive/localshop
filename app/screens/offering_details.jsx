@@ -1,16 +1,18 @@
-
-
-import React, { useState } from "react";
+import { useEffect, useState } from 'react';
 import { View, Text, ScrollView, Image, TouchableOpacity, StyleSheet, Modal, Button } from "react-native";
 import { useLocalSearchParams } from 'expo-router';
-
+import SkeletonLoader from "@/components/SkeletonLoader";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import MENU_IMAGES from '@/constants/MenuImages'
+import api from '@/constants/api'
+
 
 const OfferingDetailPage = ( ) => {
-  const { id, category, heading } = useLocalSearchParams(); // Get passed data
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const { id, category } = useLocalSearchParams(); // Get passed data
   const product = {
-    title: heading,
+    title: 'heading',
     description: "This is a sample product description.",
     price: "99.99",
     image: "https://m.media-amazon.com/images/I/41jGfc2vThS._SX522_.jpg",
@@ -18,6 +20,22 @@ const OfferingDetailPage = ( ) => {
   };
 
   const [showZoom, setShowZoom] = useState(false);
+
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+      try {
+          const response = await api.get(`/api/v1/listings/${id}/`);
+          setData(response.data);
+      } catch (error) {
+          console.error('Error fetching data:', error);
+      } finally {
+          setLoading(false);
+      }
+  };
 
   const handleAddToCart = () => {
     // Add to cart logic
@@ -31,41 +49,51 @@ const OfferingDetailPage = ( ) => {
 
   return (
     <ScrollView style={styles.container}>
-      {/* Product Image   */}
-      <View style={styles.imageContainer}>
-        <Image source={{ uri: product.image }} style={styles.productImage} />
-      </View>
-      {/* Product Title and Price */}
-      <Text style={styles.productTitle}>{product.title}</Text>
-      <Text style={styles.productPrice}>${product.price}</Text>
+      {loading ? (
+        <View>
+          <SkeletonLoader width={100} height={20} />
+          <SkeletonLoader width={200} height={15} />
+          <SkeletonLoader width={250} height={15} />
+        </View>
+      ) : (
+        <View>
+          {/* Product Image   */}
+          <View style={styles.imageContainer}>
+            <Image source={{ uri: product.image }} style={styles.productImage} />
+          </View>
+          {/* Product Title and Price */}
+          <Text style={styles.productTitle}>{product.title}</Text>
+          <Text style={styles.productPrice}>${data.rate}</Text>
 
-      {/* Product Description */}
-      <Text style={styles.productDescription}>{product.description}</Text>
+          {/* Product Description */}
+          <Text style={styles.productDescription}>{product.description}</Text>
 
-      {/* Reviews */}
-      <View style={styles.reviewsContainer}>
-        <Icon name="star" size={20} color="#FF9900" />
-        <Text style={styles.reviewsText}>{product.reviews} Reviews</Text>
-      </View>
+          {/* Reviews */}
+          <View style={styles.reviewsContainer}>
+            <Icon name="star" size={20} color="#FF9900" />
+            <Text style={styles.reviewsText}>{product.reviews} Reviews</Text>
+          </View>
 
-      {/* Add to Cart and Buy Now Buttons */}
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.addToCartButton} onPress={handleAddToCart}>
-          <Text style={styles.buttonText}>Add to Cart</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.buyNowButton} onPress={handleBuyNow}>
-          <Text style={styles.buttonText}>Buy Now</Text>
-        </TouchableOpacity>
-      </View>
-      {/* Image Zoom Modal 
-      <Modal visible={showZoom} transparent={true} onRequestClose={() => setShowZoom(false)}>
-        <ZoomableImage
-          imageUrls={[{ url: product.image }]}
-          onCancel={() => setShowZoom(false)}
-          enableSwipeDown={true}
-          swipeDownThreshold={0.3}
-        />
-      </Modal>*/}
+          {/* Add to Cart and Buy Now Buttons */}
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity style={styles.addToCartButton} onPress={handleAddToCart}>
+              <Text style={styles.buttonText}>Add to Cart</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.buyNowButton} onPress={handleBuyNow}>
+              <Text style={styles.buttonText}>Buy Now</Text>
+            </TouchableOpacity>
+          </View>
+          {/* Image Zoom Modal 
+          <Modal visible={showZoom} transparent={true} onRequestClose={() => setShowZoom(false)}>
+            <ZoomableImage
+              imageUrls={[{ url: product.image }]}
+              onCancel={() => setShowZoom(false)}
+              enableSwipeDown={true}
+              swipeDownThreshold={0.3}
+            />
+          </Modal>*/}
+          </View>
+      )}
     </ScrollView>
   );
 };
