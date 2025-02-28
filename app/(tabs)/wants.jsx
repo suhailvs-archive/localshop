@@ -1,9 +1,6 @@
-import { View, Text } from "react-native";
+import Listings from "@/components/Listings";
 
-export default function WantScreen (){
-  return (
-    <View>
-      <Text>WantScreen</Text>
-    </View>
-  );
+export default function WantScreen (){  
+  return <Listings ltype="W" />;
 }
+

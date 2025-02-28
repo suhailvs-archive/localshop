@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { View, Text, ScrollView, Image, TouchableOpacity, StyleSheet, Linking} from "react-native";
-import { useLocalSearchParams } from 'expo-router';
+import { useRouter, useLocalSearchParams } from 'expo-router';
 import SkeletonLoader from "@/components/SkeletonLoader";
 
 import api from '@/constants/api'
@@ -12,7 +12,7 @@ const OfferingDetailPage = ( ) => {
   const [loading, setLoading] = useState(true);
 
   const { id, category } = useLocalSearchParams(); // Get passed data
-
+  const router = useRouter();
   useEffect(() => {
     fetchData();
   }, []);
@@ -39,15 +39,16 @@ const OfferingDetailPage = ( ) => {
   
   const handleAddToCart = () => {
     // Add to cart logic
-    alert("Added to Cart!");
+    alert("Work in progress!");
   };
 
   const handleBuyNow = () => {
     // Navigate to payment screen
     // navigation.navigate("Checkout", { offering });
+    router.push({ pathname: 'screens/sendmoney/amount', params:{'id':offering.user.id, 'username':offering.user.username, 'first_name':offering.user.first_name} })
   };
   const handleCallPress = () => {
-    Linking.openURL(`tel:${offering.user.phone}`);
+    Linking.openURL(`tel:${offering.user.username}`);
   };
 
 
@@ -95,7 +96,7 @@ const OfferingDetailPage = ( ) => {
               <Text style={styles.phoneLabel}>Contact Customer:</Text>
               <TouchableOpacity onPress={handleCallPress}  style={styles.phoneContainer}>
                 <MaterialIcons name="phone" size={20} color="#fff" />
-                <Text style={styles.phoneText}>{offering.user.phone}</Text>
+                <Text style={styles.phoneText}>{offering.user.username}</Text>
               </TouchableOpacity>
             </View>
           </View>

@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#fff", // Amazon Pay Theme
     padding: 20,
+    marginBottom: 50,
   },
   label: {
     fontSize: 16,

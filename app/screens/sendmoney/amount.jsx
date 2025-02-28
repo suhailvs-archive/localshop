@@ -1,28 +1,50 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Modal } from "react-native";
-
+import { useLocalSearchParams,useRouter } from 'expo-router';
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-
+import api from '@/constants/api'
+import Button from "@/components/Button";
+import ErrorMessage from "@/components/ErrorMessage";
 const EnterAmountScreen = () => { // { route, navigation }
   const [amount, setAmount] = useState("");
   const [message, setMessage] = useState("");
-  const contact = "John Doe (9876543210)"; // Default contact route.params?.contact || 
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-  // const handleProceed = () => {
-  //   if (!amount || parseFloat(amount) <= 0) {
-  //     Alert.alert("Invalid Amount", "Please enter a valid amount.");
-  //     return;
-  //   }
-  //   Alert.alert("Proceeding", `Sending $${amount} to ${contact}.\nMessage: ${message || "No message"}`);
-  //   // navigation.navigate("PaymentMethodScreen", { amount, contact, message });
-  // };
-
+  const { id, username, first_name } = useLocalSearchParams();
+  const router = useRouter();
   const handleProceed = () => {
     if (!amount || parseFloat(amount) <= 0) {
       setModalVisible(false);
       return;
     }
     setModalVisible(true); // Show the modal
+  };
+
+  const handleSendMoney = async () => {
+    setError("");  // Clear previous errors
+    setLoading(true);
+    try {
+      const response = await api.post('/api/v1/transactions/',{
+        user: id,
+        amount: amount,
+        message: message
+      });
+      setModalVisible(false); 
+      router.replace({ pathname: 'screens/sendmoney/success'});
+      // setOffering(response.data);
+    } catch (err) {
+      if (error.response) {
+        setError(JSON.stringify(error.response.data)|| "Invalid credentials");
+      } else if (error.request) {
+        setError("Network error. Please try again.");
+      } else {
+        setError("Something went wrong. Please try again.");
+      }
+      
+    } finally {
+      setLoading(false);      
+    }    
   };
   return (
     <View style={styles.container}>
@@ -33,14 +55,14 @@ const EnterAmountScreen = () => { // { route, navigation }
       <View style={styles.contactContainer}>
         <Icon name="account-circle" size={50} color="#232F3E" />
         <View>
-          <Text style={styles.contactName}>{contact}</Text>
-          <Text style={styles.contactDetails}>Amazon Pay UPI</Text>
+          <Text style={styles.contactName}>{first_name} ({username})</Text>
+          <Text style={styles.contactDetails}>Send money OpenLETS</Text>
         </View>
       </View>
 
       {/* Amount Input */}
       <View style={styles.amountContainer}>
-        <Text style={styles.currency}>$</Text>
+        <Text style={styles.currency}>₹</Text>
         <TextInput
           style={styles.amountInput}
           placeholder="0"
@@ -61,7 +83,7 @@ const EnterAmountScreen = () => { // { route, navigation }
         />
       </View>
 
-      {/* Proceed Button */}
+      {/* Proceed Button */}      
       <TouchableOpacity style={styles.proceedButton} onPress={handleProceed}>
         <Text style={styles.proceedButtonText}>Proceed</Text>
       </TouchableOpacity>
@@ -72,17 +94,13 @@ const EnterAmountScreen = () => { // { route, navigation }
           <View style={styles.modalContent}>
             <Icon name="check-circle" size={60} color="#FF9900" />
             <Text style={styles.modalTitle}>Confirm Payment</Text>
-            <Text style={styles.modalText}>Send **${amount}** to {contact}?</Text>
+            <Text style={styles.modalText}>Send ₹{amount} to {first_name} ({username})?</Text>
             {message ? <Text style={styles.modalMessage}>"{message}"</Text> : null}
-
+            <ErrorMessage message={error} onClose={() => setError("")} />
             {/* Buttons */}
             <View style={styles.modalButtons}>
-              <TouchableOpacity style={styles.cancelButton} onPress={() => setModalVisible(false)}>
-                <Text style={styles.cancelButtonText}>Cancel</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.confirmButton} onPress={() => { setModalVisible(false); alert("Payment Sent!"); }}>
-                <Text style={styles.confirmButtonText}>Confirm</Text>
-              </TouchableOpacity>
+              <Button title="Cancel" style={styles.cancelButton} onPress={() => setModalVisible(false)} />
+              <Button title="Confirm" style={styles.confirmButton} onPress={handleSendMoney} isLoading={loading} />
             </View>
           </View>
         </View>

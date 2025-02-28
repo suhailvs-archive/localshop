@@ -2,7 +2,7 @@
 import React, { useEffect, useRef } from "react";
 import { View, Text, StyleSheet, Animated, Easing, TouchableOpacity } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons"; // Icon for success
-
+import { router } from "expo-router";
 const PaymentSuccessScreen = ({ navigation }) => {
 
   // Animation values for fading in and scaling the icon
@@ -59,12 +59,13 @@ const PaymentSuccessScreen = ({ navigation }) => {
         Payment Successful!
       </Animated.Text>
       <Animated.Text style={[styles.subtitle, { opacity: fadeAnim }]}>
-        Thank you for using Amazon Pay.
+        Thank you for using OpenLETS.
       </Animated.Text>
 
       {/* Back to Home Button */}
-
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={() => { 
+        router.replace("/");
+      }}>      
         <Text style={styles.buttonText}>Back to Home</Text>
       </TouchableOpacity>
       
