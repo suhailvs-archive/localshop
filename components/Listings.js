@@ -1,7 +1,7 @@
 import { StyleSheet, Appearance, Platform, SafeAreaView, TouchableOpacity, ActivityIndicator, ScrollView, FlatList, View, Text, Image } from "react-native";
 import { useEffect, useState } from 'react';
 import { useRouter } from 'expo-router';
-
+import { AntDesign } from "@expo/vector-icons";
 import { Colors } from '@/constants/Colors';
 import api from '@/constants/api'
 
@@ -49,7 +49,7 @@ export default function Listings({ltype}) {
         </TouchableOpacity>
     );
     return (
-        <Container>
+        <Container style={styles.container}>
             {loading ? (
                 <ActivityIndicator size="large" color="#0000ff" />
             ) : (
@@ -65,13 +65,23 @@ export default function Listings({ltype}) {
                 ListEmptyComponent={<Text>No items</Text>}
                 renderItem={renderItem}
             />
+           
             )}
+             {/* Floating Add Button */}
+             <TouchableOpacity style={styles.fab} onPress={() => {
+                router.push({ pathname: 'screens/new_listing', params:{'category':"Electronics",'ltype':ltype} })}}>
+                <AntDesign name="plus" size={30} color="white" />
+            </TouchableOpacity>
         </Container>
     )
 }
 
 function createStyles(theme, colorScheme) {
     return StyleSheet.create({
+        container: {
+            flex: 1,
+            
+          },
         contentContainer: {
             paddingTop: 10,
             paddingBottom: 20,
@@ -119,6 +129,22 @@ function createStyles(theme, colorScheme) {
         menuImage: {
             width: 100,
             height: 100,
-        }
+        },
+        fab: {
+            position: "absolute",
+            bottom: 20,
+            right: 20,
+            backgroundColor: "#007bff", // Blue color
+            width: 60,
+            height: 60,
+            borderRadius: 30,
+            justifyContent: "center",
+            alignItems: "center",
+            elevation: 5, // Shadow for Android
+            shadowColor: "#000",
+            shadowOffset: { width: 0, height: 2 },
+            shadowOpacity: 0.3,
+            shadowRadius: 3,
+          },
     })
 }
