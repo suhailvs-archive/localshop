@@ -1,37 +1,25 @@
 import { useState } from "react";
-import { View, Text, TextInput, ScrollView, StyleSheet, TouchableOpacity, Image } from "react-native";
+import { View, Text, TextInput, ScrollView, StyleSheet } from "react-native";
 import Button from "@/components/Button";
+import ImagePickerComponent from "@/components/ImagePickerComponent";
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import axios from "axios";
-import * as ImagePicker from "expo-image-picker";
 import api from '@/constants/api'
 import ErrorMessage from "@/components/ErrorMessage";
 
 const AddListingScreen = () => {
-  // const [category, setCategory] = useState("");
+
+  const router = useRouter();
   const [heading, setHeading] = useState("");
   const [details, setDetails] = useState("");
   const [rate, setRate] = useState("");
-  const [image, setImage] = useState(null);
+  const [image, setSelectedImage] = useState(null);
   const [loadingdetails, setLoadingDetails] = useState(false);
-  const [showDetails, setShowDetails] = useState(false);
-  const router = useRouter();
+  const [showDetails, setShowDetails] = useState(false);  
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const { category, ltype } = useLocalSearchParams();
-  // Open Image Picker
-  const pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ['images'],
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
 
-    if (!result.canceled) {
-      setImage(result.assets[0].uri);
-    }
-  };
+  const { category, ltype } = useLocalSearchParams();
 
   // Handle Form Submission
   const handleSubmit = async () => {
@@ -39,8 +27,7 @@ const AddListingScreen = () => {
       alert("Please fill all required fields.");
       return;
     }
-    console.log({ category, heading, details, rate, image });
-    setError("");  // Clear previous errors
+    setError("");
     setLoading(true);
 
     let formData = new FormData();
@@ -85,46 +72,32 @@ const AddListingScreen = () => {
 
   return (
     <ScrollView style={styles.container}>
-      <Text style={styles.title}>Add New Listing</Text>
-
-      {/* Category Picker 
-      <Picker selectedValue={category} onValueChange={(itemValue) => setCategory(itemValue)} style={styles.input}>
-        <Picker.Item label="Select Category" value="" />
-        <Picker.Item label="Electronics" value="electronics" />
-        <Picker.Item label="Fashion" value="fashion" />
-        <Picker.Item label="Home & Kitchen" value="home-kitchen" />
-      </Picker>*/}
-
+      <Text style={styles.title}>Add a New {ltype==='O'? 'Offering':'Want'}</Text>
       {/* Heading Input */}
-      <TextInput style={styles.input} placeholder="Listing Heading" value={heading} onChangeText={setHeading} />
-      
+      <TextInput style={styles.input} placeholder="Heading" value={heading} onChangeText={setHeading} />
+
       {showDetails ? (
         <View>
           {/* Details TextArea */}
           <TextInput
               style={[styles.input, styles.textArea]}
-              placeholder="Listing Details"
+              placeholder="Details"
               value={details}
               onChangeText={setDetails}
               multiline
           />
           {/* Rate Input */}
-          <TextInput style={styles.input} placeholder="Listing Rate" value={rate} onChangeText={setRate} keyboardType="numeric" />
+          <TextInput style={styles.input} placeholder="Rate" value={rate} onChangeText={setRate} />  
 
-          {/* Image Picker */}
-          <TouchableOpacity style={styles.imagePicker} onPress={pickImage}>
-              <Text style={styles.imagePickerText}>{image ? "Change Image" : "Pick an Image"}</Text>
-          </TouchableOpacity>          
-          {image && <Image source={{ uri: image }} style={styles.image} />}
-
+          {/* Show Camera View */}
+          <ImagePickerComponent onImageSelected={setSelectedImage} />
+          
           {/* Submit Button */}
           <ErrorMessage message={error} onClose={() => setError("")} />
           <Button title="Add Listing" style={styles.submitButton} onPress={handleSubmit} isLoading={loading} />
         </View>        
-      ) : (
-        <Button title="Generate detail from heading" onPress={handleGenerateDetail} isLoading={loadingdetails} />
-        
-      )}
+      ) : (<Button title="Generate detail from heading" onPress={handleGenerateDetail} isLoading={loadingdetails} />)}
+
       {/* These 3 text boxes are to add some margin Bottom */}
       <Text></Text>
       <Text></Text>
@@ -158,26 +131,8 @@ const styles = StyleSheet.create({
     height: 380,
     textAlignVertical: "top",
   },
-  imagePicker: {
-    backgroundColor: "#007bff",
-    padding: 12,
-    borderRadius: 8,
-    alignItems: "center",
-    marginBottom: 10,
-  },
-  imagePickerText: {
-    color: "#fff",
-    fontSize: 16,
-  },
-  image: {
-    width: "100%",
-    height: 200,
-    borderRadius: 8,
-    marginBottom: 12,
-  },
   submitButton: {
     backgroundColor: "#28a745",
-    padding: 14,
-    alignItems: "center",
+    padding: 14
   },
 });
