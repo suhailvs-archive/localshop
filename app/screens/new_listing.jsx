@@ -2,6 +2,7 @@ import { useState } from "react";
 import { View, Text, TextInput, ScrollView, StyleSheet } from "react-native";
 import Button from "@/components/Button";
 import ImagePickerComponent from "@/components/ImagePickerComponent";
+import Dropdown from "@/components/Dropdown";
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import axios from "axios";
 import api from '@/constants/api'
@@ -10,8 +11,9 @@ import ErrorMessage from "@/components/ErrorMessage";
 const AddListingScreen = () => {
 
   const router = useRouter();
+  const [category, setCategory] = useState(null);
   const [heading, setHeading] = useState("");
-  const [details, setDetails] = useState("");
+  const [detail, setDetails] = useState("");
   const [rate, setRate] = useState("");
   const [image, setSelectedImage] = useState(null);
   const [loadingdetails, setLoadingDetails] = useState(false);
@@ -19,12 +21,12 @@ const AddListingScreen = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const { category, ltype } = useLocalSearchParams();
-
+  const { ltype } = useLocalSearchParams();
+  const categories = ['Electronics',''];
   // Handle Form Submission
   const handleSubmit = async () => {
-    if (!category || !heading || !rate || !image) {
-      alert("Please fill all required fields.");
+    if (!category || !heading || !detail || !rate || !image) {
+      alert("Please fill all fields.");
       return;
     }
     setError("");
@@ -34,7 +36,7 @@ const AddListingScreen = () => {
     formData.append("img", {uri: image,name: "upload.jpg",type: "image/jpeg"});
     formData.append("category", category);
     formData.append("heading", heading);
-    formData.append("detail", details);
+    formData.append("detail", detail);
     formData.append("rate", rate);
     formData.append("listing_type", ltype);
     try {
@@ -55,13 +57,12 @@ const AddListingScreen = () => {
   };
 
   const handleGenerateDetail = async () => {
-  // const handleGenerateDetail = () => {
     setLoadingDetails(true);
     let url = "https://shihas.stackschools.com/ajax/stackcoinai/"; 
     try {
       const response = await axios.get(`${url}?details=${heading}`);
+      // const response = await {data: 'This is a Dummy detail for testing purpose'};
       setDetails(response.data);
-      // setDetails('When making a call to an API using Axios, you can pass a configuration object to Axios or invoke a method for the corresponding CRUD operation you want to perform. For example, you can make a GET request to the /api/users endpoint in one of the following two ways:')
       setShowDetails(true);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -73,6 +74,7 @@ const AddListingScreen = () => {
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.title}>Add a New {ltype==='O'? 'Offering':'Want'}</Text>
+      <Dropdown style={styles.input} onChange={setCategory} label="Category" items={categories} />
       {/* Heading Input */}
       <TextInput style={styles.input} placeholder="Heading" value={heading} onChangeText={setHeading} />
 
@@ -82,7 +84,7 @@ const AddListingScreen = () => {
           <TextInput
               style={[styles.input, styles.textArea]}
               placeholder="Details"
-              value={details}
+              value={detail}
               onChangeText={setDetails}
               multiline
           />

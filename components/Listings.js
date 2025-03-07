@@ -69,7 +69,7 @@ export default function Listings({ltype}) {
             )}
              {/* Floating Add Button */}
              <TouchableOpacity style={styles.fab} onPress={() => {
-                router.push({ pathname: 'screens/new_listing', params:{'category':"Electronics",'ltype':ltype} })}}>
+                router.push({ pathname: 'screens/new_listing', params:{'ltype':ltype} })}}>
                 <AntDesign name="plus" size={30} color="white" />
             </TouchableOpacity>
         </Container>
