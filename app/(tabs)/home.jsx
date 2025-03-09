@@ -1,9 +1,9 @@
-import { View, Text, TouchableOpacity, FlatList, StyleSheet, Alert } from "react-native";
-import { Ionicons, MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
+import { View, Text, TouchableOpacity, StyleSheet, Alert } from "react-native";
+import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useSession } from "@/login_extras/ctx";
 import { useRouter } from 'expo-router';
 import AccountBalance from "@/components/AccountBalance";
-
+import globalStyles from "@/components/Styles"; 
 
 export default function HomeScreen() {
   const { signOut } = useSession();
@@ -15,7 +15,7 @@ export default function HomeScreen() {
     ]);
   };
   return (
-    <View style={styles.container}>
+    <View style={globalStyles.container}>
       {/* Account Balance */}
       <AccountBalance />      
 

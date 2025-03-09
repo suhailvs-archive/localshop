@@ -2,6 +2,8 @@ import { View, Text, FlatList, StyleSheet } from "react-native";
 import { useEffect, useState } from 'react';
 import SkeletonLoader from "@/components/SkeletonLoader";
 import api from '@/constants/api'
+import globalStyles from "@/components/Styles"; 
+
 export default function TransactionScreen (){
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -29,7 +31,7 @@ export default function TransactionScreen (){
       }
   };
   return (
-    <View style={styles.container}>
+    <View style={[globalStyles.container,{padding:20}]}>
        {loading ? (
         <View>
           <SkeletonLoader width={100} height={20} />
@@ -38,7 +40,7 @@ export default function TransactionScreen (){
         </View>
       ) : (
         <View>        
-          <Text style={styles.sectionTitle}>Transactions</Text>
+          <Text style={globalStyles.title}>Transactions</Text>
           <FlatList
             data={data}
             keyExtractor={(item) => item.id.toString()}
@@ -58,7 +60,6 @@ export default function TransactionScreen (){
   );
 }
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#fff", padding: 20 },
   sectionTitle: { fontSize: 18, fontWeight: "bold", marginBottom: 10 },
   transactionItem: { padding: 15, borderBottomWidth: 1, borderBottomColor: "#ddd" },
   transactionTitle: { fontSize: 16, fontWeight: "500" },

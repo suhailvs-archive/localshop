@@ -4,6 +4,7 @@ import { useRouter } from 'expo-router';
 import { AntDesign } from "@expo/vector-icons";
 import { Colors } from '@/constants/Colors';
 import api from '@/constants/api'
+import globalStyles from "@/components/Styles"; 
 
 export default function Listings({ltype}) {
     
@@ -15,7 +16,7 @@ export default function Listings({ltype}) {
     const styles = createStyles(theme, colorScheme)
     const Container = Platform.OS === 'web' ? ScrollView : SafeAreaView;
     const separatorComp = <View style={styles.separator} />
-    const headerComp = <Text style={{ margin:10, fontSize:24 }}>All {ltype==='O'? 'Offerings':'Wants'}</Text>
+    const headerComp = <Text style={globalStyles.title}>All {ltype==='O'? 'Offerings':'Wants'}</Text>
     const footerComp = <Text style={{ color: theme.text }}>End of Menu</Text>
 
 
@@ -49,7 +50,7 @@ export default function Listings({ltype}) {
         </TouchableOpacity>
     );
     return (
-        <Container style={styles.container}>
+        <Container style={globalStyles.container}>
             {loading ? (
                 <ActivityIndicator size="large" color="#0000ff" />
             ) : (
