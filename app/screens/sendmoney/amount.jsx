@@ -68,6 +68,7 @@ const EnterAmountScreen = () => { // { route, navigation }
           keyboardType="numeric"
           value={amount}
           onChangeText={setAmount}
+          autoFocus={true}
         />
       </View>
 

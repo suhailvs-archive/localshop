@@ -1,10 +1,17 @@
+import { useEffect } from 'react';
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { Text } from 'react-native';
 import { Redirect, Tabs } from 'expo-router';
 import { useSession } from "@/login_extras/ctx";
+import { setupAxiosInterceptors } from "@/constants/api";
 
 export default function TabLayout() {
-  const { session, isLoading } = useSession();  if (isLoading) {
+  const { session, isLoading, signOut } = useSession();  
+  useEffect(() => {
+    setupAxiosInterceptors(signOut); // Pass signOut to Axios interceptor
+  }, [signOut]);
+
+  if (isLoading) {
     return <Text>Loading...</Text>;
   }
   if (!session) {

@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { StyleSheet, View, Text } from "react-native";
-import InputText from "@/components/InputText";
+import { StyleSheet, View, TextInput } from "react-native";
+// import InputText from "@/components/InputText";
 import Button from "@/components/Button";
 import ErrorMessage from "@/components/ErrorMessage";
 import { useSession } from "@/login_extras/ctx";
@@ -28,18 +28,9 @@ export default function Login() {
 
   return (
     <View style={styles.container}>
-       
-      <InputText
-        placeholder="Enter your username"
-        icon="account"
-        onChangeText={setUsername}
-      />
-      <InputText
-        placeholder="Enter your password"
-        icon="key-outline"
-        onChangeText={setPassword}
-        secureTextEntry
-      />
+      <TextInput style={styles.input} placeholder="Enter your username" onChangeText={setUsername} keyboardType="numeric" />  
+      <TextInput style={styles.input} placeholder="Enter your password" autoCapitalize="none" onChangeText={setPassword} secureTextEntry />  
+      
       
       <ErrorMessage message={error} onClose={() => setError("")} />
       <Button title="Login" onPress={handleLogin} isLoading={loading} />
@@ -49,5 +40,13 @@ export default function Login() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: "#f5f5f5", padding: 20, justifyContent:"center" },  
+  input: {
+    backgroundColor: "#fff",
+    padding: 12,
+    borderRadius: 8,
+    marginBottom: 12,
+    fontSize: 16,
+  },
   error: { color: "red", marginBottom: 10 },
+
 });
