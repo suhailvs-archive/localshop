@@ -1,29 +1,26 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { View, Text, TouchableOpacity, Modal, FlatList, StyleSheet } from "react-native";
+import { TextInput } from "react-native-paper";
 
-const Dropdown = ({
-    label,
-    items,
-    style,
-    onChange
-}) => {
-  const [selectedValue, setSelectedValue] = useState(`Select ${label}`);
+const Dropdown = ({ label, items, onSelect }) => {
+  const [selectedValue, setSelectedValue] = useState(''); 
   const [modalVisible, setModalVisible] = useState(false);
-
-    //   const items = ["Electronics", "Fashion", "Home & Kitchen", "Sports"];
 
   const handleSelect = (value) => {
     setSelectedValue(value);
-    onChange(value);
+    onSelect(value);
     setModalVisible(false);
   };
 
   return (
     <View style={styles.container}>
-      {/* Dropdown Button */}
-      <TouchableOpacity style={style} onPress={() => setModalVisible(true)}>
-        <Text style={styles.dropdownText}>{selectedValue}</Text>
-      </TouchableOpacity>
+      <TextInput
+        label={label}
+        value={selectedValue}
+        mode="outlined"
+        editable={false} // Prevent manual text input
+        right={<TextInput.Icon icon="menu-down" onPress={() => setModalVisible(true)} />}
+      />
 
       {/* Modal for Dropdown Options */}
       <Modal visible={modalVisible} transparent animationType="slide">
@@ -48,9 +45,8 @@ const Dropdown = ({
 export default Dropdown;
 
 const styles = StyleSheet.create({
-  
-  dropdownText: {
-    fontSize: 16,
+  container: {
+    marginBottom: 12,
   },
   modalOverlay: {
     flex: 1,
