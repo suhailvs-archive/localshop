@@ -1,18 +1,20 @@
 import { useEffect } from 'react';
+import { useTheme } from 'react-native-paper';
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import { Text } from 'react-native';
 import { Redirect, Tabs } from 'expo-router';
 import { useSession } from "@/login_extras/ctx";
 import { setupAxiosInterceptors } from "@/constants/api";
+import SkeletonLoader from "@/components/SkeletonLoader";
 
 export default function TabLayout() {
   const { session, isLoading, signOut } = useSession();  
+  const theme = useTheme();
   useEffect(() => {
     setupAxiosInterceptors(signOut); // Pass signOut to Axios interceptor
   }, [signOut]);
 
   if (isLoading) {
-    return <Text>Loading...</Text>;
+    return <SkeletonLoader width={250} height={15} />;
   }
   if (!session) {
     return <Redirect href="/login" />;
@@ -21,8 +23,18 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: "#FF9900", // Active tab color
-        tabBarInactiveTintColor: "gray", // Inactive tab color        
+        // tabBarStyle: {
+        //   borderTopWidth: 1,
+        //   borderTopColor: theme.colors.surfaceVariant, 
+        //   height: 60,
+        // },
+        tabBarActiveTintColor: theme.colors.primary,
+        tabBarInactiveTintColor: theme.colors.secondary,
+        tabBarLabelStyle: {
+          // fontSize: 12,
+          // fontWeight: '600',
+          paddingBottom: 5,
+        },
       }}>
       <Tabs.Screen
         name="index"
