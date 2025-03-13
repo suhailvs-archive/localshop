@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { View, Image,Text, StyleSheet, Alert } from "react-native";
 import * as ImagePicker from "expo-image-picker";
-import Button from "@/components/Button";
+// import Button from "@/components/Button";
+import { Button } from 'react-native-paper';
 
 export default function ImagePickerScreen({ onImageSelected }) {
   const [image, setImage] = useState(null);
@@ -51,10 +52,10 @@ export default function ImagePickerScreen({ onImageSelected }) {
     <View style={styles.container}>
       {image && <Image source={{ uri: image }} style={styles.image} />}
       <View style={styles.buttonContainer}>
-        <Button title="Open Camera" onPress={openCamera} style={{padding:8}} />
-        <Text></Text>
+        <Button icon="camera" mode="elevated"  onPress={openCamera}>Open Camera</Button>
+        
         {/* Image Picker */}
-        <Button title="Pick from Gallery" onPress={pickImage} style={{padding:8}} />
+        <Button mode="elevated" onPress={pickImage}>Pick from Gallery</Button>
       </View>
     </View>
   );
@@ -67,6 +68,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },  
   buttonContainer: { 
+    marginTop:10,
     flexDirection: "row", 
     justifyContent: "space-between" 
   },

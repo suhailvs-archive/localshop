@@ -59,14 +59,14 @@ const AddListingScreen = () => {
     setLoadingDescription(true);
     let url = "https://shihas.stackschools.com/ajax/stackcoinai/"; 
     try {
-      // const response = await axios.get(`${url}?details=${title}`);
-      const response = {data: 'This is a Dummy description for testing purpose'};
+      const response = await axios.get(`${url}?details=${title}`);
+      // const response = {data: 'This is a Dummy description for testing purpose'};
       setDescription(response.data);
       setShowDescription(true);
     } catch (error) {
       setError("Failed to generate description.");
     } finally {
-      setLoadingDescription(false);
+    setLoadingDescription(false);
     }
   };
 
@@ -94,19 +94,25 @@ const AddListingScreen = () => {
           />
           <TextInput label="Rate" value={rate} onChangeText={setRate} mode="outlined" style={styles.input} />
           <ImagePickerComponent onImageSelected={setSelectedImage} />
-          <Button mode="contained" onPress={handleSubmit} loading={loading} style={styles.submitButton}>
+          <Button mode="contained" onPress={handleSubmit} loading={loading} disabled={loading} style={styles.submitButton}>
             Add Listing
           </Button>
         </>
       ) : (
-        <Button mode="contained-tonal" onPress={handleGenerateDetail} loading={loadingDescription}>
-          Generate description from title
+        <Button 
+          mode="contained" 
+          loading={loadingDescription} 
+          disabled={loadingDescription} 
+          onPress={handleGenerateDetail}
+        >
+          {loadingDescription ? "Processing..." : "Generate description from title"}
         </Button>
       )}
 
       <Snackbar visible={!!error} onDismiss={() => setError("")} action={{ label: "OK" }}>
         {error}
       </Snackbar>
+      <Text></Text><Text></Text><Text></Text>
     </ScrollView>
   );
 };
@@ -126,7 +132,7 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   textArea: {
-    height: 120,
+    height: 380,
     textAlignVertical: "top",
   },
   submitButton: {
