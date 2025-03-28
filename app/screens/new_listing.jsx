@@ -1,32 +1,38 @@
 import { useState } from "react";
-import { View, Text, TextInput, ScrollView, StyleSheet } from "react-native";
-import Button from "@/components/Button";
+import { View, ScrollView, StyleSheet } from "react-native";
+
+import { Text, TextInput, Button, Snackbar, useTheme } from "react-native-paper";
+
 import ImagePickerComponent from "@/components/ImagePickerComponent";
 import Dropdown from "@/components/Dropdown";
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import axios from "axios";
 import api from '@/constants/api'
-import ErrorMessage from "@/components/ErrorMessage";
+
 
 const AddListingScreen = () => {
-
+  const theme = useTheme();
   const router = useRouter();
   const [category, setCategory] = useState(null);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [rate, setRate] = useState("");
   const [image, setSelectedImage] = useState(null);
-  const [loadingdescription, setLoadingDescription] = useState(false);
+  const [loadingDescription, setLoadingDescription] = useState(false);
   const [showDescription, setShowDescription] = useState(false);  
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const { ltype } = useLocalSearchParams();
-  const categories = ['Electronics',''];
+  const categories = ["Electronics","Clothing"];
+  //   { label: "Electronics", value: "electronics" },
+  //   { label: "Clothing", value: "clothing" },
+  //   { label: "Books", value: "books" },
+  // ];
   // Handle Form Submission
   const handleSubmit = async () => {
     if (!category || !title || !description || !rate || !image) {
-      alert("Please fill all fields.");
+      setError("Please fill all fields.");
       return;
     }
     setError("");
@@ -40,70 +46,73 @@ const AddListingScreen = () => {
     formData.append("rate", rate);
     formData.append("listing_type", ltype);
     try {
-      const response = await api.post('/listings/',formData,{headers: { "Content-Type": "multipart/form-data" }});
-      router.replace({ pathname: '/'});
+      await api.post('/listings/', formData, { headers: { "Content-Type": "multipart/form-data" } });
+      router.replace({ pathname: '/' });
     } catch (error) {
-      if (error.response) {
-        setError(JSON.stringify(error.response.data)|| "Invalid response");
-      } else if (error.request) {
-        setError("Network error. Please try again.");
-      } else {
-        console.log(error)
-        setError("Something went wrong. Please try again.");
-      }      
+      setError(error.response?.data || "Something went wrong.");
     } finally {
-      setLoading(false);      
-    }    
+      setLoading(false);
+    }   
   };
 
   const handleGenerateDetail = async () => {
     setLoadingDescription(true);
     let url = "https://shihas.stackschools.com/ajax/stackcoinai/"; 
     try {
-      // const response = await axios.get(`${url}?details=${title}`);
-      const response = await {data: 'This is a Dummy description for testing purpose'};
+      const response = await axios.get(`${url}?details=${title}`);
+      // const response = {data: 'This is a Dummy description for testing purpose'};
       setDescription(response.data);
       setShowDescription(true);
     } catch (error) {
-      console.error('Error fetching data:', error);
+      setError("Failed to generate description.");
     } finally {
-      setLoadingDescription(false);
+    setLoadingDescription(false);
     }
   };
 
   return (
-    <ScrollView style={styles.container}>
-      <Text style={styles.title}>Add a New {ltype==='O'? 'Offering':'Want'}</Text>
-      <Dropdown style={styles.input} onChange={setCategory} label="Category" items={categories} />
+    <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
+      <Text variant="titleLarge">Add a New {ltype==='O'? 'Offering':'Want'}</Text>
+      <Dropdown
+        label="Select Category"
+        items={categories}
+        // selectedValue={selectedCategory}
+        onSelect={setCategory}
+      />
       {/* Title Input */}
-      <TextInput style={styles.input} placeholder="Title" value={title} onChangeText={setTitle} />
+      <TextInput mode="outlined" label="Title" style={styles.input} value={title} onChangeText={setTitle} />
 
       {showDescription ? (
-        <View>
-          {/* Description TextArea */}
+        <>
           <TextInput
-              style={[styles.input, styles.textArea]}
-              placeholder="Description"
-              value={description}
-              onChangeText={setDescription}
-              multiline
+            label="Description"
+            value={description}
+            onChangeText={setDescription}
+            mode="outlined"
+            multiline
+            style={[styles.input, styles.textArea]}
           />
-          {/* Rate Input */}
-          <TextInput style={styles.input} placeholder="Rate" value={rate} onChangeText={setRate} />  
-
-          {/* Show Camera View */}
+          <TextInput label="Rate" value={rate} onChangeText={setRate} mode="outlined" style={styles.input} />
           <ImagePickerComponent onImageSelected={setSelectedImage} />
-          
-          {/* Submit Button */}
-          <ErrorMessage message={error} onClose={() => setError("")} />
-          <Button title="Add Listing" style={styles.submitButton} onPress={handleSubmit} isLoading={loading} />
-        </View>        
-      ) : (<Button title="Generate description from title" onPress={handleGenerateDetail} isLoading={loadingdescription} />)}
+          <Button mode="contained" onPress={handleSubmit} loading={loading} disabled={loading} style={styles.submitButton}>
+            Add Listing
+          </Button>
+        </>
+      ) : (
+        <Button 
+          mode="contained" 
+          loading={loadingDescription} 
+          disabled={loadingDescription} 
+          onPress={handleGenerateDetail}
+        >
+          {loadingDescription ? "Processing..." : "Generate description from title"}
+        </Button>
+      )}
 
-      {/* These 3 text boxes are to add some margin Bottom */}
-      <Text></Text>
-      <Text></Text>
-      <Text></Text>
+      <Snackbar visible={!!error} onDismiss={() => setError("")} action={{ label: "OK" }}>
+        {error}
+      </Snackbar>
+      <Text></Text><Text></Text><Text></Text>
     </ScrollView>
   );
 };
@@ -116,25 +125,17 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: "#f4f4f4",
   },
-  title: {
-    fontSize: 22,
-    fontWeight: "bold",
-    textAlign: "center",
-    marginBottom: 20,
+  input: {
+    marginBottom: 12,
   },
   input: {
-    backgroundColor: "#fff",
-    padding: 12,
-    borderRadius: 8,
     marginBottom: 12,
-    fontSize: 16,
   },
   textArea: {
     height: 380,
     textAlignVertical: "top",
   },
   submitButton: {
-    backgroundColor: "#28a745",
-    padding: 14
+    marginTop: 12,
   },
 });
