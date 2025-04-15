@@ -32,7 +32,7 @@ export default function Listings({ltype}) {
       description={() => (
         <View style={{flexGrow: 1}}>
           <Text variant="bodyMedium">{item.title}</Text>
-          <Text variant="bodySmall" style={styles.rating}>need to show rate</Text>
+          <Text variant="bodySmall" style={styles.rating}>{item.rate}</Text>
         </View>
       )}
       left={() => <Image source={{ uri: item.image }} style={styles.productImage} />}

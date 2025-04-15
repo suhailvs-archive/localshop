@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { View, Text, ScrollView, Image, TouchableOpacity, StyleSheet, Linking} from "react-native";
 import { useRouter, useLocalSearchParams } from 'expo-router';
+import { Button } from 'react-native-paper';
 import SkeletonLoader from "@/components/SkeletonLoader";
 
 import api from '@/constants/api'
@@ -37,11 +38,6 @@ const OfferingDetailPage = ( ) => {
     }).format(date);
   };
   
-  const handleAddToCart = () => {
-    // Add to cart logic
-    alert("Work in progress!");
-  };
-
   const handleBuyNow = () => {
     // Navigate to payment screen
     // navigation.navigate("Checkout", { offering });
@@ -50,7 +46,6 @@ const OfferingDetailPage = ( ) => {
   const handleCallPress = () => {
     Linking.openURL(`tel:${offering.user.username}`);
   };
-
 
   return (
     <ScrollView style={styles.container}>
@@ -75,11 +70,6 @@ const OfferingDetailPage = ( ) => {
           {/* Product Description */}          
           <Markdown>{offering.description}</Markdown>
 
-          {/* Reviews 
-          <View style={styles.reviewsContainer}>
-            <Icon name="star" size={20} color="#FF9900" />
-            <Text style={styles.reviewsText}>{}</Text>
-          </View>*/}
 
           {/* Advertiser Details */}
           <View>
@@ -100,18 +90,17 @@ const OfferingDetailPage = ( ) => {
               </TouchableOpacity>
             </View>
           </View>
-          {/* Add to Cart and Buy Now Buttons */}
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.addToCartButton} onPress={handleAddToCart}>
-              <Text style={styles.buttonText}>Add to Cart</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.buyNowButton} onPress={handleBuyNow}>
-              <Text style={styles.buttonText}>Buy Now</Text>
-            </TouchableOpacity>
-          </View>
+          {/* Add to Cart and Buy Now Buttons */}          
+          <Button
+            mode="contained"
+            onPress={handleBuyNow}
+            style={styles.buyNowButton}
+            labelStyle={styles.buttonText}
+          >
+            Buy Now
+          </Button>
           
           {/* These 3 text boxes are to add some margin Bottom */}
-          <Text></Text>
           <Text></Text>
           <Text></Text>
         </View>
@@ -125,14 +114,18 @@ const styles = StyleSheet.create({
   imageContainer: { alignItems: "center", marginBottom: 20 },
   productImage: { width: "100%", height: 300, borderRadius: 10 },
   productTitle: { fontSize: 24, fontWeight: "bold", color: "#232F3E", marginTop: 10, borderBottomWidth: 1, borderBottomColor: "#ddd"},
-  productPrice: { fontSize: 20, color: "#FF9900", marginTop: 10 },
+  productPrice: { fontSize: 20, marginTop: 10 },
   dateLabel: {fontSize: 16,fontWeight: "bold",color: "gray",marginRight: 5,},
-  reviewsContainer: { flexDirection: "row", alignItems: "center", marginTop: 15 },
-  reviewsText: { fontSize: 16, color: "#555", marginLeft: 10 },
-  buttonContainer: { marginTop: 20, flexDirection: "row", justifyContent: "space-between" },
-  addToCartButton: { backgroundColor: "#232F3E", padding: 15, borderRadius: 8, width: "48%" },
-  buyNowButton: { backgroundColor: "#FF9900", padding: 15, borderRadius: 8, width: "48%" },
-  buttonText: { color: "#fff", fontSize: 16, textAlign: "center", fontWeight: "bold" },
+  
+  buyNowButton: {
+    marginVertical: 10,
+    borderRadius: 8,
+    paddingVertical: 6,
+  },
+  buttonText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
 
   phoneView: {
     marginTop:10,

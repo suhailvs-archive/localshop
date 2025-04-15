@@ -1,57 +1,59 @@
-import { View, Text, TouchableOpacity, StyleSheet, Alert } from "react-native";
-import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
-import { useSession } from "@/login_extras/ctx";
+import React from 'react';
+import { View, Alert, StyleSheet } from 'react-native';
+import { useSession } from '@/login_extras/ctx';
 import { useRouter } from 'expo-router';
-import AccountBalance from "@/components/AccountBalance";
-import globalStyles from "@/components/Styles"; 
+import { Card, Button } from 'react-native-paper';
+import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
+import AccountBalance from '@/components/AccountBalance';
+import globalStyles from '@/components/Styles';
 
 export default function HomeScreen() {
   const { signOut } = useSession();
-  const router = useRouter(); // Use Expo Router for navigation
+  const router = useRouter();
+
   const handleLogout = () => {
     Alert.alert("Logout", "Are you sure you want to logout?", [
       { text: "Cancel", style: "cancel" },
-      { text: "Logout", onPress: () => signOut() }, // Replace with actual logout logic
+      { text: "Logout", onPress: () => signOut() },
     ]);
   };
+
+  
+
   return (
     <View style={globalStyles.container}>
       {/* Account Balance */}
-      <AccountBalance />      
+      <AccountBalance />
 
       {/* Quick Actions */}
-      <View style={styles.quickActions}>
-        <TouchableOpacity style={styles.actionButton} onPress={handleLogout}>
-          <MaterialCommunityIcons name="logout" size={40} color="#FF9900" />
-          <Text style={styles.actionText}>Logout</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.actionButton} onPress={() => {
-            router.push({ pathname: 'screens/sendmoney/contact' })
-            }
-        }>
-          <Ionicons name="send" size={40} color="#FF9900" />
-          <Text style={styles.actionText}>Send Money</Text>
-        </TouchableOpacity>
-      </View>
+      <Card>
+        <Card.Content style={styles.actionsContainer}>
+          <Button
+            mode="contained-tonal"
+            icon={({ size, color }) => (
+              <MaterialCommunityIcons name="logout" size={size} color={color} />
+            )}
+            onPress={handleLogout}
+          >
+            Logout
+          </Button>
 
-      <View style={styles.quickActions}>
-        <TouchableOpacity style={styles.actionButton}>
-          <Ionicons name="cart" size={40} color="#FF9900" />
-          <Text style={styles.actionText}>My Offerings</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.actionButton}>
-          <MaterialCommunityIcons name="shopping" size={40} color="#FF9900" />
-          <Text style={styles.actionText}>My Wants</Text>
-        </TouchableOpacity>
-      </View>
+          <Button
+            mode="contained-tonal"
+            icon={({ size, color }) => (
+              <Ionicons name="send" size={size} color={color} />
+            )}
+            onPress={() => router.push({ pathname: 'screens/sendmoney/contact' })}
+          >
+            Send Money
+          </Button>
+        </Card.Content>
+      </Card>
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#f8f9fa", padding: 20 },  
-  quickActions: { flexDirection: "row", justifyContent: "space-between",borderRadius: 15, marginBottom: 20, padding: 20, backgroundColor: "#fff", },
-  actionButton: { alignItems: "center", justifyContent: "center", width: 120, },
-  actionText: { fontSize: 14, fontWeight: "500", color: "#333" },
+const styles = StyleSheet.create({  
+  actionsContainer: {flexDirection: 'row',justifyContent: 'space-around'}
 });
 
