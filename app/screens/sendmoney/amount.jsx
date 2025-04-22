@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Modal } from "react-native";
+import { Button } from 'react-native-paper';
 import { useLocalSearchParams,useRouter } from 'expo-router';
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import api from '@/constants/api'
-import Button from "@/components/Button";
+
 import ErrorMessage from "@/components/ErrorMessage";
 const EnterAmountScreen = () => { // { route, navigation }
   const [amount, setAmount] = useState("");
@@ -102,8 +103,12 @@ const EnterAmountScreen = () => { // { route, navigation }
             
             {/* Modal Buttons */}
             <View style={styles.modalButtons}>
-              <Button title="Cancel" style={styles.cancelButton} onPress={handleCancel} />
-              <Button title="Confirm" style={styles.confirmButton} onPress={handleSendMoney} isLoading={loading} />
+              <Button style={styles.cancelButton} labelStyle={styles.cancelText} onPress={handleCancel}>
+                Cancel
+              </Button>
+              <Button style={styles.confirmButton} labelStyle={styles.confirmText} onPress={handleSendMoney} loading={loading} disabled={loading}>
+                {loading ? 'Loading...' : 'Confirm'}
+              </Button>
             </View>
           </View>
         </View>
@@ -168,40 +173,16 @@ const styles = StyleSheet.create({
   proceedButtonText: { color: "#fff", fontSize: 18, fontWeight: "bold" },
 
   // Modal Styles
-  modalContainer: { 
-    flex: 1, 
-    justifyContent: "center", 
-    alignItems: "center", 
-    backgroundColor: "rgba(0,0,0,0.5)" 
-  },
-  modalContent: { 
-    backgroundColor: "#fff", 
-    padding: 20, 
-    borderRadius: 15, 
-    alignItems: "center", 
-    width: "85%" 
-  },
+  modalContainer: { flex: 1, justifyContent: "center",alignItems: "center", backgroundColor: "rgba(0,0,0,0.5)" },
+  modalContent: { backgroundColor: "#fff", padding: 20, borderRadius: 15, alignItems: "center", width: "85%" },
   modalTitle: { fontSize: 22, fontWeight: "bold", marginTop: 10, color: "#000" },
   modalText: { fontSize: 18, marginTop: 10, color: "#5F6368" },
   modalMessage: { fontSize: 16, fontStyle: "italic", marginTop: 5, color: "#5F6368" },
-  modalButtons: { flexDirection: "row", marginTop: 20, width: "100%" },
-  
-  cancelButton: { 
-    flex: 1, 
-    padding: 12, 
-    backgroundColor: "#DADCE0", 
-    borderRadius: 30, 
-    alignItems: "center", 
-    marginRight: 5 
-  },
-  confirmButton: { 
-    flex: 1, 
-    padding: 12, 
-    backgroundColor: "#34A853", 
-    borderRadius: 30, 
-    alignItems: "center", 
-    marginLeft: 5 
-  },
+  modalButtons: { flexDirection: "row", marginTop: 20, width: "100%" },  
+  cancelButton: { flex: 1, padding: 12, backgroundColor: "#DADCE0", marginRight: 5 },
+  confirmButton: { flex: 1, padding: 12, backgroundColor: "#34A853", marginLeft: 5 },
+  cancelText: {color: "#000", fontWeight: "bold",},
+  confirmText: {color: "#fff", fontWeight: "bold",},
 });
 
 export default EnterAmountScreen;
