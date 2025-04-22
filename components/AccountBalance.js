@@ -21,7 +21,7 @@ const AccountBalance = () => {
       <Text style={styles.label}>Available Balance:</Text>
       
       <View style={styles.amountContainer}>
-        <Text style={[styles.amountText, balance>0 ? styles.positive : styles.negative]}>{balance ? `₹${balance.toFixed(2)}`:'****'}</Text>        
+        <Text style={[styles.amountText, balance>0 ? styles.positive : styles.negative]}>{balance ? `₹${balance}`:'****'}</Text>        
         <TouchableOpacity onPress={fetchBalance}>
           <MaterialIcons name="refresh" size={24} color="gray" />
         </TouchableOpacity>

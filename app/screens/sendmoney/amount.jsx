@@ -20,7 +20,10 @@ const EnterAmountScreen = () => { // { route, navigation }
     }
     setModalVisible(true); // Show the modal
   };
-
+  const handleCancel = () => {
+    setError("");
+    setModalVisible(false);
+  }
   const handleSendMoney = async () => {
     setError("");  // Clear previous errors
     setLoading(true);
@@ -45,6 +48,11 @@ const EnterAmountScreen = () => { // { route, navigation }
       setLoading(false);      
     }    
   };
+  const handleChange = (text) => {
+    // Remove non-digit characters and leading zeros
+    const cleaned = text.replace(/[^0-9]/g, '').replace(/^0+/, '');
+    setAmount(cleaned);
+  };
   return (
     <View style={styles.container}>
       {/* Contact Info */}
@@ -64,7 +72,7 @@ const EnterAmountScreen = () => { // { route, navigation }
           placeholder="0"
           keyboardType="numeric"
           value={amount}
-          onChangeText={setAmount}
+          onChangeText={handleChange}
           autoFocus={true}
         />
       </View>
@@ -94,7 +102,7 @@ const EnterAmountScreen = () => { // { route, navigation }
             
             {/* Modal Buttons */}
             <View style={styles.modalButtons}>
-              <Button title="Cancel" style={styles.cancelButton} onPress={() => setModalVisible(false)} />
+              <Button title="Cancel" style={styles.cancelButton} onPress={handleCancel} />
               <Button title="Confirm" style={styles.confirmButton} onPress={handleSendMoney} isLoading={loading} />
             </View>
           </View>
