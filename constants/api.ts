@@ -17,6 +17,10 @@ export const setupAxiosInterceptors = (signOut:any) => {
         console.log("Unauthorized! Logging out...");
         signOut(); // Call logout function from context
       }
+      //  else if (error.response?.status === 429) {
+      //   // request throttled
+      //   console.error('Too Many Requests:',error.response?.data?.detail);
+      // }
       return Promise.reject(error);
     }
   );

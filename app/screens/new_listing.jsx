@@ -58,8 +58,15 @@ const AddListingScreen = () => {
   const handleGenerateDetail = async () => {
     setLoadingDescription(true);
     let url = "https://shihas.stackschools.com/ajax/stackcoinai/"; 
+
+    let text_startswith = "";
+    if (ltype==='O') {
+      text_startswith = "Create an offering description for local exchange trading system where I can offer activity or things like";
+    } else {
+      text_startswith = "Create a wants description for local exchange trading system where I want ";
+    }
     try {
-      const response = await axios.get(`${url}?details=${title}`);
+      const response = await axios.get(`${url}?details=${text_startswith} ${title}`);
       // const response = {data: 'This is a Dummy description for testing purpose'};
       setDescription(response.data);
       setShowDescription(true);
