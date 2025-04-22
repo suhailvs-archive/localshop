@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { StyleSheet, View } from "react-native";
-import { TextInput, Button, ActivityIndicator, useTheme,Text} from "react-native-paper";
+import { TextInput, Button, useTheme,Text} from "react-native-paper";
 import { useSession } from "@/login_extras/ctx";
-
+import ErrorMessage from "@/components/ErrorMessage";
 export default function Login() {
   const { signIn } = useSession();
   const [username, setUsername] = useState('');
@@ -58,15 +58,10 @@ export default function Login() {
       style={styles.input}
     />
 
-    {error ? <Button textColor="red">{error}</Button> : null}
-
-    {loading ? (
-      <ActivityIndicator animating={true} size="large" style={styles.loader} />
-    ) : (
-      <Button mode="contained" onPress={handleLogin} style={styles.button} disabled={loading}>
-        Login
-      </Button>
-    )}
+    <ErrorMessage message={error} onClose={() => setError("")} />
+    <Button style={{marginTop: 15}} mode="contained" onPress={handleLogin} loading={loading} disabled={loading}>
+      {loading ? 'Loading...' : 'Login'}
+    </Button>
   </View>
   );
 }
@@ -78,9 +73,5 @@ const styles = StyleSheet.create({
   },
   input: {
     marginBottom: 15,
-  },
-  button: {
-    marginTop: 10,
-    paddingVertical: 5,
   },
 });
