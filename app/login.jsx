@@ -74,11 +74,6 @@ export default function Login() {
     <Text variant="bodyLarge" style={{ textAlign: "center", marginTop:20 }}>Or New user?</Text>
     <Button style={{marginTop: 15}} onPress={() => router.navigate('/registration')} mode="outlined">Sign up for LETS</Button>
 
-    <Button style={{marginTop: 15}} 
-      onPress={() => router.navigate({ pathname: '/inactiveuser',params:{'username':username}})} 
-      mode="outlined">
-        success
-    </Button>
   </View>
   );
 }

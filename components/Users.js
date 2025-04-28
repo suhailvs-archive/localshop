@@ -14,7 +14,13 @@ const Users = ({page}) => {
     contact.first_name.toLowerCase().includes(search.toLowerCase()) ||
     contact.username.includes(search)
   );
-
+  const handleonPress = (item) => {
+    if (page=='users') {
+      router.push({ pathname: 'screens/userdetails', params: { id: item.id}});
+    } else if (page=='sendmoney') {
+      router.push({ pathname: 'screens/sendmoney/amount', params: { id: item.id, username: item.username, first_name: item.first_name } });
+    }
+  };
   useEffect(() => {
     fetchData();
   }, []);
@@ -41,7 +47,7 @@ const Users = ({page}) => {
       ) : (
         <View>
           {/* Title */}
-          <Text style={styles.title}>{page}</Text>
+          <Text style={styles.title}>{page=='users'? 'Users': 'Send Money'}</Text>
 
           {/* Search Bar */}
           <View style={styles.searchContainer}>
@@ -59,8 +65,8 @@ const Users = ({page}) => {
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
               <TouchableOpacity 
-                style={styles.contactItem} 
-                onPress={() => router.push({ pathname: 'screens/sendmoney/amount', params: { id: item.id, username: item.username, first_name: item.first_name } })}
+                style={[styles.contactItem, !item.is_active && styles.in_active]}
+                onPress={() => handleonPress(item)}                
               >
                 {/* User Avatar */}
                 {item.profile_picture ? (
@@ -114,6 +120,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     borderBottomWidth: 1,
     borderBottomColor: "#eee",
+  },
+  in_active:{
+    backgroundColor: "#ccc",
   },
   avatar: {
     width: 50,
