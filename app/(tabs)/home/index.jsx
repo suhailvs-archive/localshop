@@ -43,7 +43,7 @@ export default function HomeScreen() {
             icon={({ size, color }) => (
               <Ionicons name="send" size={size} color={color} />
             )}
-            onPress={() => router.push({ pathname: 'screens/sendmoney/contact' })}
+            onPress={() => router.push({ pathname: '/(tabs)/home/contacts' })}
           >
             Send Money
           </Button>

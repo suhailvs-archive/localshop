@@ -51,12 +51,13 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="home"
+        name="home/index"
         options={{
           title: 'Home',
           tabBarIcon: ({ color }) => <Icon name="home" size={28} color={color} />,
         }}
       />
+      
       <Tabs.Screen
         name="users"
         options={{
@@ -71,6 +72,7 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => <Icon name="file-document" size={28} color={color} />,
         }}
       />
+      <Tabs.Screen name="home/contacts" options={{href: null}}/>
     </Tabs>
   );
 }

@@ -16,7 +16,8 @@ const Users = ({page}) => {
   );
   const handleonPress = (item) => {
     if (page=='users') {
-      router.push({ pathname: 'screens/userdetails', params: { id: item.id}});
+      // router.push({ pathname: '/(tabs)/users/detail', params: { id: item.id}});
+      router.push({ pathname: '/(tabs2)', params: { id: item.id}});
     } else if (page=='sendmoney') {
       router.push({ pathname: 'screens/sendmoney/amount', params: { id: item.id, username: item.username, first_name: item.first_name } });
     }

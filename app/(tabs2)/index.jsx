@@ -5,6 +5,7 @@ import { useLocalSearchParams,useRouter } from 'expo-router';
 import { List,Text,Button } from 'react-native-paper';
 
 import SkeletonLoader from "@/components/SkeletonLoader";
+import UserAppBar from "@/components/UserAppBar";
 const UserDetails = () => {
   const { id } = useLocalSearchParams();
   const [data, setData] = useState({});
@@ -48,7 +49,10 @@ const UserDetails = () => {
     }    
   }
   return (
+    <>
+    <UserAppBar/>
     <View style={styles.container}>
+        
       {loading ? (
         <View>
           <SkeletonLoader width={100} height={20} />
@@ -100,8 +104,10 @@ const UserDetails = () => {
           }
 
         </View>
+        
       )}
     </View>
+    </>
   )
 }
 // "government_id":"","":"2025-03-09","":1}'

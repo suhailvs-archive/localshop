@@ -37,7 +37,7 @@ export default function Listings({ltype}) {
       )}
       left={() => <Image source={{ uri: item.image }} style={styles.productImage} />}
       style={styles.listItem}
-      onPress={() => router.push({ pathname: 'screens/offering_details', params:{'id':item.id, 'category':item.category}})}
+      onPress={() => router.push({ pathname: 'screens/listing_details', params:{'id':item.id, 'category':item.category}})}
     />
   );
 
