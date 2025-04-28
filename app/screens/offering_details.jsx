@@ -101,8 +101,7 @@ const OfferingDetailPage = ( ) => {
           </Button>
           
           {/* These 3 text boxes are to add some margin Bottom */}
-          <Text></Text>
-          <Text></Text>
+          <Text></Text><Text></Text><Text></Text>
         </View>
       )}
     </ScrollView>

@@ -1,9 +1,11 @@
 import { useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, ScrollView } from "react-native";
 import { useRouter } from 'expo-router';
 import { TextInput, Button, useTheme,Text} from "react-native-paper";
 import api from '@/constants/api'
 import ErrorMessage from "@/components/ErrorMessage";
+import Logo from "@/components/Logo";
+
 export default function RegisterScreen() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -35,7 +37,8 @@ export default function RegisterScreen() {
     }   
   };
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
+      <Logo/>
       <Text variant="headlineMedium" style={{ color: theme.colors.primary, textAlign: "center", marginBottom:20 }}>Sign up to LETS</Text>
       <TextInput
         label="First Name"
@@ -97,14 +100,14 @@ export default function RegisterScreen() {
 
       <Text variant="bodyLarge" style={{ textAlign: "center", marginTop:20 }}>I already have an account !</Text>
       <Button style={{marginTop: 15}} onPress={() => router.navigate('/login')} mode="outlined">Log In</Button>
-    </View>
+      <Text></Text><Text></Text><Text></Text>
+    </ScrollView>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
     padding: 20,
   },
   input: {

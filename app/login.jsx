@@ -4,6 +4,8 @@ import { useRouter } from 'expo-router';
 import { TextInput, Button, useTheme,Text} from "react-native-paper";
 import { useSession } from "@/login_extras/ctx";
 import ErrorMessage from "@/components/ErrorMessage";
+import Logo from "@/components/Logo";
+
 export default function Login() {
   const { signIn } = useSession();
   const [username, setUsername] = useState('');
@@ -40,6 +42,7 @@ export default function Login() {
 
   return (
   <View style={styles.container}>
+    <Logo/>
     <Text variant="headlineMedium" style={{ color: theme.colors.primary, textAlign: "center", marginBottom:20 }}>
         Login to LETS
     </Text>
@@ -73,7 +76,7 @@ export default function Login() {
     </Button>
     <Text variant="bodyLarge" style={{ textAlign: "center", marginTop:20 }}>Or New user?</Text>
     <Button style={{marginTop: 15}} onPress={() => router.navigate('/registration')} mode="outlined">Sign up for LETS</Button>
-
+    <Text></Text><Text></Text><Text></Text>
   </View>
   );
 }
