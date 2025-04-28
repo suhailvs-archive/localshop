@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from 'react';
 import { View, ScrollView, StyleSheet } from "react-native";
 
 import { Text, TextInput, Button, Snackbar, useTheme } from "react-native-paper";
@@ -24,11 +24,29 @@ const AddListingScreen = () => {
   const [loading, setLoading] = useState(false);
 
   const { ltype } = useLocalSearchParams();
-  const categories = ["Electronics","Clothing"];
-  //   { label: "Electronics", value: "electronics" },
-  //   { label: "Clothing", value: "clothing" },
-  //   { label: "Books", value: "books" },
+  // const categories = [ //"Electronics","Clothing"];
+  //   ["electronics","Electronics"],
+  //   ["cloting","Cloting"],
   // ];
+
+  const [categories, setCategories] = useState([]);
+
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+
+  const fetchCategories = async () => {
+      try {
+        const response = await api.get('/ajax/?purpose=categories');
+        setCategories(response.data['data']);
+      } catch (error) {
+          console.error('Error fetching data:', error);
+      } finally {
+          // setLoading(false);
+      }
+  };
+
   // Handle Form Submission
   const handleSubmit = async () => {
     if (!category || !title || !description || !rate || !image) {

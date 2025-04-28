@@ -9,8 +9,8 @@ const AccountBalance = () => {
   
   const fetchBalance = async () => {    
     try {
-        const response = await api.get('/user/balance/');
-        setBalance(response.data);
+        const response = await api.get('/ajax/?purpose=userbalance');
+        setBalance(response.data['data']);
     } catch (error) {
         console.error('Error fetching data:', error);
     }

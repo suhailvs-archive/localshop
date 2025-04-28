@@ -6,9 +6,9 @@ const Dropdown = ({ label, items, onSelect }) => {
   const [selectedValue, setSelectedValue] = useState(''); 
   const [modalVisible, setModalVisible] = useState(false);
 
-  const handleSelect = (value) => {
-    setSelectedValue(value);
-    onSelect(value);
+  const handleSelect = (item) => {
+    setSelectedValue(item[1]);
+    onSelect(item[0]);
     setModalVisible(false);
   };
 
@@ -31,7 +31,7 @@ const Dropdown = ({ label, items, onSelect }) => {
               keyExtractor={(item) => item}
               renderItem={({ item }) => (
                 <TouchableOpacity style={styles.option} onPress={() => handleSelect(item)}>
-                  <Text style={styles.optionText}>{item}</Text>
+                  <Text style={styles.optionText}>{item[1]}</Text>
                 </TouchableOpacity>
               )}
             />

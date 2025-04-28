@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { StyleSheet, ScrollView } from "react-native";
 import { useRouter } from 'expo-router';
 import { TextInput, Button, useTheme,Text} from "react-native-paper";
 import api from '@/constants/api'
 import ErrorMessage from "@/components/ErrorMessage";
 import Logo from "@/components/Logo";
+import Dropdown from "@/components/Dropdown";
 
 export default function RegisterScreen() {
   const [loading, setLoading] = useState(false);
@@ -19,6 +20,24 @@ export default function RegisterScreen() {
   const [secureText, setSecureText] = useState(true);
   const theme = useTheme();
   const router = useRouter();
+
+  const [exchanges, setExchanges] = useState([]);
+
+
+  useEffect(() => {
+    fetchExchanges();
+  }, []);
+
+  const fetchExchanges = async () => {
+    try {
+      const response = await api.get('/ajax/?purpose=exchanges');
+      setExchanges(response.data['data']);
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    } finally {
+        // setLoading(false);
+    }
+  };
   const handleRegistration = async () => {
     if (!first_name || !username || !password  || !government_id || !date_of_birth || !exchange) {
       setError("Please fill all fields.");
@@ -80,18 +99,23 @@ export default function RegisterScreen() {
       />
       <TextInput
         label="Date Of Birth(YYYY-MM-DD)"
-        // value={date_of_birth}
+        value={date_of_birth}
         onChangeText={setDateOfBirth}
         mode="outlined"
         style={styles.input}
       />
-      <TextInput
+      <Dropdown
+        label="Select Exchange"
+        items={exchanges}
+        onSelect={setExchange}
+      />
+      {/* <TextInput
         label="Exchange"
         value={exchange}
         onChangeText={setExchange}
         mode="outlined"
         style={styles.input}
-      />
+      /> */}
       <ErrorMessage message={error} onClose={() => setError("")} />
       <Button style={{marginTop: 15}} mode="contained" onPress={handleRegistration} loading={loading} disabled={loading}>
         {loading ? 'Loading...' : 'Sign Up'}
