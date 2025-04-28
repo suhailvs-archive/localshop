@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { StyleSheet, View } from "react-native";
+import { useRouter } from 'expo-router';
 import { TextInput, Button, useTheme,Text} from "react-native-paper";
 import { useSession } from "@/login_extras/ctx";
 import ErrorMessage from "@/components/ErrorMessage";
@@ -11,6 +12,7 @@ export default function Login() {
   const [secureText, setSecureText] = useState(true);
   const [error, setError] = useState("");
   const theme = useTheme(); // Get Paper Theme Colors 
+  const router = useRouter();
 
   const handleLogin = async () => {
     if (!username || !password) {
@@ -23,7 +25,14 @@ export default function Login() {
     try {
       const userData = await signIn(username, password);      
     } catch (err) {
-      setError(err.message); // Show error message
+      if (err.message.includes("is_active")){
+        // user and password is correct, but user is inactive
+        router.navigate({ pathname: '/inactiveuser',params:{'username':username}});
+      }
+      else{
+        setError(err.message); // Show error message
+      }
+      
     } finally {
       setLoading(false);
     }
@@ -61,6 +70,14 @@ export default function Login() {
     <ErrorMessage message={error} onClose={() => setError("")} />
     <Button style={{marginTop: 15}} mode="contained" onPress={handleLogin} loading={loading} disabled={loading}>
       {loading ? 'Loading...' : 'Login'}
+    </Button>
+    <Text variant="bodyLarge" style={{ textAlign: "center", marginTop:20 }}>Or New user?</Text>
+    <Button style={{marginTop: 15}} onPress={() => router.navigate('/registration')} mode="outlined">Sign up for LETS</Button>
+
+    <Button style={{marginTop: 15}} 
+      onPress={() => router.navigate({ pathname: '/inactiveuser',params:{'username':username}})} 
+      mode="outlined">
+        success
     </Button>
   </View>
   );
