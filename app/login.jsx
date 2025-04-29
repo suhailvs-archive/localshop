@@ -51,7 +51,7 @@ export default function Login() {
       value={username}
       onChangeText={setUsername}
       mode="outlined"
-      keyboardType="numeric"
+      autoCapitalize="characters"
       style={styles.input}
     />
     <TextInput

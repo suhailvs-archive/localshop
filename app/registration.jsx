@@ -12,7 +12,7 @@ export default function RegisterScreen() {
   const [error, setError] = useState("");
 
   const [first_name, setFirstName] = useState('');
-  const [username, setUsername] = useState('');
+  const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const [government_id, setGovernmentID] = useState('');
   const [date_of_birth, setDateOfBirth] = useState('');
@@ -39,16 +39,16 @@ export default function RegisterScreen() {
     }
   };
   const handleRegistration = async () => {
-    if (!first_name || !username || !password  || !government_id || !date_of_birth || !exchange) {
+    if (!first_name || !phone || !password  || !government_id || !date_of_birth || !exchange) {
       setError("Please fill all fields.");
       return;
     }
     setError("");  // Clear previous errors
     setLoading(true);
-    let datas = {first_name,username,password,government_id,date_of_birth,exchange};
-    try {
-      await api.post('/registration/', datas);
-      router.replace({ pathname: '/inactiveuser',params:{'username':username} });
+    let datas = {first_name,phone,password,government_id,date_of_birth,exchange};
+    try {      
+      const response = await api.post('/registration/', datas);
+      router.replace({ pathname: '/inactiveuser',params:{'username':response.data['username']} });
     } catch (error) {
       setError(JSON.stringify(error.response?.data) || "Something went wrong.");
     } finally {
@@ -67,9 +67,9 @@ export default function RegisterScreen() {
         style={styles.input}
       />
       <TextInput
-        label="Username"
-        value={username}
-        onChangeText={setUsername}
+        label="Phone Number"
+        value={phone}
+        onChangeText={setPhone}
         mode="outlined"
         keyboardType="numeric"
         style={styles.input}

@@ -79,6 +79,12 @@ const UserDetails = () => {
             left={props => <List.Icon {...props} icon="folder" />}
           />
           <List.Item
+            title="Phone"
+            description={data.phone}
+            left={props => <List.Icon {...props} icon="folder" />}
+          />
+          
+          <List.Item
             title="Balance"
             description={data.balance}
             left={props => <List.Icon {...props} icon="folder" />}

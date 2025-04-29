@@ -35,7 +35,7 @@ export default function Listings({ltype}) {
           <Text variant="bodySmall" style={styles.rating}>{item.rate}</Text>
         </View>
       )}
-      left={() => <Image source={{ uri: item.image }} style={styles.productImage} />}
+      left={() => <Image source={{ uri: item.thumbnail }} style={styles.productImage} />}
       style={styles.listItem}
       onPress={() => router.push({ pathname: 'screens/listing_details', params:{'id':item.id, 'category':item.category}})}
     />

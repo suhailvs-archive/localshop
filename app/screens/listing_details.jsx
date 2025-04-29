@@ -44,7 +44,7 @@ const OfferingDetailPage = ( ) => {
     router.push({ pathname: 'screens/sendmoney/amount', params:{'id':offering.user.id, 'username':offering.user.username, 'first_name':offering.user.first_name} })
   };
   const handleCallPress = () => {
-    Linking.openURL(`tel:${offering.user.username}`);
+    Linking.openURL(`tel:${offering.user.phone}`);
   };
 
   return (
@@ -86,7 +86,7 @@ const OfferingDetailPage = ( ) => {
               <Text style={styles.phoneLabel}>Contact Customer:</Text>
               <TouchableOpacity onPress={handleCallPress}  style={styles.phoneContainer}>
                 <MaterialIcons name="phone" size={20} color="#fff" />
-                <Text style={styles.phoneText}>{offering.user.username}</Text>
+                <Text style={styles.phoneText}>{offering.user.phone}</Text>
               </TouchableOpacity>
             </View>
           </View>
