@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { View, Text, ScrollView, Image, TouchableOpacity, StyleSheet, Linking} from "react-native";
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { Button } from 'react-native-paper';
+import * as SecureStore from 'expo-secure-store';
 import SkeletonLoader from "@/components/SkeletonLoader";
 
 import api from '@/constants/api'
@@ -10,14 +11,18 @@ import { MaterialIcons } from "@expo/vector-icons"; // Call icon
 
 const OfferingDetailPage = ( ) => {
   const [offering, setOffering] = useState([]);
+  const [userdata, setUserData] = useState({});
   const [loading, setLoading] = useState(true);
 
   const { id, category } = useLocalSearchParams(); // Get passed data
   const router = useRouter();
+ 
+  // let userdata;
   useEffect(() => {
     fetchData();
+    getUser();
   }, []);
-
+  
   const fetchData = async () => {
       try {
           const response = await api.get(`/listings/${id}/`);
@@ -38,10 +43,32 @@ const OfferingDetailPage = ( ) => {
     }).format(date);
   };
   
+  const getUser = async () => {
+    try {
+      const jsonValue = await SecureStore.getItemAsync('user_data');
+      console.log(jsonValue)
+      setUserData(JSON.parse(jsonValue));
+    } catch (e) {
+      console.error('Failed to load user:', e);
+      setUserData({});
+    }
+  };
+  
   const handleBuyNow = () => {
     // Navigate to payment screen
     // navigation.navigate("Checkout", { offering });
     router.push({ pathname: 'screens/sendmoney/amount', params:{'id':offering.user.id, 'username':offering.user.username, 'first_name':offering.user.first_name} })
+  };
+  
+
+  const handleDelete = async () => {
+    try {
+      const response = await api.delete(`/listings/${offering.user.id}/`);
+      console.log('Item deleted successfully:', response.data);
+      router.replace("/")
+    } catch (error) {
+      console.error('Error deleting item:', error);
+    }
   };
   const handleCallPress = () => {
     Linking.openURL(`tel:${offering.user.phone}`);
@@ -90,7 +117,17 @@ const OfferingDetailPage = ( ) => {
               </TouchableOpacity>
             </View>
           </View>
-          {/* Add to Cart and Buy Now Buttons */}          
+          {/* Add to Delete and Buy Now Buttons */}
+          {offering.user.id == userdata.user_id && 
+          <Button
+            mode="outlined"
+            onPress={handleDelete}
+            style={styles.deleteButton}
+            textColor="#D32F2F"
+            icon={({ color, size }) => (
+              <MaterialIcons name="delete" color={color} size={size} />
+            )}
+          >Delete</Button>} 
           <Button
             mode="contained"
             onPress={handleBuyNow}
@@ -115,7 +152,11 @@ const styles = StyleSheet.create({
   productTitle: { fontSize: 24, fontWeight: "bold", color: "#232F3E", marginTop: 10, borderBottomWidth: 1, borderBottomColor: "#ddd"},
   productPrice: { fontSize: 20, marginTop: 10 },
   dateLabel: {fontSize: 16,fontWeight: "bold",color: "gray",marginRight: 5,},
-  
+  deleteButton: {
+    borderColor: '#D32F2F', // red outline
+    borderRadius: 8,
+    marginTop: 10,
+  },
   buyNowButton: {
     marginVertical: 10,
     borderRadius: 8,

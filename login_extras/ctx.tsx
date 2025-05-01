@@ -2,7 +2,7 @@ import { useContext, createContext, type PropsWithChildren } from 'react';
 // import axios from 'axios';
 import { useStorageState } from './useStorageState';
 import { router } from "expo-router";
-
+import * as SecureStore from 'expo-secure-store';
 import api from '@/constants/api'
 
 const AuthContext = createContext<{
@@ -45,10 +45,13 @@ export function SessionProvider({ children }: PropsWithChildren) {
     console.log(username);
     try {
       const response = await api.post('/login/', { username, password });
+      const data = response.data;
       // console.log(response.data);
-      const token = response.data.key;
+      const token = data.key;
       setSession(token); // Store token securely
       api.defaults.headers.common['Authorization'] = `Token ${token}`;
+      const jsonValue = {user_id:data.user_id,username:data.username,exchange:data.exchange};
+      await SecureStore.setItemAsync('user_data', JSON.stringify(jsonValue));
       router.replace("/");
     } catch (error:any) {
       if (error.response) {
