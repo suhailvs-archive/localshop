@@ -1,19 +1,20 @@
 import { Appbar } from 'react-native-paper';
+import { useRouter } from 'expo-router';
 
-const MyComponent = () => {
-  const _goBack = () => console.log('Went back');
-
-  const _handleSearch = () => console.log('Searching');
-
-  const _handleMore = () => console.log('Shown more');
+const UserAppBar = () => {
+  const router = useRouter();
+  const _handleClose = () => {
+    // router.replace('/'); // Replace current screen with home or dashboard
+    router.back(); // Navigate to previous screen
+  };
 
   return (
     <Appbar.Header>
-      <Appbar.BackAction onPress={_goBack} />
+      {/* <Appbar.BackAction onPress={_goBack} /> */}
       <Appbar.Content title="User Details" />
-      <Appbar.Action icon="close" onPress={_handleSearch} />
+      <Appbar.Action icon="close" onPress={_handleClose} />
     </Appbar.Header>
   );
 };
 
-export default MyComponent;
+export default UserAppBar;
