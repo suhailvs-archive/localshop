@@ -13,5 +13,11 @@ export default function AppLayout() {
   }
 
   // This layout can be deferred because it's not the root layout.
-  return (<Stack><Stack.Screen name="index" options={{headerShown: false}} /></Stack>);
+  return (
+  <Stack screenOptions={{
+    animation: 'slide_from_bottom', // orslide_from_bottom 'fade', 'slide_from_right', 'none'
+  }}>
+    <Stack.Screen name="index" options={{headerShown: false}} />
+  </Stack>
+  );
 }

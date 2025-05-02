@@ -17,7 +17,7 @@ export default function Index() {
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const router = useRouter();
-  
+
   useEffect(() => {
     fetchBalance();
     getAuthUser();
@@ -55,7 +55,7 @@ export default function Index() {
   );
   const { signOut } = useSession();
   const handleShowUser = (userid) => {
-    router.push({ pathname: '/(tabs)', params: { id: userid}});
+    router.navigate({ pathname: '/(tabs)', params: { id: userid}});
   };
   return (
     <ScrollView>

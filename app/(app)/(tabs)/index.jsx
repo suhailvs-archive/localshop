@@ -12,8 +12,8 @@ import {
   HelperText,
   ActivityIndicator,
 } from 'react-native-paper';
+import { Ionicons } from '@expo/vector-icons';
 import SkeletonLoader from '@/components/SkeletonLoader';
-import UserAppBar from '@/components/UserAppBar';
 
 const UserDetails = () => {
   const { id } = useLocalSearchParams();
@@ -46,7 +46,7 @@ const UserDetails = () => {
         candidate_id: data.id,
         trust_score: '0.8',
       });
-      router.replace({ pathname: 'screens/sendmoney/success',params: {name:first_name, amount:amount } });
+      // router.replace({ pathname: 'screens/sendmoney/success',params: {name:first_name, amount:amount } });
     } catch (error) {
       if (error.response) {
         setError(JSON.stringify(error.response.data) || 'Invalid credentials');
@@ -62,8 +62,8 @@ const UserDetails = () => {
 
   return (
     <>
-      <UserAppBar />
       <ScrollView contentContainerStyle={styles.container}>
+      
         {loading ? (
           <View>
             <SkeletonLoader width={100} height={20} />
@@ -71,65 +71,76 @@ const UserDetails = () => {
             <SkeletonLoader width={250} height={15} />
           </View>
         ) : (
-          <Card mode="outlined" style={styles.card}>
-            <Card.Title
-              title={data.username || 'User'}
-              subtitle={`ID: ${data.id}`}
-              left={(props) => <Avatar.Icon {...props} icon="account" />}
-            />
-            <Card.Content>
-              
-              <List.Item
-                title="Phone"
-                description={data.phone || '-'}
-                left={(props) => <List.Icon {...props} icon="phone" />}
+          <View>
+            {!data.is_active ? (
+              <Button
+                mode="contained"
+                onPress={handleVerifyUser}
+                loading={verifyLoading}
+                disabled={verifyLoading}
+              >
+                {verifyLoading ? 'Verifying...' : 'Verify User'}
+              </Button>
+            ):(
+              <Button
+                mode="contained-tonal"
+                icon={({ size, color }) => (
+                  <Ionicons name="send" size={size} color={color} />
+                )}
+                onPress={() => router.navigate({ pathname: 'screens/sendmoney/amount', params: { id: data.id, username: data.username, first_name: data.first_name } })}
+              >
+                Send Money
+              </Button>
+            )}
+          
+            <Card mode="outlined" style={styles.card}>
+              <Card.Title
+                title={data.username || 'User'}
+                subtitle={`ID: ${data.id}`}
+                left={(props) => <Avatar.Icon {...props} icon="account" />}
               />
-              <List.Item
-                title="Email"
-                description={data.email || '-'}
-                left={(props) => <List.Icon {...props} icon="email" />}
-              />
-              <List.Item
-                title="Balance"
-                description={`₹ ${data.balance ?? 0}`}
-                left={(props) => <List.Icon {...props} icon="wallet" />}
-              />
-              <List.Item
-                title="Date of Birth"
-                description={data.date_of_birth || '-'}
-                left={(props) => <List.Icon {...props} icon="calendar" />}
-              />
-              <List.Item
-                title="Government ID"
-                description={data.government_id || '-'}
-                left={(props) => <List.Icon {...props} icon="card-account-details" />}
-              />
-              <List.Item
-                title="Exchange"
-                description={data.exchange || '-'}
-                left={(props) => <List.Icon {...props} icon="swap-horizontal" />}
-              />
-              <List.Item
-                title="Last Login"
-                description={data.last_login || '-'}
-                left={(props) => <List.Icon {...props} icon="clock" />}
-              />
+              <Card.Content>
+                
+                <List.Item
+                  title="Phone"
+                  description={data.phone || '-'}
+                  left={(props) => <List.Icon {...props} icon="phone" />}
+                />
+                <List.Item
+                  title="Email"
+                  description={data.email || '-'}
+                  left={(props) => <List.Icon {...props} icon="email" />}
+                />
+                <List.Item
+                  title="Balance"
+                  description={`₹ ${data.balance ?? 0}`}
+                  left={(props) => <List.Icon {...props} icon="wallet" />}
+                />
+                <List.Item
+                  title="Date of Birth"
+                  description={data.date_of_birth || '-'}
+                  left={(props) => <List.Icon {...props} icon="calendar" />}
+                />
+                <List.Item
+                  title="Government ID"
+                  description={data.government_id || '-'}
+                  left={(props) => <List.Icon {...props} icon="card-account-details" />}
+                />
+                <List.Item
+                  title="Exchange"
+                  description={data.exchange || '-'}
+                  left={(props) => <List.Icon {...props} icon="swap-horizontal" />}
+                />
+                <List.Item
+                  title="Last Login"
+                  description={data.last_login || '-'}
+                  left={(props) => <List.Icon {...props} icon="clock" />}
+                />             
+                {error ? <HelperText type="error">{error}</HelperText> : null}
+              </Card.Content>
+            </Card>
+          </View>
 
-              <Divider style={{ marginVertical: 10 }} />
-
-              {!data.is_active && (
-                <Button
-                  mode="contained"
-                  onPress={handleVerifyUser}
-                  loading={verifyLoading}
-                  disabled={verifyLoading}
-                >
-                  {verifyLoading ? 'Verifying...' : 'Verify User'}
-                </Button>
-              )}
-              {error ? <HelperText type="error">{error}</HelperText> : null}
-            </Card.Content>
-          </Card>
         )}
       </ScrollView>
     </>
@@ -145,7 +156,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
   card: {
-    padding: 10,
+    marginTop: 30,
     borderRadius: 10,
     backgroundColor: '#fff',
   },
