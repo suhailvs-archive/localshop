@@ -45,12 +45,10 @@ export function SessionProvider({ children }: PropsWithChildren) {
     try {
       const response = await api.post('/login/', { username, password });
       const data = response.data;
-      // console.log(response.data);
       const token = data.key;
       setSession(token); // Store token securely
       api.defaults.headers.common['Authorization'] = `Token ${token}`;
-      const jsonValue = {user_id:data.user_id,username:data.username,exchange:data.exchange};
-      await SecureStore.setItemAsync('user_data', JSON.stringify(jsonValue));
+      await SecureStore.setItemAsync('user_data', JSON.stringify(data));
       
     } catch (error:any) {
       if (error.response) {

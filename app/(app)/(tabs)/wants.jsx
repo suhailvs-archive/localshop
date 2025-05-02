@@ -1,12 +1,5 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import Listings from "@/components/Listings";
 
-const UserWants = () => {
-  return (
-    <View>
-      <Text>UserWants</Text>
-    </View>
-  )
+export default function UserWants (){ 
+  return <Listings ltype="W" selectedUserId={global.selectedUserId} />;
 }
-
-export default UserWants

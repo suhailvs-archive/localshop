@@ -5,7 +5,7 @@ import { useRouter } from "expo-router";
 import SkeletonLoader from "@/components/SkeletonLoader";
 import api from "@/constants/api"; 
 
-export default function Listings({ltype}) {
+export default function Listings({ltype, selectedUserId}) {
   const [page, setPage] = useState(1);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -17,7 +17,7 @@ export default function Listings({ltype}) {
 
   const fetchData = async () => {
     try {
-        const response = await api.get(`/listings/?type=${ltype}&page=${page}`);
+        const response = await api.get(`/listings/?type=${ltype}&page=${page}&user=${selectedUserId}`);
         setData(response.data);
     } catch (error) {
         console.error('Error fetching data:', error);

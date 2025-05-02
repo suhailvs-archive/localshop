@@ -1,19 +1,10 @@
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { useEffect, useState } from 'react';
-import api from '@/constants/api';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import {
-  List,
-  Text,
-  Button,
-  Avatar,
-  Card,
-  Divider,
-  HelperText,
-  ActivityIndicator,
-} from 'react-native-paper';
+import { List, Button, Avatar, Card, HelperText } from 'react-native-paper';
 import { Ionicons } from '@expo/vector-icons';
 import SkeletonLoader from '@/components/SkeletonLoader';
+import api from '@/constants/api';
 
 const UserDetails = () => {
   const { id } = useLocalSearchParams();
@@ -26,10 +17,10 @@ const UserDetails = () => {
   useEffect(() => {
     fetchData();
   }, []);
-
+  global.selectedUserId = id;
   const fetchData = async () => {
     try {
-      const response = await api.get(`/user/${id}/`);
+      const response = await api.get(`/users/${id}/`);
       setData(response.data);
     } catch (err) {
       console.error('Error fetching data:', err);
@@ -42,11 +33,7 @@ const UserDetails = () => {
     setError('');
     setVerifyLoading(true);
     try {
-      const response = await api.post('/verifyuser/', {
-        candidate_id: data.id,
-        trust_score: '0.8',
-      });
-      // router.replace({ pathname: 'screens/sendmoney/success',params: {name:first_name, amount:amount } });
+      await api.post('/verifyuser/', { candidate_id: data.id });      
     } catch (error) {
       if (error.response) {
         setError(JSON.stringify(error.response.data) || 'Invalid credentials');
@@ -56,6 +43,7 @@ const UserDetails = () => {
         setError('Something went wrong. Please try again.');
       }
     } finally {
+      alert('verification success');
       setVerifyLoading(false);
     }
   };
@@ -63,7 +51,6 @@ const UserDetails = () => {
   return (
     <>
       <ScrollView contentContainerStyle={styles.container}>
-      
         {loading ? (
           <View>
             <SkeletonLoader width={100} height={20} />
@@ -140,7 +127,6 @@ const UserDetails = () => {
               </Card.Content>
             </Card>
           </View>
-
         )}
       </ScrollView>
     </>
