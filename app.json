@@ -16,7 +16,8 @@
         "foregroundImage": "./assets/images/lets-adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.suhailvs.lets"
+      "package": "com.suhailvs.lets",
+      "edgeToEdgeEnabled": true
     },
     "web": {
       "bundler": "metro",
