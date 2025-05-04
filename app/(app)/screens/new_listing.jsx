@@ -24,11 +24,6 @@ const AddListingScreen = () => {
   const [loading, setLoading] = useState(false);
 
   const { ltype } = useLocalSearchParams();
-  // const categories = [ //"Electronics","Clothing"];
-  //   ["electronics","Electronics"],
-  //   ["cloting","Cloting"],
-  // ];
-
   const [categories, setCategories] = useState([]);
 
 
@@ -49,7 +44,7 @@ const AddListingScreen = () => {
 
   // Handle Form Submission
   const handleSubmit = async () => {
-    if (!category || !title || !description || !rate || !image) {
+    if (!category || !title || !description || !rate) {
       setError("Please fill all fields.");
       return;
     }
@@ -57,7 +52,9 @@ const AddListingScreen = () => {
     setLoading(true);
 
     let formData = new FormData();
-    formData.append("image", {uri: image,name: "upload.jpg",type: "image/jpeg"});
+    if(image){
+      formData.append("image", {uri: image,name: "listing.jpg",type: "image/jpeg"});
+    }    
     formData.append("category", category);
     formData.append("title", title);
     formData.append("description", description);

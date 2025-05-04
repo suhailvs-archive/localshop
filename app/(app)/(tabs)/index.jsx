@@ -5,9 +5,10 @@ import { List, Button, Avatar, Card, HelperText } from 'react-native-paper';
 import { Ionicons } from '@expo/vector-icons';
 import SkeletonLoader from '@/components/SkeletonLoader';
 import api from '@/constants/api';
+import { formatDate } from '@/utils/formatDate';
 
 const UserDetails = () => {
-  const { id } = useLocalSearchParams();
+  const { id,is_mine } = useLocalSearchParams();
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(true);
   const [verifyLoading, setVerifyLoading] = useState(false);
@@ -18,6 +19,7 @@ const UserDetails = () => {
     fetchData();
   }, []);
   global.selectedUserId = id;
+  global.isMe = is_mine;
   const fetchData = async () => {
     try {
       const response = await api.get(`/users/${id}/`);
@@ -42,14 +44,13 @@ const UserDetails = () => {
       } else {
         setError('Something went wrong. Please try again.');
       }
-    } finally {
-      alert('verification success');
+    } finally {      
       setVerifyLoading(false);
+      fetchData();
     }
   };
 
   return (
-    <>
       <ScrollView contentContainerStyle={styles.container}>
         {loading ? (
           <View>
@@ -81,6 +82,7 @@ const UserDetails = () => {
             )}
           
             <Card mode="outlined" style={styles.card}>
+              <Card.Cover source={{ uri: data.image }} />
               <Card.Title
                 title={data.username || 'User'}
                 subtitle={`ID: ${data.id}`}
@@ -100,7 +102,7 @@ const UserDetails = () => {
                 />
                 <List.Item
                   title="Balance"
-                  description={`₹ ${data.balance ?? 0}`}
+                  description={`£ ${data.balance ?? 0}`}
                   left={(props) => <List.Icon {...props} icon="wallet" />}
                 />
                 <List.Item
@@ -109,18 +111,8 @@ const UserDetails = () => {
                   left={(props) => <List.Icon {...props} icon="calendar" />}
                 />
                 <List.Item
-                  title="Government ID"
-                  description={data.government_id || '-'}
-                  left={(props) => <List.Icon {...props} icon="card-account-details" />}
-                />
-                <List.Item
-                  title="Exchange"
-                  description={data.exchange || '-'}
-                  left={(props) => <List.Icon {...props} icon="swap-horizontal" />}
-                />
-                <List.Item
                   title="Last Login"
-                  description={data.last_login || '-'}
+                  description={formatDate(data.last_login) || '-'}
                   left={(props) => <List.Icon {...props} icon="clock" />}
                 />             
                 {error ? <HelperText type="error">{error}</HelperText> : null}
@@ -129,7 +121,6 @@ const UserDetails = () => {
           </View>
         )}
       </ScrollView>
-    </>
   );
 };
 
@@ -142,7 +133,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
   card: {
-    marginTop: 30,
+    marginTop: 15,
     borderRadius: 10,
     backgroundColor: '#fff',
   },

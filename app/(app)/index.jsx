@@ -54,13 +54,13 @@ export default function Index() {
     contact.username.includes(searchQuery)
   );
   const { signOut } = useSession();
-  const handleShowUser = (userid) => {
-    router.navigate({ pathname: '/(tabs)', params: { id: userid}});
+  const handleShowUser = (userid,is_mine='no') => {
+    router.navigate({ pathname: '/(tabs)', params: { id: userid, is_mine}});
   };
   return (
     <ScrollView>
       <View style={styles.header}>
-        <Text variant="labelLarge" style={styles.headerText}>Hi {authuser.user_id}, welcome to {authuser.exchange} exchange.</Text>
+        <Text variant="labelLarge" style={styles.headerText}>Hi {authuser.firstname}, welcome to {authuser.exchange_name} exchange.</Text>
         <Text variant="headlineSmall" style={styles.headerText}>Your Balance:</Text>
         
         <View style={{flexDirection: "row"}}>
@@ -74,7 +74,7 @@ export default function Index() {
         <Card>
           <Card.Actions>
             <Button onPress={signOut}>Logout</Button>
-            <Button>My Account</Button>
+            <Button onPress={() => handleShowUser(authuser.user_id, 'yes')}>My Account</Button>
           </Card.Actions>
         </Card>
         <Text variant="headlineSmall" style={{marginTop:20}}>People</Text>
@@ -91,7 +91,7 @@ export default function Index() {
             {filteredContacts.map((user, i) => (
               <View style={styles.person} key={i}>
                 <TouchableOpacity onPress={() => handleShowUser(user.id)}>
-                <Avatar.Image size={60} source={{uri:'https://avatars.githubusercontent.com/u/2777384'}} />
+                <Avatar.Image size={60} source={{ uri: user.thumbnail }} />
                 <Text variant="bodyMedium" style={[styles.personText, !user.is_active && styles.in_active]}>{user.first_name}</Text>
                 </TouchableOpacity>
               </View>
