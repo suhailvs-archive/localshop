@@ -10,14 +10,13 @@ export default function Listings({ltype}) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
-
   useEffect(() => {
     fetchData();
   }, [page]);
 
   const fetchData = async () => {
     try {
-        const response = await api.get(`/listings/?type=${ltype}&page=${page}`);
+        const response = await api.get(`/listings/?type=${ltype}&page=${page}&user=${global.selectedUserId}`);
         setData(response.data);
     } catch (error) {
         console.error('Error fetching data:', error);
@@ -67,12 +66,11 @@ export default function Listings({ltype}) {
       />
 
       {/* Floating Cart Button */}
-      <FAB
-        style={styles.fab}
-        icon={'plus'}
-        label={ltype==='O'? 'New Offering':'New Want'}
-        onPress={() => router.push({ pathname: 'screens/new_listing', params:{'ltype':ltype} })}
-      />
+      {global.isMe=='yes' && (
+        <FAB style={styles.fab} icon={'plus'} label={ltype==='O'? 'New Offering':'New Want'}
+          onPress={() => router.push({ pathname: 'screens/new_listing', params:{'ltype':ltype} })}
+        />)
+      }
     </SafeAreaView>
   );
 }

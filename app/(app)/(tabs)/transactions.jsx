@@ -1,20 +1,14 @@
-import { View, Text, FlatList, StyleSheet } from "react-native";
+import { View, FlatList, StyleSheet } from "react-native";
+import { Text} from "react-native-paper";
 import { useEffect, useState } from 'react';
 import SkeletonLoader from "@/components/SkeletonLoader";
 import api from '@/constants/api'
 import globalStyles from "@/components/Styles"; 
+import { formatDate } from '@/utils/formatDate';
 
 export default function TransactionScreen (){
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const formatDate = (dateString) => {    
-    const date = new Date(dateString);    
-    return new Intl.DateTimeFormat("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "2-digit",
-    }).format(date);
-  };
   
   useEffect(() => {
       fetchData();
@@ -22,7 +16,7 @@ export default function TransactionScreen (){
 
   const fetchData = async () => {
       try {
-          const response = await api.get('/transactions/');
+          const response = await api.get(`/transactions/?user=${global.selectedUserId}`);
           setData(response.data);
       } catch (error) {
           console.error('Error fetching data:', error);
@@ -40,17 +34,18 @@ export default function TransactionScreen (){
         </View>
       ) : (
         <View>        
-          <Text style={globalStyles.title}>Transactions</Text>
+          <Text variant="headlineMedium">Transactions</Text>
           <FlatList
             data={data}
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
               <View style={styles.transactionItem}>
-                <Text style={styles.transactionTitle}>{item.is_received ? `Received from ${item.buyer_name}` : `Paid to ${item.seller_name}`}</Text>
+                <Text variant="labelLarge">{item.is_received ? `Received from ${item.buyer_name}` : `Paid to ${item.seller_name}`}</Text>
                 <Text style={[styles.transactionAmount, item.is_received ? styles.positive : styles.negative]}>
-                {item.is_received ? '+' : '-'}{item.amount}₹
+                {item.is_received ? '+' : '-'}{item.amount}£
                 </Text>
-                <Text style={styles.transactionDate}>{formatDate(item.created_at)}</Text>
+                {item.description && (<Text variant="bodySmall">{item.description}</Text>)}                
+                <Text style={styles.transactionDate}>{formatDate(item.created_at)}</Text>                
               </View>
             )}
           />
@@ -60,9 +55,7 @@ export default function TransactionScreen (){
   );
 }
 const styles = StyleSheet.create({
-  sectionTitle: { fontSize: 18, fontWeight: "bold", marginBottom: 10 },
   transactionItem: { padding: 15, borderBottomWidth: 1, borderBottomColor: "#ddd" },
-  transactionTitle: { fontSize: 16, fontWeight: "500" },
   transactionAmount: { fontSize: 16, fontWeight: "bold", position: "absolute", right: 10, top: 15 },
   transactionDate: { fontSize: 12, color: "gray", marginTop: 2 },
   positive: { color: "green" },

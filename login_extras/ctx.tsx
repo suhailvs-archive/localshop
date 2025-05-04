@@ -1,9 +1,8 @@
-import { useContext, createContext, type PropsWithChildren } from 'react';
+import { createContext, useContext, type PropsWithChildren } from 'react';
 // import axios from 'axios';
-import { useStorageState } from './useStorageState';
-import { router } from "expo-router";
+import api from '@/constants/api';
 import * as SecureStore from 'expo-secure-store';
-import api from '@/constants/api'
+import { useStorageState } from './useStorageState';
 
 const AuthContext = createContext<{
   // signIn: () => void;
@@ -46,13 +45,11 @@ export function SessionProvider({ children }: PropsWithChildren) {
     try {
       const response = await api.post('/login/', { username, password });
       const data = response.data;
-      // console.log(response.data);
       const token = data.key;
       setSession(token); // Store token securely
       api.defaults.headers.common['Authorization'] = `Token ${token}`;
-      const jsonValue = {user_id:data.user_id,username:data.username,exchange:data.exchange};
-      await SecureStore.setItemAsync('user_data', JSON.stringify(jsonValue));
-      router.replace("/");
+      await SecureStore.setItemAsync('user_data', JSON.stringify(data));
+      
     } catch (error:any) {
       if (error.response) {
         // Server responded with a status code outside 2xx

@@ -3,7 +3,7 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { Redirect, Tabs } from 'expo-router';
 import { useTheme } from 'react-native-paper';
 
-export default function TabLayout2() {
+export default function TabLayout() {
   const theme = useTheme();
   return (
     <Tabs
@@ -42,6 +42,13 @@ export default function TabLayout2() {
         options={{
           title: 'Wants',
           tabBarIcon: ({ color }) => <Icon name="shopping" size={28} color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="transactions"
+        options={{
+          title: 'Transactions',
+          tabBarIcon: ({ color }) => <Icon name="file-document" size={28} color={color} />,
         }}
       />
     </Tabs>

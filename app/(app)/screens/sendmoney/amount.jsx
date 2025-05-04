@@ -57,17 +57,26 @@ const EnterAmountScreen = () => { // { route, navigation }
   return (
     <View style={styles.container}>
       {/* Contact Info */}
-      <View style={styles.contactContainer}>
+      {/* <View style={styles.contactContainer}>
         <Icon name="account-circle" size={50} color="#4285F4" />
         <View>
           <Text style={styles.contactName}>{first_name} ({username})</Text>
           <Text style={styles.contactDetails}>Send money on LETS</Text>
         </View>
+      </View> */}
+      <View style={styles.contactWrapper}>
+        <View style={styles.contactContainer}>
+          <Icon name="account-circle" size={50} color="#4285F4" />
+          <View>
+            <Text style={styles.contactName}>{first_name} ({username})</Text>
+            <Text style={styles.contactDetails}>Send money on LETS</Text>
+          </View>
+        </View>
       </View>
-
+      <View style={styles.formContainer}>
       {/* Amount Input */}
       <View style={styles.amountContainer}>
-        <Text style={styles.currency}>₹</Text>
+        <Text style={styles.currency}>£</Text>
         <TextInput
           style={styles.amountInput}
           placeholder="0"
@@ -88,16 +97,16 @@ const EnterAmountScreen = () => { // { route, navigation }
 
       {/* Proceed Button */}
       <TouchableOpacity style={styles.proceedButton} onPress={handleProceed}>
-        <Text style={styles.proceedButtonText}>Pay ₹{amount || "0"}</Text>
+        <Text style={styles.proceedButtonText}>Pay £{amount || "0"}</Text>
       </TouchableOpacity>
-
+      </View>
       {/* Confirmation Modal */}
       <Modal transparent={true} animationType="fade" visible={modalVisible}>
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
             <Icon name="check-circle" size={60} color="#34A853" />
             <Text style={styles.modalTitle}>Confirm Payment</Text>
-            <Text style={styles.modalText}>Pay ₹{amount} to {first_name} ({username})?</Text>
+            <Text style={styles.modalText}>Pay £{amount} to {first_name} ({username})?</Text>
             {message ? <Text style={styles.modalMessage}>"{message}"</Text> : null}
             <ErrorMessage message={error} onClose={() => setError("")} />
             
@@ -124,6 +133,18 @@ const styles = StyleSheet.create({
     justifyContent: "center", 
     paddingHorizontal: 20 
   },
+  contactWrapper: {
+    width: '100%',
+    position: 'absolute',
+    top: 0,
+    paddingTop: 50, // adjust for status bar if needed
+    backgroundColor: '#fff',
+    zIndex: 10,
+    borderBottomWidth: 1,
+    borderColor: '#e0e0e0',
+  },
+  
+  
   contactContainer: { 
     flexDirection: "row", 
     alignItems: "center", 
@@ -136,6 +157,12 @@ const styles = StyleSheet.create({
   contactName: { fontSize: 18, fontWeight: "bold", color: "#000", marginLeft: 10 },
   contactDetails: { fontSize: 14, color: "#5F6368", marginLeft: 10 },
   
+
+  formContainer: {
+    marginTop: 140, // enough space below contactWrapper
+    width: '100%',
+    alignItems: 'center',
+  },
   amountContainer: { 
     flexDirection: "row", 
     alignItems: "center", 

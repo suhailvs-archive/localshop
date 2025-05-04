@@ -46,7 +46,6 @@ const OfferingDetailPage = ( ) => {
   const getUser = async () => {
     try {
       const jsonValue = await SecureStore.getItemAsync('user_data');
-      console.log(jsonValue)
       setUserData(JSON.parse(jsonValue));
     } catch (e) {
       console.error('Failed to load user:', e);
@@ -86,13 +85,16 @@ const OfferingDetailPage = ( ) => {
         <View>
           {/* Product Title and Price */}
           <Text style={styles.productTitle}>{offering.title}</Text>
-          <Text style={styles.productPrice}>₹{offering.rate}</Text>
+          <Text style={styles.productPrice}>£{offering.rate}</Text>
           {/* Formatted Date */}
           <Text style={styles.dateLabel}>Added on: {formatDate(offering.created_at)}</Text>
           {/* Product Image   */}
-          <View style={styles.imageContainer}>
-            <Image source={{ uri: offering.image }} style={styles.productImage} />
-          </View>
+          {offering.image && (
+            <View style={styles.imageContainer}>
+              <Image source={{ uri: offering.image }} style={styles.productImage} />
+            </View>
+          )}
+          
           
           {/* Product Description */}          
           <Markdown>{offering.description}</Markdown>
@@ -104,7 +106,7 @@ const OfferingDetailPage = ( ) => {
             
             <Text style={styles.advertiserTitle}>{offering.user.first_name}</Text>
             <Text style={[offering.user.balance > 0 ? styles.positive : styles.negative]}>
-              Balance: ₹{offering.user.balance} Rs
+              Balance: £{offering.user.balance}
             </Text>
             <Text style={styles.advertiserDate}>Last login: {formatDate(offering.user.last_login)}</Text>
                

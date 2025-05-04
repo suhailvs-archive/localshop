@@ -1,10 +1,10 @@
-import { useState } from 'react';
-import { StyleSheet, View } from "react-native";
-import { useRouter } from 'expo-router';
-import { TextInput, Button, useTheme,Text} from "react-native-paper";
-import { useSession } from "@/login_extras/ctx";
 import ErrorMessage from "@/components/ErrorMessage";
 import Logo from "@/components/Logo";
+import { useSession } from "@/login_extras/ctx";
+import { useRouter } from 'expo-router';
+import { useState } from 'react';
+import { StyleSheet, View } from "react-native";
+import { Button, Text, TextInput, useTheme } from "react-native-paper";
 
 export default function Login() {
   const { signIn } = useSession();
@@ -25,7 +25,8 @@ export default function Login() {
     setLoading(true);
     
     try {
-      const userData = await signIn(username, password);      
+      const userData = await signIn(username, password);  
+      router.replace("/");    
     } catch (err) {
       if (err.message.includes("is_active")){
         // user and password is correct, but user is inactive
