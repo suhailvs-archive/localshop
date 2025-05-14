@@ -62,13 +62,25 @@ const OfferingDetailPage = ( ) => {
 
   const handleDelete = async () => {
     try {
-      const response = await api.delete(`/listings/${offering.user.id}/`);
-      console.log('Item deleted successfully:', response.data);
+      const response = await api.delete(`/listings/${offering.id}/`);
+      console.log('Item deleted successfully:');
       router.replace("/")
     } catch (error) {
       console.error('Error deleting item:', error);
     }
   };
+  const handleDeactivate = async () => {
+    try {
+      const response = await api.patch(`/listings/${offering.id}/`,{is_active:false},
+        { headers: { 'Content-Type': 'application/json'}}
+      );
+      console.log('Item deactivated successfully:');
+      router.replace("/")
+    } catch (error) {
+      console.error('Error deactivating item:', error);
+    }
+  };
+  
   const handleCallPress = () => {
     Linking.openURL(`tel:${offering.user.phone}`);
   };
@@ -121,7 +133,15 @@ const OfferingDetailPage = ( ) => {
           </View>
           {/* Add to Delete and Buy Now Buttons */}
           {offering.user.id == userdata.user_id && 
-          <Button
+          <><Button
+            mode="outlined"
+            onPress={handleDeactivate}
+            style={styles.deleteButton}
+            textColor="#D32F2F"
+            icon={({ color, size }) => (
+              <MaterialIcons name="close" color={color} size={size} />
+            )}
+          >Deactivate</Button><Button
             mode="outlined"
             onPress={handleDelete}
             style={styles.deleteButton}
@@ -129,7 +149,7 @@ const OfferingDetailPage = ( ) => {
             icon={({ color, size }) => (
               <MaterialIcons name="delete" color={color} size={size} />
             )}
-          >Delete</Button>} 
+          >Delete</Button></>} 
           <Button
             mode="contained"
             onPress={handleBuyNow}

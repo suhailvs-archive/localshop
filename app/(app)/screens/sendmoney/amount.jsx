@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
     width: '100%',
     position: 'absolute',
     top: 0,
-    paddingTop: 50, // adjust for status bar if needed
+    paddingTop: 10, // adjust for status bar if needed
     backgroundColor: '#fff',
     zIndex: 10,
     borderBottomWidth: 1,
@@ -159,7 +159,7 @@ const styles = StyleSheet.create({
   
 
   formContainer: {
-    marginTop: 140, // enough space below contactWrapper
+    marginTop: 10, // enough space below contactWrapper
     width: '100%',
     alignItems: 'center',
   },
