@@ -61,3 +61,5 @@ $ eas build -p android --profile preview
 you can download the `apk` after some time at https://expo.dev/accounts/suhailvs/projects/stackcoinapp
 
 https://docs.expo.dev/build-reference/apk/
+
+**production build:** `eas build -p android`

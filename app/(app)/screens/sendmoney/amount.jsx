@@ -130,14 +130,13 @@ const styles = StyleSheet.create({
     flex: 1, 
     backgroundColor: "#fff", 
     alignItems: "center", 
-    justifyContent: "center", 
+    // justifyContent: "center", 
     paddingHorizontal: 20 
   },
   contactWrapper: {
     width: '100%',
-    position: 'absolute',
-    top: 0,
-    paddingTop: 10, // adjust for status bar if needed
+    // position: 'absolute',
+    
     backgroundColor: '#fff',
     zIndex: 10,
     borderBottomWidth: 1,
@@ -151,15 +150,15 @@ const styles = StyleSheet.create({
     backgroundColor: "#F1F3F4", 
     padding: 15, 
     borderRadius: 10, 
-    width: "100%", 
-    marginBottom: 30 
+    width: "100%"
+    // marginBottom: 30 
   },
   contactName: { fontSize: 18, fontWeight: "bold", color: "#000", marginLeft: 10 },
   contactDetails: { fontSize: 14, color: "#5F6368", marginLeft: 10 },
   
 
   formContainer: {
-    marginTop: 10, // enough space below contactWrapper
+    // marginTop: 100, // enough space below contactWrapper
     width: '100%',
     alignItems: 'center',
   },
