@@ -2,7 +2,7 @@
   "expo": {
     "name": "LETS",
     "slug": "lets",
-    "version": "1.1.2",
+    "version": "1.1.3",
     "orientation": "portrait",
     "icon": "./assets/images/lets-icon.png",
     "scheme": "lets",
@@ -16,7 +16,7 @@
         "foregroundImage": "./assets/images/lets-adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.suhailvs.lets",
+      "package": "com.suhailvs.letsystem",
       "edgeToEdgeEnabled": true
     },
     "web": {
