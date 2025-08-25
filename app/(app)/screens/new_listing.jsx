@@ -81,8 +81,8 @@ const AddListingScreen = () => {
       text_startswith = "Create a wants description for local exchange trading system where I want ";
     }
     try {
-      const response = await axios.get(`${url}?details=${text_startswith} ${title}`);
-      // const response = {data: 'This is a Dummy description for testing purpose'};
+      // const response = await axios.get(`${url}?details=${text_startswith} ${title}`);
+      const response = {data: ''};
       setDescription(response.data);
       setShowDescription(true);
     } catch (error) {
@@ -127,7 +127,7 @@ const AddListingScreen = () => {
           disabled={loadingDescription} 
           onPress={handleGenerateDetail}
         >
-          {loadingDescription ? "Processing..." : "Generate description from title"}
+          {loadingDescription ? "Processing..." : "Enter description"}
         </Button>
       )}
 
