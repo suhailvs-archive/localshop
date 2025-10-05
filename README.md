@@ -63,3 +63,5 @@ you can download the `apk` after some time at https://expo.dev/accounts/suhailvs
 https://docs.expo.dev/build-reference/apk/
 
 **production build:** `eas build -p android`
+
+`eas credentials`: 78:2C:FE:47:99:0B:83:9D:9D:74:C6:29:9C:DD:F2:5B:18:DE:5B:5A

@@ -133,7 +133,7 @@ const OfferingDetailPage = ( ) => {
           </View>
           {/* Add to Delete and Buy Now Buttons */}
           {offering.user.id == userdata.user_id && 
-          <><Button
+          <>{offering.is_active == false && <Button
             mode="outlined"
             onPress={handleDeactivate}
             style={styles.deleteButton}
@@ -141,7 +141,7 @@ const OfferingDetailPage = ( ) => {
             icon={({ color, size }) => (
               <MaterialIcons name="close" color={color} size={size} />
             )}
-          >Deactivate</Button><Button
+          >Deactivate</Button>}<Button
             mode="outlined"
             onPress={handleDelete}
             style={styles.deleteButton}

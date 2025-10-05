@@ -41,7 +41,7 @@ export default function Listings({ltype}) {
   );
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       {/* Search Bar */}
       <Searchbar
         placeholder="Search"
@@ -71,7 +71,7 @@ export default function Listings({ltype}) {
           onPress={() => router.push({ pathname: 'screens/new_listing', params:{'ltype':ltype} })}
         />)
       }
-    </SafeAreaView>
+    </View>
   );
 }
 

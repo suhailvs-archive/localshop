@@ -82,11 +82,11 @@ const UserDetails = () => {
             )}
           
             <Card mode="outlined" style={styles.card}>
-              <Card.Cover source={{ uri: data.image }} />
+              
               <Card.Title
                 title={data.username || 'User'}
                 subtitle={`ID: ${data.id}`}
-                left={(props) => <Avatar.Icon {...props} icon="account" />}
+                left={(props) => <Avatar.Image size={50} source={{ uri: data.thumbnail }} />}
               />
               <Card.Content>
                 
@@ -117,6 +117,7 @@ const UserDetails = () => {
                 />             
                 {error ? <HelperText type="error">{error}</HelperText> : null}
               </Card.Content>
+              <Card.Cover source={{ uri: data.image }} style={{ resizeMode: "contain", height: 250, backgroundColor: "#000" }} />
             </Card>
           </View>
         )}

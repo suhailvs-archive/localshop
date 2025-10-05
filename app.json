@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "LETS",
-    "slug": "lets",
-    "version": "1.1.3",
+    "name": "letsystem",
+    "slug": "letsystem",
+    "version": "1.1.4",
     "orientation": "portrait",
     "icon": "./assets/images/lets-icon.png",
-    "scheme": "lets",
+    "scheme": "letsystem",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
@@ -17,10 +17,10 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.suhailvs.letsystem",
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "predictiveBackGestureEnabled": false
     },
     "web": {
-      "bundler": "metro",
       "output": "static",
       "favicon": "./assets/images/favicon.png"
     },
@@ -32,21 +32,22 @@
           "image": "./assets/images/splash-icon.png",
           "imageWidth": 200,
           "resizeMode": "contain",
-          "backgroundColor": "#ffffff"
+          "backgroundColor": "#ffffff",
+          "dark": {
+            "backgroundColor": "#000000"
+          }
         }
       ]
     ],
     "experiments": {
-      "typedRoutes": true
+      "typedRoutes": true,
+      "reactCompiler": true
     },
     "extra": {
-      "router": {
-        "origin": false
-      },
+      "router": {},
       "eas": {
-        "projectId": "a9585cc2-2612-48e2-810e-d4c35192566a"
+        "projectId": "97a7f612-8acd-4f27-b63b-dce41bd23967"
       }
-    },
-    "owner": "suhailvs"
+    }
   }
 }
