@@ -9,8 +9,8 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: theme.colors.primary,
-        tabBarInactiveTintColor: theme.colors.secondary,
+        tabBarActiveTintColor: '#2A4BA0',
+        tabBarInactiveTintColor: '#B2BBCE',
         tabBarLabelStyle: {
           paddingBottom: 5,
         },
@@ -23,10 +23,24 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
+        name="categories"
+        options={{
+          title: 'Categories',
+          tabBarIcon: ({ color }) => <Icon name="animation-outline" size={28} color={color} />,
+        }}
+      />
+      <Tabs.Screen
         name="transactions"
         options={{
-          title: 'Transactions',
-          tabBarIcon: ({ color }) => <Icon name="file-document" size={28} color={color} />,
+          title: 'Account',
+          tabBarIcon: ({ color }) => <Icon name="account-outline" size={28} color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="cart"
+        options={{
+          title: 'Cart',
+          tabBarIcon: ({ color }) => <Icon name="cart" size={28} color={color} />,
         }}
       />
     </Tabs>
