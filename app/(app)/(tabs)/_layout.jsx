@@ -8,14 +8,6 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        // not working -> https://stackoverflow.com/a/79569125/2351696
-        // animation: 'shift', // or 'shift'
-        // transitionSpec: {
-        //   animation: 'timing',
-        //   config: {
-        //     duration: 3000,
-        //   },
-        // },
         headerShown: false,
         tabBarActiveTintColor: theme.colors.primary,
         tabBarInactiveTintColor: theme.colors.secondary,
@@ -28,20 +20,6 @@ export default function TabLayout() {
         options={{
           title: 'Home',
           tabBarIcon: ({ color }) => <Icon name="home" size={28} color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="offerings"
-        options={{
-          title: 'Offerings',
-          tabBarIcon: ({ color }) => <Icon name="cart" size={28} color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="wants"
-        options={{
-          title: 'Wants',
-          tabBarIcon: ({ color }) => <Icon name="shopping" size={28} color={color} />,
         }}
       />
       <Tabs.Screen

@@ -2,7 +2,6 @@ import { View, StyleSheet, ScrollView } from 'react-native';
 import { useEffect, useState } from 'react';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { List, Button, Avatar, Card, HelperText } from 'react-native-paper';
-import { Ionicons } from '@expo/vector-icons';
 import SkeletonLoader from '@/components/SkeletonLoader';
 import api from '@/constants/api';
 import { formatDate } from '@/utils/formatDate';
@@ -60,26 +59,6 @@ const UserDetails = () => {
           </View>
         ) : (
           <View>
-            {!data.is_active ? (
-              <Button
-                mode="contained"
-                onPress={handleVerifyUser}
-                loading={verifyLoading}
-                disabled={verifyLoading}
-              >
-                {verifyLoading ? 'Verifying...' : 'Verify User'}
-              </Button>
-            ):(
-              <Button
-                mode="contained-tonal"
-                icon={({ size, color }) => (
-                  <Ionicons name="send" size={size} color={color} />
-                )}
-                onPress={() => router.navigate({ pathname: 'screens/sendmoney/amount', params: { id: data.id, username: data.username, first_name: data.first_name } })}
-              >
-                Send Money
-              </Button>
-            )}
           
             <Card mode="outlined" style={styles.card}>
               

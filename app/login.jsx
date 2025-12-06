@@ -75,8 +75,6 @@ export default function Login() {
     <Button style={{marginTop: 15}} mode="contained" onPress={handleLogin} loading={loading} disabled={loading}>
       {loading ? 'Loading...' : 'Login'}
     </Button>
-    <Text variant="bodyLarge" style={{ textAlign: "center", marginTop:20 }}>Or New user?</Text>
-    <Button style={{marginTop: 15}} onPress={() => router.navigate('/registration')} mode="outlined">Sign up for LETS</Button>
     <Text></Text><Text></Text><Text></Text>
   </View>
   );
