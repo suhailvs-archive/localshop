@@ -10,11 +10,13 @@ from rest_framework.response import Response
 
 from .models import Product,Cart, Order, OrderItems
 from .serializers import CartSerializer, ProductsSerializer
-class ProductListAPIView(APIView):
-    def get(self, request, format=None):
-        queryset = Product.objects.order_by('-created_at')
-        serializer = ProductsSerializer(queryset, many=True)
-        return Response(serializer.data)
+
+class ProductReadOnlyViewSet(viewsets.ReadOnlyModelViewSet):
+    # permission_classes = [IsAuthenticated]
+    serializer_class = ProductsSerializer
+
+    def get_queryset(self):
+        return Product.objects.order_by('-created_at')
     
 class CartListAPIView(viewsets.ModelViewSet):
     queryset = Cart.objects.order_by('-created_at')
