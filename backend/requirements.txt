@@ -1,0 +1,7 @@
+Django
+python-decouple
+djangorestframework
+django-cors-headers
+requests
+pillow==11.1.0
+sorl-thumbnail==12.11.0

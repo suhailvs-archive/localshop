@@ -4,8 +4,8 @@ import axios from "axios";
 import { router } from "expo-router";
 
 const api = axios.create({
-  // baseURL: process.env.REACT_APP_BASE_URL || "http://192.168.156.167:8000/api/v1",
-  baseURL: "https://suhailvs.pythonanywhere.com/api/v1",
+  baseURL: process.env.REACT_APP_BASE_URL || "http://10.232.195.167:8000/api",
+  // baseURL: "https://suhailvs.pythonanywhere.com/api",
 });
 
 // if token has been deleted from the table, then user need to signout

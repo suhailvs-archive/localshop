@@ -1,38 +1,31 @@
 import { useEffect, useState } from 'react';
 import { StyleSheet, FlatList, View, Image } from "react-native";
-import { Text, List } from "react-native-paper";
+import { Text, List, Searchbar } from "react-native-paper";
 import { useRouter } from "expo-router";
 import SkeletonLoader from "@/components/SkeletonLoader";
 import {useIsFocused} from '@react-navigation/native';
+import api from "@/constants/api"; 
 
 export default function HomeScreen (){
   const [page, setPage] = useState(1);
-  const [data, setProductList] = useState([]);
+  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const isFocused = useIsFocused();
   const router = useRouter();
-  const getProductsList = async () => {
-    try {
-      const res = await fetch('https://dummyjson.com/products');
-      const data = await res.json();
+  useEffect(() => {
+    fetchData();
+  }, [page]);
 
-      if (Array.isArray(data.products) && data.products.length) {
-        const updatedProducts = data.products.map((product) => {
-          return {
-            ...product,
-            isFavorite: false,
-          };
-        });
-        setProductList(updatedProducts);
-      }
+  const fetchData = async () => {
+    try {
+        const response = await api.get(`/products/?page=${page}`);
+        setData(response.data);
     } catch (error) {
-      console.error('Failed to get products list!', error);
+        console.error('Error fetching data:', error);
+    } finally {
+        setLoading(false);
     }
   };
 
-  useEffect(() => {
-    getProductsList();
-  }, [isFocused]);
 
 
   const renderItem = ({ item }) => (
@@ -41,7 +34,7 @@ export default function HomeScreen (){
         description={() => (
           <View style={{flexGrow: 1}}>
             <Text variant="bodyMedium">{item.title}</Text>
-            <Text variant="bodySmall" style={styles.rating}>{item.price}</Text>
+            <Text variant="bodySmall" style={styles.rating}>{item.price}{item.thumbnail}</Text>
           </View>
         )}
         left={() => <Image source={{ uri: item.thumbnail }} style={styles.productImage} />}
@@ -52,6 +45,11 @@ export default function HomeScreen (){
 
   return (
     <View style={styles.container}>
+      <Searchbar
+        placeholder="Search"
+        style={styles.searchBar}
+        icon="magnify"
+      />
       {/* Product Listing */}
       
       <FlatList
@@ -59,8 +57,6 @@ export default function HomeScreen (){
         keyExtractor={(item) => item.id.toString()}
         renderItem={renderItem}
         contentContainerStyle={styles.listContainer}
-        onEndReached={() => setPage(page + 1)}
-        onEndReachedThreshold={0.5}
         ListFooterComponent={loading && <SkeletonLoader width={100} height={20} />}
       />
 
@@ -76,6 +72,10 @@ const styles = StyleSheet.create({
   listContainer: {
     paddingHorizontal: 10,
     paddingBottom: 80,
+  },
+  listItem: {
+    margin:5,
+    backgroundColor: "#fff",
   },
   productImage: {
     width: 60,
