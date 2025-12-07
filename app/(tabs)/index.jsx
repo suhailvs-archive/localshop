@@ -42,7 +42,7 @@ export default function HomeScreen (){
         description={() => (
           <View style={{flexGrow: 1}}>
             <Text variant="bodyMedium">{item.title}</Text>
-            <Text variant="bodySmall" style={styles.rating}>{item.price}</Text>
+            <Text variant="bodySmall" style={styles.rating}>{item.price} ₹</Text>
           </View>
         )}
         left={() => 
