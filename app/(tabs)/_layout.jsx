@@ -1,10 +1,16 @@
 
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { Redirect, Tabs } from 'expo-router';
-import { useTheme } from 'react-native-paper';
 
+import { useSession } from "@/login_extras/ctx";
 export default function TabLayout() {
-  const theme = useTheme();
+  const { session, isLoading } = useSession();
+  // if (isLoading) {
+  //   return <Text>Loading...</Text>;
+  // }
+  if (!session) {
+    return <Redirect href="/login" />;
+  }
   return (
     <Tabs
       screenOptions={{
@@ -30,7 +36,7 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="transactions"
+        name="account"
         options={{
           title: 'Account',
           tabBarIcon: ({ color }) => <Icon name="account-outline" size={28} color={color} />,

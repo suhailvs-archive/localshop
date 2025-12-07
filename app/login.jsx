@@ -23,19 +23,11 @@ export default function Login() {
     }
     setError("");  // Clear previous errors
     setLoading(true);
-    
     try {
-      const userData = await signIn(username, password);  
+      const userData = await signIn(username.toLowerCase(), password);  
       router.replace("/");    
     } catch (err) {
-      if (err.message.includes("is_active")){
-        // user and password is correct, but user is inactive
-        router.navigate({ pathname: '/inactiveuser',params:{'username':username}});
-      }
-      else{
-        setError(err.message); // Show error message
-      }
-      
+      setError(err.message); // Show error message      
     } finally {
       setLoading(false);
     }
@@ -82,8 +74,8 @@ export default function Login() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
     padding: 20,
+    marginTop: 50,
   },
   input: {
     marginBottom: 15,

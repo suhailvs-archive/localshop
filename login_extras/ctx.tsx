@@ -43,11 +43,11 @@ export function SessionProvider({ children }: PropsWithChildren) {
   const signIn = async (username: string, password: string) => {
     console.log(username);
     try {
-      const response = await api.post('/login/', { username, password });
+      delete api.defaults.headers.common['Authorization'];
+      const response = await api.post('/api-token-auth/', { username, password });
       const data = response.data;
-      const token = data.key;
-      setSession(token); // Store token securely
-      api.defaults.headers.common['Authorization'] = `Token ${token}`;
+      setSession(data.token); // Store token securely
+      api.defaults.headers.common['Authorization'] = `Token ${data.token}`;
       await SecureStore.setItemAsync('user_data', JSON.stringify(data));
       
     } catch (error:any) {
@@ -77,6 +77,7 @@ export function SessionProvider({ children }: PropsWithChildren) {
   const signOut = () => {
     setSession(null);
     delete api.defaults.headers.common['Authorization'];
+    console.log(session)
   };
 
   return (

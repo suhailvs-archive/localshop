@@ -1,4 +1,5 @@
 from rest_framework import routers
+from rest_framework.authtoken.views import obtain_auth_token
 from django.urls import path,include
 
 from .views import CartListAPIView, OrderListAPIView, ProductReadOnlyViewSet
@@ -12,5 +13,5 @@ app_name='api'
 urlpatterns = [
     path('', include(router.urls)),
     path('orders/', OrderListAPIView.as_view()),
-    # path('products/', ProductListAPIView.as_view()),
+    path('api-token-auth/', obtain_auth_token),
 ]
