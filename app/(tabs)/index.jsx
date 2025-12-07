@@ -25,19 +25,21 @@ export default function HomeScreen (){
         setLoading(false);
     }
   };
-
-
-
+  
   const renderItem = ({ item }) => (
       <List.Item
         title={item.category}
         description={() => (
           <View style={{flexGrow: 1}}>
             <Text variant="bodyMedium">{item.title}</Text>
-            <Text variant="bodySmall" style={styles.rating}>{item.price}{item.thumbnail}</Text>
+            <Text variant="bodySmall" style={styles.rating}>{item.price}</Text>
           </View>
         )}
-        left={() => <Image source={{ uri: item.thumbnail }} style={styles.productImage} />}
+        left={() => 
+          // <Image source={{ uri: item.thumbnail }} style={styles.productImage} />
+          <Image source={{ uri: item.image }} style={styles.productImage} />
+        
+        }
         style={styles.listItem}
         onPress={() => router.push({ pathname: 'screens/product_details', params:{'id':item.id, 'category':item.category}})}
       />
@@ -76,9 +78,11 @@ const styles = StyleSheet.create({
     margin:5,
     backgroundColor: "#fff",
   },
+  
   productImage: {
     width: 60,
-    // height: 60,
+    height: 60,
+    resizeMode: "contain",
   },
   loader: {
     marginTop: 20,

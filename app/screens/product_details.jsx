@@ -83,7 +83,12 @@ const ProductDetailPage = ( ) => {
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 20, backgroundColor: "#fff" },
   imageContainer: { alignItems: "center", marginBottom: 20 },
-  productImage: { width: "100%", height: 300, borderRadius: 10 },
+  productImage: {
+    width: 260,
+  height: 260,
+    resizeMode: "contain",
+  },
+  
   productTitle: { fontSize: 24, fontWeight: "bold", color: "#232F3E", marginTop: 10, borderBottomWidth: 1, borderBottomColor: "#ddd"},
   productPrice: { fontSize: 20, marginTop: 10 },
   buyNowButton: {
