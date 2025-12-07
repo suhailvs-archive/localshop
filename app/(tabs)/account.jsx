@@ -1,11 +1,11 @@
 import { View,StyleSheet } from "react-native";
 import { Button, Text  } from 'react-native-paper';
 import { useSession } from "@/login_extras/ctx";
-export default function TxnScreen (){
+export default function AccountScreen (){
   const { signOut } = useSession();
   return (
     <View style={styles.container}>
-      <Button onPress={signOut}>Logout</Button>
+      <Button mode="contained" onPress={signOut}>Logout</Button>
     </View>
   )};
 

@@ -1,5 +1,3 @@
-staticfiles/
-fixtures/
 media/
 
 # sorl.thumbnail.kvstores.dbm_kvstore.KVStore

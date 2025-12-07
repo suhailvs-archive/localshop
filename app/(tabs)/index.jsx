@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { StyleSheet, FlatList, View, Image } from "react-native";
+import { StyleSheet, FlatList, View, Image, TouchableOpacity } from "react-native";
 import { Text, List, Searchbar } from "react-native-paper";
 import { useRouter } from "expo-router";
 import SkeletonLoader from "@/components/SkeletonLoader";
@@ -10,6 +10,7 @@ export default function HomeScreen (){
   const [page, setPage] = useState(1);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
   const router = useRouter();
   useEffect(() => {
     fetchData();
@@ -25,7 +26,15 @@ export default function HomeScreen (){
         setLoading(false);
     }
   };
-  
+  const onRefresh = async () => {
+    try {
+      setRefreshing(true);
+      await fetchData();   // reload data
+    } finally {
+      setRefreshing(false);
+    }
+  };
+
   const renderItem = ({ item }) => (
       <List.Item
         title={item.category}
@@ -38,8 +47,12 @@ export default function HomeScreen (){
         left={() => 
           // <Image source={{ uri: item.thumbnail }} style={styles.productImage} />
           <Image source={{ uri: item.image }} style={styles.productImage} />
-        
         }
+        right={() => (
+          <TouchableOpacity onPress={() => console.log("Icon clicked!")}>
+            <List.Icon icon="plus" />
+          </TouchableOpacity>
+        )}
         style={styles.listItem}
         onPress={() => router.push({ pathname: 'screens/product_details', params:{'id':item.id, 'category':item.category}})}
       />
@@ -57,6 +70,10 @@ export default function HomeScreen (){
         data={data}
         keyExtractor={(item) => item.id.toString()}
         renderItem={renderItem}
+        onEndReached={() => setPage(page + 1)}
+        onEndReachedThreshold={0.5}
+        refreshing={refreshing}
+        onRefresh={onRefresh}
         contentContainerStyle={styles.listContainer}
         ListFooterComponent={loading && <SkeletonLoader width={100} height={20} />}
       />
@@ -67,6 +84,7 @@ export default function HomeScreen (){
 
 const styles = StyleSheet.create({
   container: {
+    paddingTop: 20,
     flex: 1,
     backgroundColor: "#f8f8f8",
   },

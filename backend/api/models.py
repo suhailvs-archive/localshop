@@ -9,7 +9,8 @@ class Product(models.Model):
     category = models.CharField(max_length=50)
     title = models.CharField(max_length=255)
     description = models.TextField()
-    price = models.CharField(max_length=100, blank=True)
+    price = models.IntegerField()
+    unit = models.CharField(max_length=100, blank=True) # kg, litre, pc, gram
     created_at = models.DateTimeField(auto_now_add=True)
     image = models.ImageField(upload_to='offering/%Y/%m/%d/', null=True, blank=True)
     is_active = models.BooleanField(default=True)

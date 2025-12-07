@@ -1,0 +1,128 @@
+[
+{
+    "model": "api.product",
+    "pk": 1,
+    "fields": {
+        "category": "mobile",
+        "title": "OPPO K12x",
+        "description": "75,549 Ratings & 2,163 Reviews\r\n\r\n    32MP + 2MP | 8MP Front Camera\r\n    16.94 cm (6.67 inch) HD Display\r\n    Dimensity 6300 Processor\r\n    6 GB RAM | 128 GB ROM | Expandable Upto 1 TB\r\n    1 Year Manufacturer Warranty for Device and 6 Months Manufacturer Warranty for Inbox Accessories\r\n    5100 mAh Battery",
+        "price": 12999,
+        "unit": "",
+        "created_at": "2025-12-07T09:37:26.758Z",
+        "image": "offering/2025/12/07/1.jpeg",
+        "is_active": true
+    }
+},
+{
+    "model": "api.product",
+    "pk": 2,
+    "fields": {
+        "category": "mobile",
+        "title": "REDMI 13",
+        "description": "9,025 Ratings & 338 Reviews\r\n\r\n    108MP + 2MP | 13MP Front Camera\r\n    17.25 cm (6.79 inch) Full HD+ Display\r\n    4 Gen 2 AE Processor\r\n    6 GB RAM | 128 GB ROM | Expandable Upto 1 TB\r\n    1 Year Manufacturer Warranty for Phone and 6 Months Warranty for In the Box Accessories\r\n    5030 mAh Lithium Polymer Battery",
+        "price": 13999,
+        "unit": "",
+        "created_at": "2025-12-07T09:38:14.241Z",
+        "image": "offering/2025/12/07/2.jpeg",
+        "is_active": true
+    }
+},
+{
+    "model": "api.product",
+    "pk": 3,
+    "fields": {
+        "category": "mobile",
+        "title": "Apple iPhone 15",
+        "description": "Star: 4.6 1,79,856 Ratings & 5,943 Reviews\r\n\r\n    48MP + 12MP | 12MP Front Camera\r\n    15.49 cm (6.1 inch) Super Retina XDR Display\r\n    1 year warranty for phone and 1 year warranty for in Box Accessories.\r\n    128 GB ROM\r\n    1 Year Manufacturer Warranty for Phone and 6 Months Warranty for In the Box Accessories\r\n    A16 Bionic Chip, 6 Core Processor Processor",
+        "price": 57999,
+        "unit": "",
+        "created_at": "2025-12-07T11:00:25.402Z",
+        "image": "offering/2025/12/07/3.jpeg",
+        "is_active": true
+    }
+},
+{
+    "model": "api.product",
+    "pk": 4,
+    "fields": {
+        "category": "mobile",
+        "title": "Nothing Phone (2a)",
+        "description": "Star: 4.4 65,467 Ratings & 5,531 Reviews\r\n\r\n    50MP (OIS) + 50MP | 32MP Front Camera\r\n    17.02 cm (6.7 inch) Full HD+ Display\r\n    Dimensity 7200 Pro Processor\r\n    8 GB RAM | 128 GB ROM\r\n    1 Year Manufacturing Warranty\r\n    5000 mAh Battery",
+        "price": 21999,
+        "unit": "",
+        "created_at": "2025-12-07T11:04:58.264Z",
+        "image": "offering/2025/12/07/4.jpeg",
+        "is_active": true
+    }
+},
+{
+    "model": "api.product",
+    "pk": 5,
+    "fields": {
+        "category": "mobile",
+        "title": "CMF by Nothing Phone 1",
+        "description": "Star: 4.4 11,336 Ratings & 672 Reviews\r\n\r\n    50MP + 2MP | 16MP Front Camera\r\n    16.94 cm (6.67 inch) Full HD+ Display\r\n    Dimensity 7300 5G Processor\r\n    8 GB RAM | 128 GB ROM | Expandable Upto 2 TB\r\n    1 Year Manufacturing Warranty\r\n    5000 mAh Battery",
+        "price": 16499,
+        "unit": "",
+        "created_at": "2025-12-07T11:05:42.116Z",
+        "image": "offering/2025/12/07/5.jpeg",
+        "is_active": true
+    }
+},
+{
+    "model": "api.product",
+    "pk": 6,
+    "fields": {
+        "category": "mobile",
+        "title": "SAMSUNG Galaxy F05",
+        "description": "Star: 4.2 8,250 Ratings & 341 Reviews\r\n\r\n    50MP + 2MP | 8MP Front Camera\r\n    17.12 cm (6.74 inch) HD+ Display\r\n    Helio G85 Processor\r\n    4 GB RAM | 64 GB ROM | Expandable Upto 1 TB\r\n    1 Year Manufacturer Warranty for Device and 6 Months for In-Box Accessories\r\n    5000 mAh Battery",
+        "price": 6499,
+        "unit": "",
+        "created_at": "2025-12-07T11:06:44.985Z",
+        "image": "offering/2025/12/07/6.jpeg",
+        "is_active": true
+    }
+},
+{
+    "model": "api.product",
+    "pk": 7,
+    "fields": {
+        "category": "mobile",
+        "title": "REDMI Note 13 Pro+",
+        "description": "Star: 4.2 10,052 Ratings & 989 Reviews\r\n\r\n    200MP (OIS) + 8MP + 2MP | 16MP Front Camera\r\n    16.94 cm (6.67 inch) Display\r\n    Dimensity 7200 Ultra 5G Processor\r\n    8 GB RAM | 256 GB ROM\r\n    1 Year Manufacturer Warranty for Phone and 6 Months Warranty for In the Box Accessories\r\n    5000 mAh Battery",
+        "price": 27999,
+        "unit": "",
+        "created_at": "2025-12-07T11:07:42.793Z",
+        "image": "offering/2025/12/07/7.jpeg",
+        "is_active": true
+    }
+},
+{
+    "model": "api.product",
+    "pk": 8,
+    "fields": {
+        "category": "mobile",
+        "title": "Nothing Phone (2a) Plus",
+        "description": "Star: 4.4 2,641 Ratings & 141 Reviews\r\n\r\n    50MP + 50MP | 50MP Front Camera\r\n    17.02 cm (6.7 inch) Full HD+ Display\r\n    Dimensity 7350 Pro 5G Processor\r\n    8 GB RAM | 256 GB ROM\r\n    1 Year Manufacturing Warranty\r\n    5000 mAh Battery",
+        "price": 23999,
+        "unit": "",
+        "created_at": "2025-12-07T11:09:05.601Z",
+        "image": "offering/2025/12/07/8.jpeg",
+        "is_active": true
+    }
+},
+{
+    "model": "api.product",
+    "pk": 9,
+    "fields": {
+        "category": "mobile",
+        "title": "REDMI 13C",
+        "description": "Star: 4.3 59,400 Ratings & 2,466 Reviews\r\n\r\n    50MP Rear Camera | 8MP Front Camera\r\n    17.12 cm (6.74 inch) HD+ Display\r\n    Helio G85 Processor\r\n    4 GB RAM | 128 GB ROM | Expandable Upto 1 TB\r\n    1 Year Manufacturer Warranty for Phone and 6 Months Warranty for In the Box Accessories\r\n    5000 mAh Battery",
+        "price": 7199,
+        "unit": "",
+        "created_at": "2025-12-07T11:10:01.855Z",
+        "image": "offering/2025/12/07/9.jpeg",
+        "is_active": true
+    }
+}
+]

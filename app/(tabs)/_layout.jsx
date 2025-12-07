@@ -8,7 +8,6 @@ export default function TabLayout() {
   // if (isLoading) {
   //   return <Text>Loading...</Text>;
   // }
-  console.log('session',session);
   if (!session) {
     return <Redirect href="/login" />;
   }
