@@ -6,7 +6,7 @@ from .models import Cart,Product
 class ProductsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = ("id", "category", "title", "image",'price','thumbnail')
+        fields = ("id", "category", "title","description", "image",'price','thumbnail')
     # https://github.com/dessibelle/sorl-thumbnail-serializer-field/tree/master#example-usage
     thumbnail = HyperlinkedSorlImageField(
         '128x128',

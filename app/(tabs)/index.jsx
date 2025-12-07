@@ -29,6 +29,7 @@ export default function HomeScreen (){
   const onRefresh = async () => {
     try {
       setRefreshing(true);
+      setPage(1);          // reset page if needed
       await fetchData();   // reload data
     } finally {
       setRefreshing(false);
