@@ -39,7 +39,7 @@ export default function HomeScreen (){
         )}
         left={() => <Image source={{ uri: item.thumbnail }} style={styles.productImage} />}
         style={styles.listItem}
-        onPress={() => router.push({ pathname: 'screens/listing_details', params:{'id':item.id, 'category':item.category}})}
+        onPress={() => router.push({ pathname: 'screens/product_details', params:{'id':item.id, 'category':item.category}})}
       />
     );
 
@@ -50,8 +50,7 @@ export default function HomeScreen (){
         style={styles.searchBar}
         icon="magnify"
       />
-      {/* Product Listing */}
-      
+      {/* Product Listing */}      
       <FlatList
         data={data}
         keyExtractor={(item) => item.id.toString()}
