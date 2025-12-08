@@ -47,15 +47,20 @@ class OrderAPIView(APIView):
         Telegram Bot doc
         ----------------
         https://stackoverflow.com/a/38388851/2351696 
-
+        1. Add the bot to the group.
+        2. Send a message to the bot in the group: /my_id @my_bot
+        3. Go to following url: https://api.telegram.org/botXXX:YYYY/getUpdates
+        4. Look for "chat":{"id":-zzzzzzzzzz,
+        
         To get TELEGRAM_TOKEN visit:
         ----------------------------
         https://web.telegram.im/#/im?p=@BotFather
+        /mybots
         """
         url = f"https://api.telegram.org/bot{settings.TELEGRAM_TOKEN}/"
-        params = {'chat_id':-595052915, 'text': f'new order:{order.id} by {order.user.first_name}({order.user.username})'}
+        params = {'chat_id':-5000033946, 'text': f'new order:{order.id} by {order.user.first_name}({order.user.username})'}
         response = requests.post(url + 'sendMessage', data=params)
-        print(response)
+        
     def get(self, request, format=None):
         orders = Order.objects.filter(user=request.user).order_by('-created_at')
         return Response([{'created_at':order.created_at,'id':order.id,
