@@ -13,7 +13,7 @@ export default function CartScreen() {
 
   useEffect(() => {
     fetchData();
-  });
+  },[]);
 
   const fetchData = async () => {
     try {
