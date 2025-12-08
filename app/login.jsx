@@ -37,7 +37,7 @@ export default function Login() {
   <View style={styles.container}>
     <Logo/>
     <Text variant="headlineMedium" style={{ color: theme.colors.primary, textAlign: "center", marginBottom:20 }}>
-        Login to LETS
+        Login to Local Shop
     </Text>
     <TextInput
       label="Username"
