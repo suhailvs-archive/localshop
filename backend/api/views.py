@@ -6,11 +6,11 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from .models import Product,Cart, Order, OrderItems
-from .serializers import CartSerializer, ProductsSerializer
+from .serializers import CartSerializer, ProductSerializer
 
 class ProductReadOnlyViewSet(viewsets.ReadOnlyModelViewSet):
     # permission_classes = [IsAuthenticated]
-    serializer_class = ProductsSerializer
+    serializer_class = ProductSerializer
 
     def get_queryset(self):
         return Product.objects.order_by('-created_at')

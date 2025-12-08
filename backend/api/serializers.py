@@ -4,7 +4,7 @@ from .fields import HyperlinkedSorlImageField
 from .models import Cart,Product
 
 
-class ProductsSerializer(serializers.ModelSerializer):
+class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = ("id", "category", "title","description", "image",'price','thumbnail')
