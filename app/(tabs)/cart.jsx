@@ -1,8 +1,12 @@
 import { useEffect, useState } from 'react';
+import { useIsFocused } from '@react-navigation/native';
 import { StyleSheet, FlatList, View } from "react-native";
 import { useRouter } from "expo-router";
 import { Text,TextInput, List, Button } from "react-native-paper";
 import api from "@/constants/api"; 
+import SkeletonLoader from "@/components/SkeletonLoader";
+import globalStyles from "@/components/Styles"; 
+
 export default function CartScreen() {
   const [cart_total, setCartTotal] = useState(0);
   const [data, setData] = useState([]);
@@ -10,12 +14,16 @@ export default function CartScreen() {
   const [loading_btn, setButtonLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const router = useRouter();
+  const isFocused = useIsFocused();
 
   useEffect(() => {
-    fetchData();
-  },[]);
+    if (isFocused) {
+      fetchData();
+    }
+  }, [isFocused]);
 
   const fetchData = async () => {
+    setLoading(true);
     try {
         const response = await api.get('/cart/');
         setData(response.data);
@@ -26,7 +34,7 @@ export default function CartScreen() {
     }
   };
   // Handle Qty Change
-  const OtyChange = async (cartid,qty) => {
+  const QtyChange = async (cartid,qty) => {
     if (!qty) {
       return;
     }
@@ -81,7 +89,7 @@ export default function CartScreen() {
           mode="outlined"
           placeholder="0"
           keyboardType="numeric"
-          onChangeText={(newText) => OtyChange(item.id,newText)}
+          onChangeText={(newText) => QtyChange(item.id,newText)}
           defaultValue={item.quantity.toString()}
           style={{ width: 80, marginRight: 10 }}
         />
@@ -90,8 +98,15 @@ export default function CartScreen() {
     />
   );
   return (
-    <View style={styles.container}>
+    <View style={[globalStyles.container,{padding:20}]}>
       <Text variant="headlineMedium">Cart</Text>
+      {loading && (
+        <View>
+          <SkeletonLoader width={100} height={20} />
+          <SkeletonLoader width={200} height={15} />
+          <SkeletonLoader width={250} height={15} />
+        </View>
+      )}
       <FlatList
         data={data}
         keyExtractor={(item) => item.id.toString()}
@@ -108,17 +123,12 @@ export default function CartScreen() {
         labelStyle={styles.buttonText}
         loading={loading_btn} 
         disabled={loading_btn}
-      >{loading ? 'Loading...' : `Buy Now(${cart_total} ₹)`}</Button>
+      >{loading_btn ? 'Loading...' : `Buy Now(${cart_total} ₹)`}</Button>
     </View>
   )
 };
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 16,
-    flex: 1,
-    backgroundColor: "#f8f8f8",
-  },
   listContainer: {
     paddingHorizontal: 10,
     paddingBottom: 80,

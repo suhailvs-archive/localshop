@@ -3,7 +3,7 @@ import { StyleSheet, FlatList, View, Image, TouchableOpacity } from "react-nativ
 import { Text, List, Searchbar } from "react-native-paper";
 import { useRouter } from "expo-router";
 import SkeletonLoader from "@/components/SkeletonLoader";
-
+import globalStyles from "@/components/Styles"; 
 import api from "@/constants/api"; 
 
 export default function HomeScreen (){
@@ -88,7 +88,7 @@ export default function HomeScreen (){
     );
 
   return (
-    <View style={styles.container}>
+    <View style={[globalStyles.container,{paddingTop:20}]}>
       <Text variant="headlineMedium">Home</Text>
       <Searchbar
         placeholder="Search"
@@ -102,7 +102,7 @@ export default function HomeScreen (){
         keyExtractor={(item) => item.id.toString()}
         renderItem={renderItem}
         onEndReached={fetchData}
-        onEndReachedThreshold={0.4}
+        onEndReachedThreshold={0.5}
         refreshing={refreshing}
         onRefresh={onRefresh}
         contentContainerStyle={styles.listContainer}
@@ -113,11 +113,6 @@ export default function HomeScreen (){
 }
 
 const styles = StyleSheet.create({
-  container: {
-    paddingTop: 20,
-    flex: 1,
-    backgroundColor: "#f8f8f8",
-  },
   listContainer: {
     paddingHorizontal: 10,
     paddingBottom: 80,

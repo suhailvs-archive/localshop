@@ -33,8 +33,6 @@ class CartListAPIView(viewsets.ModelViewSet):
         return response
     
     def get_queryset(self):
-        import time
-        time.sleep(2)
         return self.queryset.filter(user=self.request.user)
 
     def perform_create(self, serializer):

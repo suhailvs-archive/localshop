@@ -1,9 +1,10 @@
 import { View, FlatList, StyleSheet } from "react-native";
-import { Button, Text } from 'react-native-paper';
+import { Button, Text, Divider } from 'react-native-paper';
 import { useSession } from "@/login_extras/ctx";
 import { useEffect, useState } from 'react';
 import SkeletonLoader from "@/components/SkeletonLoader";
 import api from '@/constants/api'
+import globalStyles from "@/components/Styles"; 
 
 export default function AccountScreen() {
   const { signOut } = useSession();
@@ -29,9 +30,7 @@ export default function AccountScreen() {
     try {
       if (!date) return "";
       const parsedDate = typeof date === 'string' ? new Date(date) : date;
-
       if (isNaN(parsedDate)) return 'Invalid date';
-
       const defaultOptions = {
         year: 'numeric',
         month: 'short',
@@ -40,45 +39,47 @@ export default function AccountScreen() {
         minute: '2-digit',
         hour12: true,
       };
-
       return new Intl.DateTimeFormat('en-US', {
         ...defaultOptions,
         ...options,
       }).format(parsedDate);
-    } catch (err) {
-      console.error('formatDate error:', err);
-      return 'Invalid date';
-    }
+    } catch (err) {return 'Invalid date';}
   }
+
   return (
-    <View style={styles.container}>
+    <View style={[globalStyles.container,{padding:20}]}>
       <Text variant="headlineMedium">Account</Text>
+      <Divider />
       <Button mode="contained" onPress={signOut}>Logout</Button>
       <Text variant="headlineMedium">Orders</Text>
-      <FlatList
-        data={data}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => (
-          <View style={styles.orderItem}>
-            <Text variant="labelLarge">{item.created_at}</Text>
-            <Text style={styles.orderAmount}>{item.total}₹</Text>
-            <Text variant="bodySmall">{item.status}</Text>             
-            <Text style={styles.orderDate}>{formatDate(item.created_at)}</Text>                
-          </View>
-        )}
-      />
+      {loading ? (
+        <View>
+          <SkeletonLoader width={100} height={20} />
+          <SkeletonLoader width={200} height={15} />
+          <SkeletonLoader width={250} height={15} />
+        </View>
+      ) : (     
+        <FlatList
+          data={data}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={({ item }) => (
+            <View style={styles.orderItem}>
+              <Text variant="labelLarge" style={[item.status=='delivered' ? styles.positive : styles.negative]}>#{item.id} {item.status}</Text>
+              <Text style={styles.orderAmount}>{item.total}₹</Text>
+              <Text style={styles.orderDate}>{formatDate(item.created_at)}</Text>                
+            </View>
+          )}
+        />
+      )}
     </View>
   )
 };
 
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: 20,
-    backgroundColor: "#f8f8f8",
-  },
   orderItem: { padding: 15, borderBottomWidth: 1, borderBottomColor: "#ddd" },
   orderAmount: { fontSize: 16, fontWeight: "bold", position: "absolute", right: 10, top: 15 },
   orderDate: { fontSize: 12, color: "gray", marginTop: 2 },
+  positive: { color: "green" },
+  negative: { color: "red" },
 });
