@@ -8,18 +8,28 @@ import api from "@/constants/api";
 
 export default function HomeScreen (){
   const [page, setPage] = useState(1);
+  const [totalproducts, setTotalProducts] = useState(0);
+  const [hasNext, setHasNext] = useState(true);
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const router = useRouter();
   useEffect(() => {
     fetchData(page === 1);
   }, [page]);
 
-  const fetchData = async (reset = false) => {
+  const fetchData = async () => {
+    if (loading || refreshing || !hasNext) return;
+    setLoading(true);
     try {
-        const response = await api.get(`/products/?page=${page}`);
-        setData(prev => reset ? response.data.results : [...prev, ...response.data.results]);
+        const res = await api.get(`/products/?page=${page}`);
+        setData(prev => [...prev, ...res.data.results]);
+        setTotalProducts(res.data.count);
+        if (res.data.next) {
+          setPage(prev => prev + 1);
+        } else {
+          setHasNext(false);   // last page reached
+        }
     } catch (error) {
         console.error('Error fetching data:', error);
     } finally {
@@ -27,10 +37,14 @@ export default function HomeScreen (){
     }
   };
   const onRefresh = async () => {
-    try {
-      setRefreshing(true);
-      setPage(1);          // reset page if needed
-      await fetchData();   // reload data
+    setRefreshing(true);
+    try {      
+      const res = await api.get(`/products/?page=1`);
+      setData(res.data.results);
+      setPage(2);                   // next page is 2
+      setHasNext(!!res.data.next);  // true if next exists
+    } catch (err) {
+      console.log(err);
     } finally {
       setRefreshing(false);
     }
@@ -58,7 +72,13 @@ export default function HomeScreen (){
           <Image source={{ uri: item.image }} style={styles.productImage} />
         }
         right={() => (
-          <TouchableOpacity onPress={() => addToCart(item.id)}>
+          <TouchableOpacity onPress={() => addToCart(item.id)}
+          style={{
+            padding: 10,      // 👈 increases touch area
+            marginRight: 5,
+            justifyContent: "center",
+            alignItems: "center",
+          }}>
             <List.Icon icon="plus" />
           </TouchableOpacity>
         )}
@@ -75,19 +95,19 @@ export default function HomeScreen (){
         style={styles.searchBar}
         icon="magnify"
       />
+      <Text>Total Products: {totalproducts}</Text>
       {/* Product Listing */}      
       <FlatList
         data={data}
         keyExtractor={(item) => item.id.toString()}
         renderItem={renderItem}
-        onEndReached={() => {if (!loading) {setPage(prev => prev + 1)}}}
-        onEndReachedThreshold={0.5}
+        onEndReached={fetchData}
+        onEndReachedThreshold={0.4}
         refreshing={refreshing}
         onRefresh={onRefresh}
         contentContainerStyle={styles.listContainer}
         ListFooterComponent={loading ? <SkeletonLoader width={100} height={20} /> : null}
       />
-
     </View>
   );
 }
