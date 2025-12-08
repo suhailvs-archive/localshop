@@ -45,15 +45,16 @@ class OrderItems(models.Model):
 
 class Order(models.Model): 
     STATUS_CHOICES =(
-        (0,'Processing'),
-        (1,'Packing'),
-        (2,'Out for Delivery'),     
-        (3,'Delivered'),
+        ('processing','Processing'),
+        ('packing','Packing'),
+        ('out_for_delivery','Out for Delivery'),     
+        ('delivered','Delivered'),
     )   
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    status = models.IntegerField(choices=STATUS_CHOICES,default=0)
+    status = models.CharField(max_length=20,choices=STATUS_CHOICES,default='processing')
     created_at = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
+    total = models.FloatField(default=0)
     def __str__(self):
         order_date = self.created_at.strftime('%I:%M%p %d/%b/%y')
         return f'#{self.id} {self.user.username}({order_date})'

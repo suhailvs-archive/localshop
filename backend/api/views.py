@@ -60,21 +60,16 @@ class OrderAPIView(APIView):
         url = f"https://api.telegram.org/bot{settings.TELEGRAM_TOKEN}/"
         params = {'chat_id':-595052915, 'text': f'new order:{order.id} by {order.user.first_name}({order.user.username})'}
         response = requests.post(url + 'sendMessage', data=params)
-
+        print(response)
     def get(self, request, format=None):
         orders = Order.objects.filter(user=request.user).order_by('-created_at')
-        return Response([{'date':order.created_at,'id':order.id,
-            'total':OrderItems.objects.filter(order=order).aggregate(s=Sum('amount'))['s'] or 0,
-            'status':order.status,
-            'items':[{
-                'product':item.product,
-                'quantity':item.quantity
-            } for item in order.orderitems_set.all()]} for order in orders])
+        return Response([{'created_at':order.created_at,'id':order.id,
+            'total':order.total,'status':order.status} for order in orders])
 
     def post(self, request, format=None):
         carts = Cart.objects.filter(user=request.user)
         if carts:
-            order = Order.objects.create(user=request.user)
+            order = Order.objects.create(user=request.user, total=Cart.total_for_user(request.user))
             for cart in carts:
                 OrderItems.objects.create(order=order,product=cart.product,quantity=cart.quantity)
                 cart.delete()
