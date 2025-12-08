@@ -66,7 +66,7 @@ class OrderAPIView(APIView):
         if carts:
             order = Order.objects.create(user=request.user, total=Cart.total_for_user(request.user))
             for cart in carts:
-                OrderItems.objects.create(order=order,product=cart.product,quantity=cart.quantity)
+                OrderItems.objects.create(order=order,product=cart.product,quantity=cart.quantity,price=cart.product.price)
                 cart.delete()
             self.send_telegram_message(order)
         return Response('', status=status.HTTP_201_CREATED)
