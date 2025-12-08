@@ -17,18 +17,22 @@ export default function HomeScreen (){
   const [refreshing, setRefreshing] = useState(false);
   const router = useRouter();
   useEffect(() => {
-    fetchData(page === 1);
-  }, [page]);
+    fetchData(1);
+  }, []);
 
-  const fetchData = async () => {
+  const fetchData = async (pageNumber = page) => {
     if (loading || refreshing || !hasNext) return;
     setLoading(true);
     try {
-        const res = await api.get(`/products/?page=${page}`);
-        setData(prev => [...prev, ...res.data.results]);
+        const res = await api.get(`/products/?page=${pageNumber}`);
+        if (pageNumber === 1) {
+          setData(res.data.results);
+        } else {
+          setData(prev => [...prev, ...res.data.results]);
+        }
         setTotalProducts(res.data.count);
         if (res.data.next) {
-          setPage(prev => prev + 1);
+          setPage(pageNumber + 1);
         } else {
           setHasNext(false);   // last page reached
         }
@@ -109,8 +113,8 @@ export default function HomeScreen (){
         data={data}
         keyExtractor={(item) => item.id.toString()}
         renderItem={renderItem}
-        onEndReached={fetchData}
-        onEndReachedThreshold={0.5}
+        onEndReached={() => fetchData(page)}
+        onEndReachedThreshold={0.2}
         refreshing={refreshing}
         onRefresh={onRefresh}
         contentContainerStyle={styles.listContainer}

@@ -66,6 +66,7 @@ export default function CartScreen() {
   };
 
   const handleBuyNow = async () => {
+    if (data.length === 0) {return};
     setButtonLoading(true);
     try {
       await api.post('/orders/');
@@ -115,7 +116,7 @@ export default function CartScreen() {
         refreshing={refreshing}
         onRefresh={onRefresh}
         contentContainerStyle={styles.listContainer}
-        ListEmptyComponent={!loading && <Text variant="titleLarge">Cart is Empty</Text>}
+        ListEmptyComponent={!loading && <Text variant="titleMedium">Cart is Empty</Text>}
       />
       {/* Buy Now Buttons */}
       <Button

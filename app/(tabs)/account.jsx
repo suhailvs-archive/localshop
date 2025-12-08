@@ -69,6 +69,7 @@ export default function AccountScreen() {
               <Text style={styles.orderDate}>{formatDate(item.created_at)}</Text>                
             </View>
           )}
+          ListEmptyComponent={!loading && <Text variant="titleMedium">Order is Empty</Text>}
         />
       )}
     </View>
