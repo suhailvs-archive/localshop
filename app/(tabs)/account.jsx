@@ -51,7 +51,7 @@ export default function AccountScreen() {
       <Text variant="headlineMedium">Account</Text>
       <Divider />
       <Button mode="contained" onPress={signOut}>Logout</Button>
-      <Text variant="headlineMedium">Orders</Text>
+      <Text variant="titleLarge">Orders</Text>
       {loading ? (
         <View>
           <SkeletonLoader width={100} height={20} />

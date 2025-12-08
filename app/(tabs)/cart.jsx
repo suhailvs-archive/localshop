@@ -6,7 +6,7 @@ import { Text,TextInput, List, Button } from "react-native-paper";
 import api from "@/constants/api"; 
 import SkeletonLoader from "@/components/SkeletonLoader";
 import globalStyles from "@/components/Styles"; 
-
+import Toast from 'react-native-toast-message';
 export default function CartScreen() {
   const [cart_total, setCartTotal] = useState(0);
   const [data, setData] = useState([]);
@@ -17,9 +17,7 @@ export default function CartScreen() {
   const isFocused = useIsFocused();
 
   useEffect(() => {
-    if (isFocused) {
-      fetchData();
-    }
+    if (isFocused) {fetchData();}
   }, [isFocused]);
 
   const fetchData = async () => {
@@ -27,6 +25,8 @@ export default function CartScreen() {
     try {
         const response = await api.get('/cart/');
         setData(response.data);
+        const resp_cart_total = await api.get('/ajax_views/?purpose=cart_total');
+        setCartTotal(resp_cart_total.data);
     } catch (error) {
         console.error('Error fetching data:', error);
     } finally {
@@ -45,7 +45,8 @@ export default function CartScreen() {
     } catch (error) {
       console.error(error.response?.data || error);
     } finally {
-      console.log('item quantity changed.');
+      Toast.show({type: 'success',text1: 'Success:',
+              text2: 'Item Quantity Updated.👋'});
       // start of very bad change
       // ========================
       // this is to fix while quantity change, get whole cart items from backend
@@ -114,6 +115,7 @@ export default function CartScreen() {
         refreshing={refreshing}
         onRefresh={onRefresh}
         contentContainerStyle={styles.listContainer}
+        ListEmptyComponent={!loading && <Text variant="titleLarge">Cart is Empty</Text>}
       />
       {/* Buy Now Buttons */}
       <Button
@@ -121,9 +123,9 @@ export default function CartScreen() {
         onPress={handleBuyNow}
         style={styles.buyNowButton}
         labelStyle={styles.buttonText}
-        loading={loading_btn} 
-        disabled={loading_btn}
-      >{loading_btn ? 'Loading...' : `Buy Now(${cart_total} ₹)`}</Button>
+        loading={loading_btn||loading} 
+        disabled={loading_btn||loading}
+      >{loading_btn||loading ? 'Loading...' : `Buy Now(${cart_total} ₹)`}</Button>
     </View>
   )
 };

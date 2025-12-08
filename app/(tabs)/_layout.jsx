@@ -28,13 +28,13 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => <Icon name="home" size={28} color={color} />,
         }}
       />
-      <Tabs.Screen
+      {/* <Tabs.Screen
         name="categories"
         options={{
           title: 'Categories',
           tabBarIcon: ({ color }) => <Icon name="animation-outline" size={28} color={color} />,
         }}
-      />
+      /> */}
       <Tabs.Screen
         name="account"
         options={{
