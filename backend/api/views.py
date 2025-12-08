@@ -1,8 +1,5 @@
 import requests
-from django.shortcuts import render
-from django.db.models import Sum
 from django.conf import settings
-# Create your views here.
 from rest_framework import viewsets
 from rest_framework.views import APIView
 from rest_framework import status
@@ -73,3 +70,12 @@ class OrderAPIView(APIView):
                 cart.delete()
             self.send_telegram_message(order)
         return Response('', status=status.HTTP_201_CREATED)
+
+
+
+class AjaxAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+    def get(self, request):
+        purpose = request.GET.get('purpose')
+        if purpose=='cart_total':return Response(Cart.total_for_user(request.user))
+        if purpose=='test':return Response(1)

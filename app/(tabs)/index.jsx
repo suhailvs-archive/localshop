@@ -5,13 +5,15 @@ import { useRouter } from "expo-router";
 import SkeletonLoader from "@/components/SkeletonLoader";
 import globalStyles from "@/components/Styles"; 
 import api from "@/constants/api"; 
-
+import Toast from 'react-native-toast-message';
 export default function HomeScreen (){
   const [page, setPage] = useState(1);
   const [totalproducts, setTotalProducts] = useState(0);
   const [hasNext, setHasNext] = useState(true);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [addToCartLoading, setaddToCartLoading] = useState(false);
+  
   const [refreshing, setRefreshing] = useState(false);
   const router = useRouter();
   useEffect(() => {
@@ -50,12 +52,15 @@ export default function HomeScreen (){
     }
   };
   const addToCart = async (itemid) => {
+    setaddToCartLoading(true);
     try {
       await api.post('/cart/', {product:itemid,quantity:1});
     } catch (error) {
       console.error('Error fetching data:', error);
     } finally {
-      console.log('added to cart.');
+      Toast.show({type: 'success',text1: 'Success:',
+        text2: 'Item Added to Cart.👋'});
+      setaddToCartLoading(false);
     }   
   };
   const renderItem = ({ item }) => (
@@ -72,13 +77,16 @@ export default function HomeScreen (){
           <Image source={{ uri: item.image }} style={styles.productImage} />
         }
         right={() => (
-          <TouchableOpacity onPress={() => addToCart(item.id)}
-          style={{
-            padding: 10,      // 👈 increases touch area
-            marginRight: 5,
-            justifyContent: "center",
-            alignItems: "center",
-          }}>
+          <TouchableOpacity 
+            onPress={() => !addToCartLoading && addToCart(item.id)}
+            disabled={addToCartLoading}    
+            style={{
+              opacity: addToCartLoading ? 0.4 : 1,
+              padding: 10,      // 👈 increases touch area
+              marginRight: 5,
+              justifyContent: "center",
+              alignItems: "center",
+            }}>
             <List.Icon icon="plus" />
           </TouchableOpacity>
         )}
