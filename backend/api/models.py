@@ -6,7 +6,11 @@ class User(AbstractUser):
     pass
 
 class Product(models.Model):
-    category = models.CharField(max_length=50)
+    CATEGORY_CHOICES = (
+        ("mobile","Mobile Phone"),
+        ("monitor","Monitor"),
+    )
+    category = models.CharField(max_length=50,choices=CATEGORY_CHOICES,default="mobile")
     title = models.CharField(max_length=255)
     description = models.TextField()
     price = models.IntegerField()

@@ -124,5 +124,243 @@
         "image": "offering/2025/12/07/9.jpeg",
         "is_active": true
     }
+},
+{
+    "model": "api.product",
+    "pk": 10,
+    "fields": {
+        "category": "mobile",
+        "title": "Xiaomi 14 CIVI",
+        "description": "Star: 4.3 970 Ratings & 124 Reviews\r\n\r\n    50MP Rear Camera | 32MP + 32MP Dual Front Camera\r\n    16.64 cm (6.55 inch) Display\r\n    8s Gen 3 Mobile Platform Processor\r\n    8 GB RAM | 256 GB ROM\r\n    1 Year Manufacturer Warranty for Phone and 6 Months Warranty for In the Box Accessories\r\n    4700 mAh Battery",
+        "price": 40999,
+        "unit": "",
+        "created_at": "2025-12-07T13:02:24.407Z",
+        "image": "offering/2025/12/07/10.jpeg",
+        "is_active": true
+    }
+},
+{
+    "model": "api.product",
+    "pk": 11,
+    "fields": {
+        "category": "mobile",
+        "title": "SAMSUNG Galaxy S23",
+        "description": "Star: 4.6 49,709 Ratings & 3,102 Reviews\r\n\r\n    50MP + 10MP + 12MP | 12MP Front Camera\r\n    15.49 cm (6.1 inch) Full HD+ Display\r\n    Qualcomm Snapdragon 8 Gen 2 Processor\r\n    8 GB RAM | 128 GB ROM\r\n    1 Year Manufacturer Warranty for Device and 6 Months Manufacturer Warranty for In-Box Accessories\r\n    3900 mAh Lithium Ion Battery",
+        "price": 37999,
+        "unit": "pc",
+        "created_at": "2025-12-07T13:03:14.338Z",
+        "image": "offering/2025/12/07/11.jpeg",
+        "is_active": true
+    }
+},
+{
+    "model": "api.product",
+    "pk": 12,
+    "fields": {
+        "category": "mobile",
+        "title": "OnePlus 12",
+        "description": "Star: 4.6 1,059 Ratings & 80 Reviews\r\n\r\n    64MP Rear Camera\r\n    17.32 cm (6.82 inch) Display\r\n    1 Year Brand Warranty\r\n    12 GB RAM | 256 GB ROM\r\n    5400 mAh Battery",
+        "price": 58980,
+        "unit": "piece",
+        "created_at": "2025-12-07T13:04:06.989Z",
+        "image": "offering/2025/12/07/12.jpeg",
+        "is_active": true
+    }
+},
+{
+    "model": "api.product",
+    "pk": 13,
+    "fields": {
+        "category": "mobile",
+        "title": "REDMI 10",
+        "description": "Star: 4.3 2,58,858 Ratings & 15,147 Reviews\r\n\r\n    50MP + 2MP | 5MP Front Camera\r\n    17.02 cm (6.7 inch) HD+ Display\r\n    Qualcomm Snapdragon 680 Processor\r\n    4 GB RAM | 64 GB ROM | Expandable Upto 1 TB\r\n    1 Year Warranty for Phone and 6 Months Warranty for In-Box Accessories\r\n    6000 mAh Lithium Polymer Battery",
+        "price": 14999,
+        "unit": "piece",
+        "created_at": "2025-12-07T13:05:17.135Z",
+        "image": "offering/2025/12/07/13.jpeg",
+        "is_active": true
+    }
+},
+{
+    "model": "api.product",
+    "pk": 14,
+    "fields": {
+        "category": "mobile",
+        "title": "Nokia 130 Music",
+        "description": "Star: 4.2 9,390 Ratings & 414 Reviews\r\n\r\n    0MP Front Camera\r\n    6.1 cm (2.4 inch) Display\r\n    6261D Processor\r\n    4 MB RAM | 4 MB ROM\r\n    1 year Brand warranty\r\n    1450 mAh Battery",
+        "price": 1775,
+        "unit": "piece",
+        "created_at": "2025-12-07T13:05:53.018Z",
+        "image": "offering/2025/12/07/14.jpeg",
+        "is_active": true
+    }
+},
+{
+    "model": "api.product",
+    "pk": 15,
+    "fields": {
+        "category": "mobile",
+        "title": "OPPO F25 Pro",
+        "description": "Star: 4.3 5,254 Ratings & 390 Reviews\r\n\r\n    64MP + 8MP + 2MP | 32MP Front Camera\r\n    17.02 cm (6.7 inch) Full HD+ Display\r\n    Dimensity 7050 Processor\r\n    8 GB RAM | 128 GB ROM | Expandable Upto 2 TB\r\n    1 Year Manufacturer Warranty for Device and 6 Months Manufacturer Warranty for Inbox Accessories\r\n    5000 mAh Battery",
+        "price": 19999,
+        "unit": "piece",
+        "created_at": "2025-12-07T13:10:17.350Z",
+        "image": "offering/2025/12/07/15.jpeg",
+        "is_active": true
+    }
+},
+{
+    "model": "api.product",
+    "pk": 16,
+    "fields": {
+        "category": "mobile",
+        "title": "Google Pixel 9 Pro XL",
+        "description": "Star: 4.6 395 Ratings & 30 Reviews\r\n\r\n    50MP + 48MP + 48MP | 42MP Front Camera\r\n    17.27 cm (6.8 inch) Display\r\n    Google Tensor G4 Processor\r\n    16 GB RAM | 256 GB ROM\r\n    1 Year Domestic Warranty\r\n    5060 mAh Battery",
+        "price": 124999,
+        "unit": "piece",
+        "created_at": "2025-12-07T13:10:52.795Z",
+        "image": "offering/2025/12/07/16.jpeg",
+        "is_active": true
+    }
+},
+{
+    "model": "api.product",
+    "pk": 17,
+    "fields": {
+        "category": "mobile",
+        "title": "Motorola Edge 30",
+        "description": "Star: 4.1 8,705 Ratings & 1,080 Reviews\r\n\r\n    50MP + 50MP + 2MP | 32MP Front Camera\r\n    16.64 cm (6.55 inch) Full HD+ Display\r\n    Qualcomm Snapdragon 778G Plus Processor\r\n    8 GB RAM | 128 GB ROM\r\n    1 Year on Handset and 6 Months on Accessories\r\n    4020 mAh Lithium Battery",
+        "price": 18899,
+        "unit": "piece",
+        "created_at": "2025-12-07T13:11:34.494Z",
+        "image": "offering/2025/12/07/17.jpeg",
+        "is_active": true
+    }
+},
+{
+    "model": "api.product",
+    "pk": 18,
+    "fields": {
+        "category": "mobile",
+        "title": "POCO M6",
+        "description": "Star: 4.2 78,206 Ratings & 3,686 Reviews\r\n\r\n    50MP Rear Camera | 5MP Front Camera\r\n    17.12 cm (6.74 inch) HD+ Display\r\n    Mediatek Dimensity 6100+ Processor\r\n    4 GB RAM | 128 GB ROM | Expandable Upto 1 TB\r\n    1 Year Manufacturer Warranty for Phone and 6 Months Warranty for In the Box Accessories\r\n    5000 mAh Battery",
+        "price": 9249,
+        "unit": "piece",
+        "created_at": "2025-12-07T13:12:35.354Z",
+        "image": "offering/2025/12/07/18.jpeg",
+        "is_active": true
+    }
+},
+{
+    "model": "api.product",
+    "pk": 19,
+    "fields": {
+        "category": "mobile",
+        "title": "realme Narzo 70 Pro",
+        "description": "Star: 4.3 4,752 Ratings & 306 Reviews\r\n\r\n    50MP Rear Camera\r\n    16.94 cm (6.67 inch) Display\r\n    1 Year Domestic Warranty for Phone and 6 Months Warranty for In-Box Accessories\r\n    8 GB RAM | 128 GB ROM\r\n    1 Year Manufacturer Warranty for Phone and 6 Months Warranty for In the Box Accessories\r\n    5000 mAh Battery",
+        "price": 18999,
+        "unit": "piece",
+        "created_at": "2025-12-07T13:26:36.688Z",
+        "image": "offering/2025/12/07/20.jpeg",
+        "is_active": true
+    }
+},
+{
+    "model": "api.product",
+    "pk": 20,
+    "fields": {
+        "category": "mobile",
+        "title": "Motorola Edge 50 Ultra",
+        "description": "Star: 4.3 1,598 Ratings & 180 Reviews\r\n\r\n    50MP + 50MP + 64MP | 50MP Front Camera\r\n    17.02 cm (6.7 inch) Display\r\n    8s Gen 3 Mobile Platform Processor\r\n    12 GB RAM | 512 GB ROM\r\n    1 Year on Handset and 6 Months on Accessories\r\n    4500 mAh Battery",
+        "price": 53999,
+        "unit": "piece",
+        "created_at": "2025-12-07T13:30:09.454Z",
+        "image": "offering/2025/12/07/21.jpeg",
+        "is_active": true
+    }
+},
+{
+    "model": "api.product",
+    "pk": 21,
+    "fields": {
+        "category": "mobile",
+        "title": "vivo Y200",
+        "description": "Star: 4.4 3,003 Ratings & 208 Reviews\r\n\r\n    64MP + 2MP | 16MP Front Camera\r\n    16.94 cm (6.67 inch) Full HD+ AMOLED Display\r\n    4 Gen 1 Processor\r\n    8 GB RAM | 256 GB ROM | Expandable Upto 2 TB\r\n    1 Year Manufacturer Warranty for Device and 6 Months Manufacturer Warranty for Inbox Accessories\r\n    4800 mAh Battery",
+        "price": 22489,
+        "unit": "piece",
+        "created_at": "2025-12-07T13:30:46.255Z",
+        "image": "offering/2025/12/07/22.jpeg",
+        "is_active": true
+    }
+},
+{
+    "model": "api.product",
+    "pk": 22,
+    "fields": {
+        "category": "mobile",
+        "title": "Tecno Spark 30C",
+        "description": "Star: 4.5 15 Ratings & 1 Reviews\r\n\r\n    48MP Rear Camera | 8MP Front Camera\r\n    16.94 cm (6.67 inch) HD Display\r\n    Mediatek D6300 Processor\r\n    4 GB RAM | 64 GB ROM | Expandable Upto 1 TB\r\n    12 months manufacturer Warranty\r\n    5000 mAh Battery",
+        "price": 9999,
+        "unit": "piece",
+        "created_at": "2025-12-07T13:33:09.829Z",
+        "image": "offering/2025/12/07/23.jpeg",
+        "is_active": true
+    }
+},
+{
+    "model": "api.product",
+    "pk": 23,
+    "fields": {
+        "category": "monitor",
+        "title": "SAMSUNG M5 81.28 cm (32 inch)",
+        "description": "Star: 4.4 200 Ratings & 21 Reviews\r\n\r\n    Panel Type: VA Panel\r\n    Screen Resolution Type: Full HD\r\n    Brightness: 250 nits\r\n    Response Time: 4 ms | Refresh Rate: 60 Hz\r\n    HDMI Ports - 2\r\n    3 Years Warranty",
+        "price": 17499,
+        "unit": "piece",
+        "created_at": "2025-12-08T17:12:38.400Z",
+        "image": "offering/2025/12/08/1.jpeg",
+        "is_active": true
+    }
+},
+{
+    "model": "api.product",
+    "pk": 24,
+    "fields": {
+        "category": "monitor",
+        "title": "Acer NITRO 68.58 cm (27 inch) Curved",
+        "description": "Star: 4.5 295 Ratings & 28 Reviews\r\n\r\n    Panel Type: VA Panel\r\n    Screen Resolution Type: Full HD\r\n    Brightness: 250 nits\r\n    Response Time: 1 ms | Refresh Rate: 180 Hz\r\n    HDMI Ports - 2\r\n    3 years manufacturer warranty",
+        "price": 12355,
+        "unit": "piece",
+        "created_at": "2025-12-08T17:13:31.751Z",
+        "image": "offering/2025/12/08/2.jpeg",
+        "is_active": true
+    }
+},
+{
+    "model": "api.product",
+    "pk": 25,
+    "fields": {
+        "category": "monitor",
+        "title": "BenQ GW2490T 60.96 cm (24 inch)",
+        "description": "Star: 4.5 221 Ratings & 21 Reviews\r\n\r\n    Panel Type: IPS Panel\r\n    Screen Resolution Type: Full HD\r\n    Brightness: 250 nits\r\n    Response Time: 5 ms | Refresh Rate: 100 Hz\r\n    HDMI Ports - 2\r\n    3 Years Warranty",
+        "price": 10740,
+        "unit": "piece",
+        "created_at": "2025-12-08T17:14:21.861Z",
+        "image": "offering/2025/12/08/3.jpeg",
+        "is_active": true
+    }
+},
+{
+    "model": "api.product",
+    "pk": 26,
+    "fields": {
+        "category": "monitor",
+        "title": "MSI 60.45 cm (23.8 inch) Full HD",
+        "description": "Star: 4.4 28 Ratings & 4 Reviews\r\n\r\n    Panel Type: VA Panel\r\n    Screen Resolution Type: Full HD\r\n    Brightness: 300 nits\r\n    Response Time: 1 ms | Refresh Rate: 100 Hz\r\n    HDMI Ports - 1\r\n    3 Years Warranty",
+        "price": 7839,
+        "unit": "piece",
+        "created_at": "2025-12-08T17:15:19.724Z",
+        "image": "offering/2025/12/08/4.jpeg",
+        "is_active": true
+    }
 }
 ]
