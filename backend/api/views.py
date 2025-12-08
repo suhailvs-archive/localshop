@@ -7,7 +7,7 @@ from rest_framework import viewsets
 from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.response import Response
-
+from rest_framework.permissions import IsAuthenticated
 from .models import Product,Cart, Order, OrderItems
 from .serializers import CartSerializer, ProductsSerializer
 
@@ -21,16 +21,19 @@ class ProductReadOnlyViewSet(viewsets.ReadOnlyModelViewSet):
 class CartListAPIView(viewsets.ModelViewSet):
     queryset = Cart.objects.order_by('-created_at')
     serializer_class = CartSerializer
-
+    permission_classes = [IsAuthenticated]
     def get_queryset(self):
         return self.queryset.filter(user=self.request.user)
 
     def perform_create(self, serializer):
         # import time
         # time.sleep(2)
+        
+        product = serializer.validated_data['product']
         req = serializer.context['request']
-        serializer.save(user=req.user)
-
+        print(Cart.objects.filter(user=req.user))
+        if not Cart.objects.filter(product=product,user=req.user):
+            serializer.save(user=req.user)
 
 class OrderListAPIView(APIView):
     """

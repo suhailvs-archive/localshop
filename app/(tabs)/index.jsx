@@ -13,13 +13,13 @@ export default function HomeScreen (){
   const [refreshing, setRefreshing] = useState(false);
   const router = useRouter();
   useEffect(() => {
-    fetchData();
+    fetchData(page === 1);
   }, [page]);
 
-  const fetchData = async () => {
+  const fetchData = async (reset = false) => {
     try {
         const response = await api.get(`/products/?page=${page}`);
-        setData(response.data);
+        setData(prev => reset ? response.data.results : [...prev, ...response.data.results]);
     } catch (error) {
         console.error('Error fetching data:', error);
     } finally {
@@ -35,7 +35,15 @@ export default function HomeScreen (){
       setRefreshing(false);
     }
   };
-
+  const addToCart = async (itemid) => {
+    try {
+      await api.post('/cart/', {product:itemid,quantity:1});
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    } finally {
+      console.log('added to cart.')
+    }   
+  };
   const renderItem = ({ item }) => (
       <List.Item
         title={item.category}
@@ -50,7 +58,7 @@ export default function HomeScreen (){
           <Image source={{ uri: item.image }} style={styles.productImage} />
         }
         right={() => (
-          <TouchableOpacity onPress={() => console.log("Icon clicked!")}>
+          <TouchableOpacity onPress={() => addToCart(item.id)}>
             <List.Icon icon="plus" />
           </TouchableOpacity>
         )}
@@ -71,12 +79,12 @@ export default function HomeScreen (){
         data={data}
         keyExtractor={(item) => item.id.toString()}
         renderItem={renderItem}
-        onEndReached={() => setPage(page + 1)}
+        onEndReached={() => {if (!loading) {setPage(prev => prev + 1)}}}
         onEndReachedThreshold={0.5}
         refreshing={refreshing}
         onRefresh={onRefresh}
         contentContainerStyle={styles.listContainer}
-        ListFooterComponent={loading && <SkeletonLoader width={100} height={20} />}
+        ListFooterComponent={loading ? <SkeletonLoader width={100} height={20} /> : null}
       />
 
     </View>
