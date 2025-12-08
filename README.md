@@ -23,4 +23,7 @@ you can download the `apk` after some time at https://expo.dev/accounts/suhailvs
 
 ### android production build 
 
-`$ eas build -p android`
+```bash
+$ eas init
+$ eas build -p android
+```
