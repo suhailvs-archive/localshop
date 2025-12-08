@@ -22,23 +22,31 @@ class CartListAPIView(viewsets.ModelViewSet):
     queryset = Cart.objects.order_by('-created_at')
     serializer_class = CartSerializer
     permission_classes = [IsAuthenticated]
+    pagination_class = None
+
+    def partial_update(self, request, *args, **kwargs):        
+        response = super().partial_update(request, *args, **kwargs)
+        if response.data['quantity'] == 0:
+            # if zero, then delete the cart item
+            Cart.objects.filter(id=response.data['id']).delete()
+        response.data["cart_total"] = Cart.total_for_user(request.user)
+        return response
+    
     def get_queryset(self):
+        import time
+        time.sleep(2)
         return self.queryset.filter(user=self.request.user)
 
     def perform_create(self, serializer):
-        # import time
-        # time.sleep(2)
-        
-        product = serializer.validated_data['product']
         req = serializer.context['request']
-        print(Cart.objects.filter(user=req.user))
-        if not Cart.objects.filter(product=product,user=req.user):
+        if not self.queryset.filter(product=serializer.validated_data['product']):
             serializer.save(user=req.user)
 
-class OrderListAPIView(APIView):
+class OrderAPIView(APIView):
     """
     List all orders, or create a new order.
     """
+    permission_classes = [IsAuthenticated]
     def send_telegram_message(self,order):
         """
         Telegram Bot doc

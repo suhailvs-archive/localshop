@@ -3,7 +3,7 @@ import { StyleSheet, FlatList, View, Image, TouchableOpacity } from "react-nativ
 import { Text, List, Searchbar } from "react-native-paper";
 import { useRouter } from "expo-router";
 import SkeletonLoader from "@/components/SkeletonLoader";
-import {useIsFocused} from '@react-navigation/native';
+
 import api from "@/constants/api"; 
 
 export default function HomeScreen (){
@@ -41,7 +41,7 @@ export default function HomeScreen (){
     } catch (error) {
       console.error('Error fetching data:', error);
     } finally {
-      console.log('added to cart.')
+      console.log('added to cart.');
     }   
   };
   const renderItem = ({ item }) => (
@@ -69,6 +69,7 @@ export default function HomeScreen (){
 
   return (
     <View style={styles.container}>
+      <Text variant="headlineMedium">Home</Text>
       <Searchbar
         placeholder="Search"
         style={styles.searchBar}

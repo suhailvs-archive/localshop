@@ -25,6 +25,18 @@ class Cart(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    @staticmethod
+    def total_for_user(user):
+        from django.db.models import F, Sum, FloatField, ExpressionWrapper
+        return Cart.objects.filter(user=user).aggregate(
+            total=Sum(
+                ExpressionWrapper(
+                    F('quantity') * F('product__price'),
+                    output_field=FloatField()
+                )
+            )
+        )['total'] or 0
+
 class OrderItems(models.Model):
     order = models.ForeignKey('Order', on_delete=models.CASCADE)
     product = models.ForeignKey('Product', on_delete=models.CASCADE)
