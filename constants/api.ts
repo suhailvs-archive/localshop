@@ -4,7 +4,7 @@ import axios from "axios";
 import { router } from "expo-router";
 
 const api = axios.create({
-  baseURL: process.env.REACT_APP_BASE_URL || "http://10.232.195.167:8000/api",
+  baseURL: process.env.REACT_APP_BASE_URL || "http://172.17.3.167:8000/api",
   // baseURL: "https://suhailvs.pythonanywhere.com/api",
 });
 

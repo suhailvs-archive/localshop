@@ -43,7 +43,7 @@ export function SessionProvider({ children }: PropsWithChildren) {
   const signIn = async (username: string, password: string) => {
     console.log(username);
     try {
-      // delete api.defaults.headers.common['Authorization'];
+      delete api.defaults.headers.common['Authorization'];
       const response = await api.post('/api-token-auth/', { username, password });
       const data = response.data;
       setSession(data.token); // Store token securely
