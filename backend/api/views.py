@@ -13,7 +13,7 @@ class ProductReadOnlyViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = ProductSerializer
 
     def get_queryset(self):
-        return Product.objects.order_by('-created_at')
+        return Product.objects.filter(is_active=True).order_by('-created_at')
     
 class CartListAPIView(viewsets.ModelViewSet):
     queryset = Cart.objects.order_by('-created_at')
