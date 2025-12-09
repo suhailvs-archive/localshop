@@ -64,7 +64,13 @@ class OrderAPIView(APIView):
     def get(self, request, format=None):
         orders = Order.objects.filter(user=request.user).order_by('-created_at')
         return Response([{'created_at':order.created_at,'id':order.id,
-            'total':order.total,'status':order.status} for order in orders])
+            'total':order.total,'status':order.status,
+            'items':[{
+                'product':item.product.title,
+                'quantity':item.quantity,
+                'price':item.price,
+            } for item in order.orderitems_set.all()]
+        } for order in orders])
 
     def post(self, request, format=None):
         carts = Cart.objects.filter(user=request.user)

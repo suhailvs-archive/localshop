@@ -1,5 +1,5 @@
-import { View, FlatList, StyleSheet } from "react-native";
-import { Button, Text, Divider } from 'react-native-paper';
+import { View, FlatList } from "react-native";
+import { Button, Text, Divider, List } from 'react-native-paper';
 import { useSession } from "@/login_extras/ctx";
 import { useEffect, useState } from 'react';
 import SkeletonLoader from "@/components/SkeletonLoader";
@@ -47,7 +47,7 @@ export default function AccountScreen() {
   }
 
   return (
-    <View style={[globalStyles.container,{padding:20}]}>
+    <View style={[globalStyles.container,{paddingTop:20}]}>
       <Text variant="headlineMedium">Account</Text>
       <Divider />
       <Button mode="contained" onPress={signOut}>Logout</Button>
@@ -63,11 +63,19 @@ export default function AccountScreen() {
           data={data}
           keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => (
-            <View style={styles.orderItem}>
-              <Text variant="labelLarge" style={[item.status=='delivered' ? styles.positive : styles.negative]}>#{item.id} {item.status}</Text>
-              <Text style={styles.orderAmount}>{item.total}₹</Text>
-              <Text style={styles.orderDate}>{formatDate(item.created_at)}</Text>                
-            </View>
+              <List.Accordion
+                title={formatDate(item.created_at)}
+                description={`Total: ₹${item.total}, Status: ${item.status}`}
+                left={props => <List.Icon {...props} color={item.status=='delivered' ? "green" : "red"} icon="information-outline" />}
+              >
+                {item.items.map((orderitem, j) => (
+                  <List.Item
+                    key={j}
+                    title={orderitem.product}
+                    description={`qty: ${orderitem.quantity}, ₹${orderitem.price}`}
+                  />
+                ))}
+              </List.Accordion>
           )}
           ListEmptyComponent={!loading && <Text variant="titleMedium">Order is Empty</Text>}
         />
@@ -75,12 +83,3 @@ export default function AccountScreen() {
     </View>
   )
 };
-
-
-const styles = StyleSheet.create({
-  orderItem: { padding: 15, borderBottomWidth: 1, borderBottomColor: "#ddd" },
-  orderAmount: { fontSize: 16, fontWeight: "bold", position: "absolute", right: 10, top: 15 },
-  orderDate: { fontSize: 12, color: "gray", marginTop: 2 },
-  positive: { color: "green" },
-  negative: { color: "red" },
-});
