@@ -63,7 +63,7 @@ export default function HomeScreen (){
     } catch (error) {
       console.error('Error fetching data:', error);
     } finally {
-      Toast.show({type: 'success',text1: 'Success:',
+      Toast.show({type: 'success',visibilityTime:1000,text1: 'Success:',
         text2: 'Item Added to Cart.👋'});
       setaddToCartLoading(false);
     }   

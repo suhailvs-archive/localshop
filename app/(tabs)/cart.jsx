@@ -45,7 +45,7 @@ export default function CartScreen() {
     } catch (error) {
       console.error(error.response?.data || error);
     } finally {
-      Toast.show({type: 'success',text1: 'Success:',
+      Toast.show({type: 'success',visibilityTime:1000,text1: 'Success:',
               text2: 'Item Quantity Updated.👋'});
       // start of very bad change
       // ========================

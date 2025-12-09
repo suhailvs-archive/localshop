@@ -58,8 +58,7 @@ export default function AccountScreen() {
   return (
     <View style={[globalStyles.container,{paddingTop:20}]}>
       <Text variant="headlineMedium">Account</Text>
-      <Divider />
-      <Button mode="contained" onPress={signOut}>Logout</Button>
+      <View style={{padding:40}}><Button mode="contained" onPress={signOut}>Logout</Button></View>
       <Text variant="titleLarge">Orders</Text>
       {loading ? (
         <View>
