@@ -10,6 +10,7 @@ export default function AccountScreen() {
   const { signOut } = useSession();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
     fetchData();
@@ -46,6 +47,14 @@ export default function AccountScreen() {
     } catch (err) {return 'Invalid date';}
   }
 
+  const onRefresh = async () => {
+    try {
+      setRefreshing(true);
+      await fetchData();   // reload data
+    } finally {
+      setRefreshing(false);
+    }
+  };
   return (
     <View style={[globalStyles.container,{paddingTop:20}]}>
       <Text variant="headlineMedium">Account</Text>
@@ -77,6 +86,8 @@ export default function AccountScreen() {
                 ))}
               </List.Accordion>
           )}
+          refreshing={refreshing}
+          onRefresh={onRefresh}
           ListEmptyComponent={!loading && <Text variant="titleMedium">Order is Empty</Text>}
         />
       )}
