@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 import { StyleSheet, FlatList, View, Image, TouchableOpacity } from "react-native";
-import { Text, List, Searchbar } from "react-native-paper";
+import { Text, List } from "react-native-paper";
 import { useRouter } from "expo-router";
 import SkeletonLoader from "@/components/SkeletonLoader";
 import globalStyles from "@/components/Styles"; 
 import api from "@/constants/api"; 
 import Toast from 'react-native-toast-message';
+
 export default function HomeScreen (){
   const [page, setPage] = useState(1);
   const [totalproducts, setTotalProducts] = useState(0);
@@ -102,11 +103,6 @@ export default function HomeScreen (){
   return (
     <View style={[globalStyles.container,{paddingTop:20}]}>
       <Text variant="headlineMedium">Home</Text>
-      <Searchbar
-        placeholder="Search"
-        style={styles.searchBar}
-        icon="magnify"
-      />
       <Text>Total Products: {totalproducts}</Text>
       {/* Product Listing */}      
       <FlatList
