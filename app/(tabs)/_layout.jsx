@@ -5,9 +5,9 @@ import { Redirect, Tabs } from 'expo-router';
 import { useSession } from "@/login_extras/ctx";
 export default function TabLayout() {
   const { session, isLoading } = useSession();
-  // if (isLoading) {
-  //   return <Text>Loading...</Text>;
-  // }
+  if (isLoading) {
+    return null;
+  }
   if (!session) {
     return <Redirect href="/login" />;
   }
