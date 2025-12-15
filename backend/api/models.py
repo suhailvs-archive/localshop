@@ -9,6 +9,7 @@ class Product(models.Model):
     CATEGORY_CHOICES = (
         ("mobile","Mobile Phone"),
         ("monitor","Monitor"),
+        ("പലചരക്ക്","പലചരക്ക്"),
     )
     category = models.CharField(max_length=50,choices=CATEGORY_CHOICES,default="mobile")
     title = models.CharField(max_length=255)
